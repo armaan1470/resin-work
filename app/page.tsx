@@ -1,3 +1,7 @@
+import CombinedSection from "@/components/home-sections/combined-section";
+import HeroSection from "@/components/home-sections/hero-section";
+import SolutionsSection from "@/components/home-sections/solutions-section";
+import TimelineSection from "@/components/home-sections/timeline-section";
 import Link from "next/link";
 
 export default function Home() {
@@ -34,36 +38,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-secondary dark:bg-secondary py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-text mb-6">
-              Professional
-              <span className="text-brand block">Resin Solutions</span>
-            </h1>
-            <p className="text-xl text-text-muted mb-8 max-w-3xl mx-auto">
-              Leading provider of high-quality resin materials for dental,
-              jewellery, and functional applications. We specialize in
-              innovative resin technology and premium filaments.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/company"
-                className="bg-brand hover:bg-brand-dark text-text-light px-8 py-3 rounded-lg font-semibold transition-colors"
-              >
-                Learn More
-              </Link>
-              <Link
-                href="/dental"
-                className="border border-border text-text hover:bg-accent px-8 py-3 rounded-lg font-semibold transition-colors"
-              >
-                Our Services
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection />
+
+      <TimelineSection />
+
+      <CombinedSection />
+
+      <SolutionsSection />
 
       {/* Services Section */}
       <section className="py-20 bg-primary">

@@ -1,126 +1,899 @@
-import Link from "next/link";
+"use client";
 
-export default function Footer() {
+import type React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import {
+  Facebook,
+  Instagram,
+  Twitter,
+  Linkedin,
+  ChevronDown,
+  ArrowRight,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+// Form validation schema
+const contactFormSchema = z.object({
+  phoneNumber: z.string().min(1, "Phone number is required"),
+  company: z.string().min(1, "Company is required"),
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  message: z.string().min(1, "Message is required"),
+});
+
+const subscribeFormSchema = z.object({
+  email: z.string().email("Invalid email address"),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
+type SubscribeFormData = z.infer<typeof subscribeFormSchema>;
+
+interface SocialLink {
+  icon: React.ReactNode;
+  link: string;
+  label: string;
+}
+
+const Footer: React.FC = () => {
+  // Contact form
+  const contactForm = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      phoneNumber: "",
+      company: "",
+      name: "",
+      email: "",
+      message: "",
+    },
+  });
+
+  // Subscribe form for desktop
+  const subscribeForm = useForm<SubscribeFormData>({
+    resolver: zodResolver(subscribeFormSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  // Subscribe form for mobile
+  const mobileSubscribeForm = useForm<SubscribeFormData>({
+    resolver: zodResolver(subscribeFormSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  const social: SocialLink[] = [
+    {
+      icon: <Facebook className="w-6 h-6" />,
+      link: "https://www.facebook.com/",
+      label: "Facebook",
+    },
+    {
+      icon: <Instagram className="w-6 h-6" />,
+      link: "https://www.instagram.com/",
+      label: "Instagram",
+    },
+    {
+      icon: <Twitter className="w-6 h-6" />,
+      link: "https://twitter.com/",
+      label: "Twitter",
+    },
+    {
+      icon: <Linkedin className="w-6 h-6" />,
+      link: "https://www.linkedin.com/",
+      label: "LinkedIn",
+    },
+  ];
+
+  const onContactSubmit = (data: ContactFormData) => {
+    console.log("Contact form submitted:", data);
+    // Handle contact form submission
+  };
+
+  const onSubscribeSubmit = (data: SubscribeFormData) => {
+    console.log("Subscribe form submitted:", data);
+    // Handle subscribe form submission
+  };
+
+  const onMobileSubscribeSubmit = (data: SubscribeFormData) => {
+    console.log("Mobile subscribe form submitted:", data);
+    // Handle mobile subscribe form submission
+  };
+
   return (
-    <footer className="bg-accent dark:bg-accent text-text">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Company Info */}
-          <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl font-bold text-brand mb-4">Resin Work</h3>
-            <p className="text-text-muted mb-4 max-w-md">
-              Leading provider of high-quality resin solutions for dental,
-              jewellery, and functional applications. We specialize in
-              innovative resin technology and premium filaments.
-            </p>
-            <div className="flex space-x-4">
-              <a
-                href="#"
-                className="text-text-sub hover:text-brand transition-colors"
+    <div className="bg-black text-white text-[14px] relative">
+      {/* Subscribe Section */}
+      <div className="bg-[var(--color-primary)] px-[1.5rem] md:px-[4rem] py-[2rem] md:py-[3rem] grid grid-cols-1 md:grid-cols-2 gap-[2rem]">
+        <div className="hidden md:block">
+          <div className="flex justify-center flex-col mb-4 md:mb-0">
+            <h2 className="text-[28px] md:text-[35px] font-light mb-4">
+              Subscribe for latest updates
+            </h2>
+            <Form {...subscribeForm}>
+              <form
+                onSubmit={subscribeForm.handleSubmit(onSubscribeSubmit)}
+                className="w-full md:w-[80%]"
               >
-                <span className="sr-only">Facebook</span>
-                <svg
-                  className="h-6 w-6"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
+                <FormField
+                  control={subscribeForm.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="email"
+                          placeholder="Enter your Email Address"
+                          className="h-14 py-[0.8rem] px-4 placeholder:opacity-50 rounded border text-[16px] md:text-[20px] border-[#C4C4C4] bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </form>
+            </Form>
+          </div>
+        </div>
+
+        <div className="md:hidden overflow-hidden">
+          <h2 className="text-[60px] opacity-20 font-black">CONNECT!</h2>
+        </div>
+
+        <div>
+          <p className="text-[#FFFFFF]/60 text-[18px] md:text-[22px] mb-2">
+            Please fill out the form and we will get back to you.
+          </p>
+
+          <Form {...contactForm}>
+            <form
+              onSubmit={contactForm.handleSubmit(onContactSubmit)}
+              className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 mt-[1rem] md:mt-[2rem]"
+            >
+              {/* Phone Country Code */}
+              <div className="hidden col-span-12 md:col-span-1">
+                <Label className="block text-[var(--color-primary)] mb-1">
+                  *
+                </Label>
+                <div className="w-full text-[1rem] py-[3px] px-6 rounded border border-[#C4C4C4] bg-transparent text-[#C4C4C4] flex items-center justify-center gap-2">
+                  🇮🇳
+                  <ChevronDown className="w-4 h-4" />
+                </div>
+              </div>
+
+              {/* Phone Number */}
+              <div className="col-span-12 md:col-span-5">
+                <FormField
+                  control={contactForm.control}
+                  name="phoneNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">
+                        Phone Number *
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Enter Phone Number"
+                          className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* Company */}
+              <div className="col-span-12 md:col-span-6">
+                <FormField
+                  control={contactForm.control}
+                  name="company"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">Company *</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Enter Company"
+                          className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* Name */}
+              <div className="col-span-12 md:col-span-6">
+                <FormField
+                  control={contactForm.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">Your Name *</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Enter Your Name"
+                          className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* Email */}
+              <div className="col-span-12 md:col-span-6">
+                <FormField
+                  control={contactForm.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">Your Email *</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="email"
+                          placeholder="Enter Your Email"
+                          className="h-11 py-2 px-3 text-white rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent placeholder-white focus:ring-0 focus:border-white"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* Message */}
+              <div className="col-span-12 md:col-span-10">
+                <FormField
+                  control={contactForm.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">
+                        Your Message *
+                      </FormLabel>
+                      <FormControl>
+                        <Textarea
+                          {...field}
+                          placeholder="Enter Your Message"
+                          rows={3}
+                          className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white resize-none"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* Submit */}
+              <div className="col-span-12 md:col-span-2 flex justify-end md:justify-end items-center">
+                <Button
+                  type="submit"
+                  variant="outline"
+                  className="size-12 text-[#C4C4C4] rounded-full hover:bg-transparent hover:text-white"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </a>
-              <a
-                href="#"
-                className="text-text-sub hover:text-brand transition-colors"
-              >
-                <span className="sr-only">Instagram</span>
-                <svg
-                  className="h-6 w-6"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </a>
-              <a
-                href="#"
-                className="text-text-sub hover:text-brand transition-colors"
-              >
-                <span className="sr-only">Twitter</span>
-                <svg
-                  className="h-6 w-6"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                </svg>
-              </a>
+                  <ArrowRight className="size-8" />
+                </Button>
+              </div>
+            </form>
+          </Form>
+
+          <p className="hidden md:block text-white text-[12px] mt-2">
+            * Fields are mandatory
+          </p>
+        </div>
+      </div>
+
+      {/* Mobile Subscribe Section */}
+      <div className="w-full md:hidden bg-[#FFF3F0] py-[2rem] flex flex-col justify-center items-center">
+        <h2 className="text-[1.5rem] text-[#FF4713] text-center font-bold">
+          Subscribe for latest updates
+        </h2>
+
+        <Form {...mobileSubscribeForm}>
+          <form
+            onSubmit={mobileSubscribeForm.handleSubmit(onMobileSubscribeSubmit)}
+            className="w-full flex flex-col items-center"
+          >
+            <FormField
+              control={mobileSubscribeForm.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="w-[60%] my-[2rem]">
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="email"
+                      placeholder="Enter your Email Address"
+                      className="py-2 px-3 mx-[2rem] rounded border border-[#C4C4C4] placeholder:text-black placeholder:opacity-60 bg-transparent text-black focus:ring-0 focus:border-[#FF4713]"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              className="px-[3rem] bg-[#FF4713] text-[#ffffff] rounded-md py-[0.5rem] md:py-[1rem] my-[0.5rem] md:my-[1rem] hover:bg-[#FF4713]/90"
+            >
+              Submit
+            </Button>
+          </form>
+        </Form>
+      </div>
+
+      {/* Desktop Footer Links Section */}
+      <div className="hidden md:block">
+        <div className="px-[1.5rem] md:px-[6rem] py-[2rem] md:py-[4rem] grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4">
+          {/* Logo and Address */}
+          <div className="col-span-3 order-1">
+            <div className="flex justify-start">
+              <Image
+                src="/logo.svg"
+                alt="Logo"
+                width={200}
+                height={60}
+                className="mb-4 w-[80%] md:w-auto md:ms-[-5%]"
+              />
+            </div>
+            <div className="text-white text-[12px] leading-[1.6]">
+              <strong className="text-[var(--color-primary)]">INDIA</strong>
+              <br />3 AK Chemie Pvt.Ltd.
+              <br />5 / B5 / 1, TSIIC Automotive Park,
+              <br />
+              Kallakal - 502336 Telangana, India.
+              <br />
+              <br />
+              <strong className="text-[var(--color-primary)]">GERMANY</strong>
+              <br />
+              Graichen Produktions - und Vertriebs GmbH
+              <br />
+              Darmstädter Str.127, Bensheim 64625, Germany.
+              <br />
+              Tel.: +49 6251 770788 - 0
             </div>
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+          <div className="col-span-2 order-3 md:order-2">
+            <h3 className="text-[16px] text-[var(--color-primary)] font-medium mb-3">
+              QUICK LINKS
+            </h3>
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/dental"
-                  className="text-text-muted hover:text-brand transition-colors"
+                  href="/"
+                  className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Dental Solutions
+                  Home
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/jewellery"
-                  className="text-text-muted hover:text-brand transition-colors"
+                  href="/dental"
+                  className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Jewellery
+                  Dental
                 </Link>
               </li>
               <li>
                 <Link
                   href="/functionality"
-                  className="text-text-muted hover:text-brand transition-colors"
+                  className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Functional Applications
+                  Functionality
                 </Link>
               </li>
               <li>
                 <Link
                   href="/filaments"
-                  className="text-text-muted hover:text-brand transition-colors"
+                  className="hover:text-[var(--color-primary)] transition-colors"
                 >
                   Filaments
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/diy"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  DIY
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/offer-zone"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Offer Zone
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/featured"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Featured
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Contact Info */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Contact</h4>
-            <ul className="space-y-2 text-text-muted">
-              <li>Email: info@resinwork.com</li>
-              <li>Phone: +1 (555) 123-4567</li>
-              <li>Address: 123 Resin Street</li>
-              <li>City, State 12345</li>
+          {/* Support */}
+          <div className="col-span-2 order-4 md:order-3">
+            <h3 className="text-[16px] text-[var(--color-primary)] font-medium mb-3">
+              SUPPORT
+            </h3>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  href="/order-status"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Order Status
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tds-msds"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  TDS / MSDS
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/media-centre"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Media Centre
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/case-studies"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Case Studies
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/blogs"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Blogs
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/faq"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  FAQ's
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* About Us */}
+          <div className="col-span-2 order-5 md:order-4 mt-6 md:mt-0">
+            <h3 className="text-[16px] text-[var(--color-primary)] font-medium mb-3">
+              ABOUT US
+            </h3>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  href="/who-we-are"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Who We Are
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/solutions"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Solutions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/news-events"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  News & Events
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Us */}
+          <div className="col-span-3 order-2 md:order-5">
+            <h3 className="text-[16px] text-[var(--color-primary)] font-medium mb-3">
+              CONTACT US
+            </h3>
+            <p>
+              1800 - 102 - 0525
+              <br />
+              Mon - Sun - 10 AM - 7 PM
+            </p>
+            <p className="mt-4">
+              Resellers
+              <br />
+              ?? ?? ??
+            </p>
+            <p className="mt-2">!!!!!!</p>
+          </div>
+
+          {/* Bottom Links and Social */}
+          <div className="col-span-12 order-7 flex flex-wrap justify-between items-center mt-10 pt-4">
+            <ul className="flex flex-wrap gap-6">
+              <li>
+                <Link
+                  href="/privacy-policy"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/terms-conditions"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/cookie-policy"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Cookie Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/sitemap"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Sitemap
+                </Link>
+              </li>
+            </ul>
+            <hr className="h-[.5px] text-[#FFFFFF]/30 w-[50%]" />
+            <div className="flex gap-6 text-[24px]">
+              {social.map((item, index) => (
+                <Link
+                  href={item.link}
+                  key={index}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#FF2F00] transition-colors"
+                  aria-label={item.label}
+                >
+                  {item.icon}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Footer */}
+      <div className="md:hidden px-5 py-6">
+        <div className="grid grid-cols-2 gap-4 py-4">
+          <Image src="/logo.svg" alt="Logo" width={120} height={40} />
+          <div className="flex gap-6 text-[24px]">
+            {social.map((item, index) => (
+              <Link
+                href={item.link}
+                key={index}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#FF2F00] transition-colors"
+                aria-label={item.label}
+              >
+                {item.icon}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-[16px] text-[var(--color-primary)] font-medium my-3">
+            QUICK LINKS
+          </h2>
+          <div className="grid grid-cols-2 gap-4">
+            <ul>
+              <li>
+                <Link
+                  href="/"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/dental"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Dental
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/functionality"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Functionality
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/filaments"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Filaments
+                </Link>
+              </li>
+            </ul>
+            <ul>
+              <li>
+                <Link
+                  href="/diy"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  DIY
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/offer-zone"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Offer Zone
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/featured"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Featured
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-8 text-center">
-          <p className="text-text-sub">
-            © 2024 Resin Work. All rights reserved.
-          </p>
+        <div>
+          <h2 className="text-[16px] text-[var(--color-primary)] font-medium my-3">
+            SUPPORT
+          </h2>
+          <div className="grid grid-cols-2 gap-4">
+            <ul>
+              <li>
+                <Link
+                  href="/order-status"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Order Status
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tds-msds"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  TDS / MSDS
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/media-centre"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Media Centre
+                </Link>
+              </li>
+            </ul>
+            <ul>
+              <li>
+                <Link
+                  href="/case-studies"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Case Studies
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/blogs"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Blogs
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/faq"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  FAQ's
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-[16px] text-[var(--color-primary)] font-medium my-3">
+            COMPANY
+          </h2>
+          <div className="grid grid-cols-2 gap-4">
+            <ul>
+              <li>
+                <Link
+                  href="/who-we-are"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Who We Are
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/solutions"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Solutions
+                </Link>
+              </li>
+            </ul>
+            <ul>
+              <li>
+                <Link
+                  href="/news-events"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  News & Events
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/career"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Career
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/resellers"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Resellers
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mb-[1rem]">
+          <h2 className="text-[16px] text-[var(--color-primary)] font-medium my-3">
+            CONTACT
+          </h2>
+          <h3>
+            1800 - 102 - 0525{" "}
+            <span className="text-[12px]">(Mon - Sun - 10 AM - 7 PM)</span>
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-2 mb-[1rem]">
+          <div>
+            <h3 className="text-[16px] text-[var(--color-primary)] font-medium mb-1">
+              Information
+            </h3>
+            <h6>info@resinwork.com</h6>
+          </div>
+          <div>
+            <h3 className="text-[16px] text-[var(--color-primary)] font-medium mb-1">
+              Sales
+            </h3>
+            <h6>sales@resinwork.com</h6>
+          </div>
+        </div>
+
+        <div>
+          <div className="text-white text-[12px] leading-[1.6]">
+            <strong className="text-[var(--color-primary)]">INDIA</strong>
+            <br />3 AK Chemie Pvt.Ltd.
+            <br />5 / B5 / 1, TSIIC Automotive Park,
+            <br />
+            Kallakal - 502336 Telangana, India.
+            <br />
+            <br />
+            <strong className="text-[var(--color-primary)]">GERMANY</strong>
+            <br />
+            Graichen Produktions - und Vertriebs GmbH
+            <br />
+            Darmstädter Str.127, Bensheim 64625, Germany.
+          </div>
+        </div>
+
+        <div className="p-3 pt-10">
+          <ul className="flex justify-between">
+            <li>
+              <Link
+                href="/privacy-policy"
+                className="hover:text-[var(--color-primary)] transition-colors"
+              >
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/terms-conditions"
+                className="hover:text-[var(--color-primary)] transition-colors"
+              >
+                Terms & Conditions
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/cookie-policy"
+                className="hover:text-[var(--color-primary)] transition-colors"
+              >
+                cookie policy
+              </Link>
+            </li>
+          </ul>
         </div>
       </div>
-    </footer>
+    </div>
   );
-}
+};
+
+export default Footer;

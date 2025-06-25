@@ -6,6 +6,7 @@ import Footer from "../components/footer";
 import ThemeToggle from "../components/theme-toggle";
 import ScrollToTop from "../components/scroll-to-top";
 import { ThemeProvider } from "../components/theme-provider";
+import SmoothScroll from "@/components/smooth-scroll";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -32,19 +33,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-primary text-text min-h-screen">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navbar />
-          <main className="pt-16">{children}</main>
-          <Footer />
-          <ThemeToggle />
-          <ScrollToTop />
-        </ThemeProvider>
+      <body className="bg-primary text-text min-h-screen scrollbar-hidden">
+        <SmoothScroll>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Navbar />
+            <main className="pt-16">{children}</main>
+            <Footer />
+            <ThemeToggle />
+            <ScrollToTop />
+          </ThemeProvider>
+        </SmoothScroll>
       </body>
     </html>
   );
