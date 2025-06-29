@@ -58,26 +58,24 @@ const DentalProductSection: React.FC = () => {
   const [userSelectedColor, setUserSelectedColor] = useState<boolean | null>(
     null
   );
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-  useEffect(() => {
-    const hash = window.location.hash;
+  // useEffect(() => {
+  //   const hash = window.location.hash;
 
-    if (hash) {
-      setTimeout(() => {
-        const element = document.querySelector(hash);
-        if (element) {
-          element.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-      }, 100);
-    } else {
-      window.scrollTo(0, 0);
-    }
-  }, [pathname]);
+  //   if (hash) {
+  //     setTimeout(() => {
+  //       const element = document.querySelector(hash);
+  //       if (element) {
+  //         element.scrollIntoView({
+  //           behavior: "smooth",
+  //           block: "start",
+  //         });
+  //       }
+  //     }, 100);
+  //   } else {
+  //     window.scrollTo(0, 0);
+  //   }
+  // }, [pathname]);
 
   const [mainImages, setMainImages] = useState<MainImageState>(() => {
     return productData.reduce((acc, product) => {
