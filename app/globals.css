@@ -5,6 +5,7 @@
 
 /* ======= Tailwind v4 Theme Configuration ======= */
 @theme {
+
   /* Shorter class names - use primary, secondary, etc. directly */
   --color-primary: var(--bg-primary);
   --color-secondary: var(--bg-secondary);
@@ -30,6 +31,10 @@
   /* UI elements */
   --color-border: var(--border-color);
   --color-service: var(--service-box);
+
+  /* Font families */
+  --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
+  --font-satoshi: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
 }
 
 /* ======= Your existing CSS variables ======= */
@@ -239,3 +244,5 @@ body {
     display: none;
   }
 }
+
+

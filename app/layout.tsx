@@ -7,16 +7,7 @@ import ThemeToggle from "../components/theme-toggle";
 import ScrollToTop from "../components/scroll-to-top";
 import { ThemeProvider } from "../components/theme-provider";
 import SmoothScroll from "@/components/smooth-scroll";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+import { satoshi } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "Resin Work - Professional Resin Solutions",
@@ -33,7 +24,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-primary text-text min-h-screen scrollbar-hidden">
+      <body
+        className={`${satoshi.variable} font-satoshi antialiased bg-primary text-text min-h-screen scrollbar-hidden`}
+      >
         <SmoothScroll>
           <ThemeProvider
             attribute="class"

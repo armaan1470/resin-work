@@ -7,6 +7,13 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: "class",
+  theme: {
+    extend: {
+      fontFamily: {
+        satoshi: ['var(--font-satoshi)', 'sans-serif'],
+      },
+    },
+  },
 };
 
 export default config;
