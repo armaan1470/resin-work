@@ -157,17 +157,17 @@ const Footer: React.FC = () => {
         </div>
 
         <div>
-          <p className="text-[#FFFFFF]/60 text-[18px] md:text-[22px] mb-2">
+          <p className="text-[#FFFFFF]/60 text-[18px] md:text-[22px] mb-4">
             Please fill out the form and we will get back to you.
           </p>
 
           <Form {...contactForm}>
             <form
               onSubmit={contactForm.handleSubmit(onContactSubmit)}
-              className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 mt-[1rem] md:mt-[2rem]"
+              className="flex flex-col gap-8"
             >
               {/* Phone Country Code */}
-              <div className="hidden col-span-12 md:col-span-1">
+              {/* <div className="hidden col-span-12 md:col-span-1">
                 <Label className="block text-[var(--color-primary)] mb-1">
                   *
                 </Label>
@@ -175,128 +175,133 @@ const Footer: React.FC = () => {
                   🇮🇳
                   <ChevronDown className="w-4 h-4" />
                 </div>
+              </div> */}
+
+              <div className="flex gap-10">
+                {/* Phone Number */}
+                <div className="flex-1">
+                  <FormField
+                    control={contactForm.control}
+                    name="phoneNumber"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-white">
+                          Phone Number *
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                {/* Company */}
+                <div className="flex-1">
+                  <FormField
+                    control={contactForm.control}
+                    name="company"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-white">Company *</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
 
-              {/* Phone Number */}
-              <div className="col-span-12 md:col-span-5">
-                <FormField
-                  control={contactForm.control}
-                  name="phoneNumber"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">
-                        Phone Number *
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="Enter Phone Number"
-                          className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <div className="flex gap-10">
+                {/* Name */}
+                <div className="flex-1">
+                  <FormField
+                    control={contactForm.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-white">
+                          Your Name *
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                {/* Email */}
+                <div className="flex-1">
+                  <FormField
+                    control={contactForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-white">
+                          Your Email *
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="email"
+                            className="h-11 py-2 px-3 text-white rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent placeholder-white focus:ring-0 focus:border-white"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
 
-              {/* Company */}
-              <div className="col-span-12 md:col-span-6">
-                <FormField
-                  control={contactForm.control}
-                  name="company"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">Company *</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="Enter Company"
-                          className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+              <div className="flex gap-10">
+                {/* Message */}
+                <div className="flex-1">
+                  <FormField
+                    control={contactForm.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-white">
+                          Your Message *
+                        </FormLabel>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            rows={3}
+                            className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white resize-none"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
-              {/* Name */}
-              <div className="col-span-12 md:col-span-6">
-                <FormField
-                  control={contactForm.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">Your Name *</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="Enter Your Name"
-                          className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Email */}
-              <div className="col-span-12 md:col-span-6">
-                <FormField
-                  control={contactForm.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">Your Email *</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="email"
-                          placeholder="Enter Your Email"
-                          className="h-11 py-2 px-3 text-white rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent placeholder-white focus:ring-0 focus:border-white"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Message */}
-              <div className="col-span-12 md:col-span-10">
-                <FormField
-                  control={contactForm.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">
-                        Your Message *
-                      </FormLabel>
-                      <FormControl>
-                        <Textarea
-                          {...field}
-                          placeholder="Enter Your Message"
-                          rows={3}
-                          className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white resize-none"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Submit */}
-              <div className="col-span-12 md:col-span-2 flex justify-end md:justify-end items-center">
-                <Button
-                  type="submit"
-                  variant="outline"
-                  className="size-12 text-[#C4C4C4] rounded-full hover:bg-transparent hover:text-white"
-                >
-                  <ArrowRight className="size-8" />
-                </Button>
+                {/* Submit */}
+                <div className="flex items-center justify-center mt-5">
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    className="size-12 text-[#C4C4C4] rounded-full hover:bg-transparent hover:text-white"
+                  >
+                    <ArrowRight className="size-8" />
+                  </Button>
+                </div>
               </div>
             </form>
           </Form>
