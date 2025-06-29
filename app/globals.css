@@ -190,6 +190,7 @@
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
+
 }
 
 @theme inline {

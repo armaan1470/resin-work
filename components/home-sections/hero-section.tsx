@@ -61,7 +61,7 @@ const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="relative -top-24 bg-primary min-h-screen w-full overflow-hidden">
+    <section className="relative flex justify-center -top-24 bg-primary min-h-screen w-full overflow-hidden">
       <Swiper
         modules={[Autoplay, Pagination, EffectFade]}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
@@ -70,7 +70,7 @@ const HeroSection = () => {
         effect="fade"
         speed={1000}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-        className="relative w-[92vw] h-[95vh] flex justify-center rounded-b-4xl"
+        className="relative w-[96vw] lg:w[92vw] h-[95vh] flex justify-center rounded-b-4xl"
       >
         {slides.map((slide, idx) => (
           <SwiperSlide key={idx}>
@@ -79,7 +79,7 @@ const HeroSection = () => {
                 src={slide.image}
                 alt={slide.heading}
                 fill
-                className="object-cover z-0 transition-opacity duration-1000 ease-in-out"
+                className="object-cover z-0 transition-opacity duration-1000 ease-in-out rounded-b-4xl"
                 priority
               />
 
@@ -92,15 +92,15 @@ const HeroSection = () => {
                     animate="animate"
                     exit="exit"
                     variants={contentVariants}
-                    className="absolute left-24 bottom-1/5 max-w-[30%] z-10"
+                    className="absolute left-6 bottom-12 md:left-16 lg:left-24 md:bottom-1/5 max-w-[80%] lg:max-w-[40%] xl:max-w-[30%] z-10"
                   >
                     <h2 className="text-4xl font-bold mb-4 text-wrap font-family-satoshi">
                       {slide.heading}
                     </h2>
-                    <p className="mb-6">{slide.text}</p>
+                    <p className="mb-8">{slide.text}</p>
                     <Button
                       size="lg"
-                      className="cursor-pointer text-xs bg-brand text-white rounded-md border-1 border-brand transition-colors hover:bg-transparent hover:border-1 hover:border-white"
+                      className="cursor-pointer px-8 py-6 text-base bg-brand text-white rounded-md border-1 border-brand transition-colors hover:bg-transparent hover:border-1 hover:border-white"
                     >
                       {slide.buttonText}
                     </Button>

@@ -19,7 +19,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={handleToggle}
-      className="z-[10] fixed bottom-4 left-4 size-12 rounded-full bg-[var(--toggle-bg-color)] backdrop-blur-md shadow-lg flex items-center justify-center transition-all duration-300 group"
+      className="z-50 fixed bottom-4 left-4 size-12 rounded-full bg-[var(--toggle-bg-color)] backdrop-blur-md shadow-lg flex items-center justify-center transition-all duration-300 group"
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
     >
       <div className="relative">
