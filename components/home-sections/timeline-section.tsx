@@ -107,7 +107,7 @@ const TimelineSection = () => {
       title: "In-house R&D",
       heading: "Core Capabilities",
       content:
-        "Our in-house R&D facility located in Germany & India is a hub of innovation...",
+        "Our in-house R&D facility located in Germany & India is a hub of innovation where cutting-edge research meets practical application. We focus on developing breakthrough technologies and solutions that address real-world challenges across multiple industries.",
       video: "/video/video1.mp4",
       isYoutube: false,
     },
@@ -116,7 +116,7 @@ const TimelineSection = () => {
       title: "Manufacturing",
       heading: "Manufacturing Excellence",
       content:
-        "With state-of-the-art manufacturing facilities, we deliver consistent...",
+        "With state-of-the-art manufacturing facilities, we deliver consistent quality and reliability across all our products. Our manufacturing processes are optimized for efficiency, sustainability, and scalability while maintaining the highest industry standards.",
       video: "https://youtu.be/swD7peONcaE?si=an8lkJW_0q2KROLi",
       display_video: "/video/video2.mp4",
       isYoutube: true,
@@ -126,7 +126,7 @@ const TimelineSection = () => {
       title: "CDMO",
       heading: "CDMO Services",
       content:
-        "With state-of-the-art manufacturing facilities, we deliver consistent...",
+        "Our Contract Development and Manufacturing Organization services provide comprehensive solutions from concept to commercialization. We partner with clients to develop, manufacture, and scale their products efficiently while ensuring quality and compliance at every step.",
       video: "https://youtu.be/DStoMEQx8DY?si=u0Ylj2T6XlRbxxOr",
       display_video: "/video/video3.mp4",
       isYoutube: true,
@@ -136,7 +136,7 @@ const TimelineSection = () => {
       title: "Technology",
       heading: "Technology Innovation",
       content:
-        "With state-of-the-art manufacturing facilities, we deliver consistent...",
+        "We leverage cutting-edge technology including advanced analytics, artificial intelligence, and automation systems to drive innovation and create competitive advantages. Our technology stack enables new possibilities and delivers future-ready solutions.",
       video: "https://youtu.be/ZLx9TeeG0bc?si=RWvS0yqlTVLPdU6p",
       display_video: "/video/video4.mp4",
       isYoutube: true,
@@ -173,7 +173,7 @@ const TimelineSection = () => {
 
   // Handle content animations when tab changes with staggered effect
   useEffect(() => {
-    // Animate out current content
+    // Animate out current content together
     gsap.to(
       [
         headingRefs.current[activeTab].current,
@@ -184,11 +184,13 @@ const TimelineSection = () => {
         opacity: 0,
         duration: 0.3,
         ease: "power2.in",
-        stagger: 0.1,
         onComplete: () => {
-          // Animate in heading first
+          // Animate in heading and content together
           gsap.fromTo(
-            headingRefs.current[activeTab].current,
+            [
+              headingRefs.current[activeTab].current,
+              contentRefs.current[activeTab].current,
+            ],
             {
               x: -100,
               opacity: 0,
@@ -198,22 +200,6 @@ const TimelineSection = () => {
               opacity: 1,
               duration: 0.5,
               ease: "power2.out",
-            }
-          );
-
-          // Then animate in content with delay
-          gsap.fromTo(
-            contentRefs.current[activeTab].current,
-            {
-              x: -100,
-              opacity: 0,
-            },
-            {
-              x: 0,
-              opacity: 1,
-              duration: 0.5,
-              ease: "power2.out",
-              delay: 0.2,
             }
           );
         },
@@ -459,7 +445,7 @@ const TimelineSection = () => {
             </div>
             <div
               id="text-container"
-              className="absolute left-[5%] top-[34%] w-1/2 overflow-hidden pr-[140px] z-20"
+              className="absolute left-[5%] top-[34%] w-[48%] max-w-[550px] z-20"
               ref={textContainerRef}
             >
               {tabs.map((tab, index) => (
@@ -476,14 +462,26 @@ const TimelineSection = () => {
                   <h1
                     ref={headingRefs.current[index]}
                     id="heading"
-                    className="text-[30px] font-bold mb-4 pr-12"
+                    className="text-[30px] font-bold mb-4 leading-tight"
+                    style={{
+                      whiteSpace: "normal",
+                      overflow: "visible",
+                      textOverflow: "clip",
+                    }}
                   >
                     {tab.heading}
                   </h1>
                   <p
                     ref={contentRefs.current[index]}
                     id="paragraph"
-                    className="text-base leading-[1.6] pr-32 opacity-40"
+                    className="text-base leading-[1.6] opacity-80 break-words"
+                    style={{
+                      whiteSpace: "normal",
+                      overflow: "visible",
+                      textOverflow: "clip",
+                      wordWrap: "break-word",
+                      hyphens: "auto",
+                    }}
                   >
                     {tab.content}
                   </p>
@@ -493,21 +491,29 @@ const TimelineSection = () => {
           </div>
           <div
             id="scroll-indicator"
-            className="absolute top-[80vh] text-white text-sm text-center w-[88%] left-1/2 transform -translate-x-1/2 opacity-100"
+            className="absolute top-[80vh] text-white text-sm text-center w-[88%] left-1/2 transform -translate-x-1/2 opacity-100 z-50"
             ref={tabsRef}
           >
-            <div className="flex justify-between mb-5">
+            <div className="flex justify-between mb-5 relative z-50">
               {tabs.map((tab, index) => (
-                <a
+                <button
                   key={tab.id}
                   className={cn(
-                    "text-sm text-[#878787] font-medium py-2.5 inline-block cursor-pointer transition-all duration-200 ease-in-out no-underline rounded first:relative last:relative",
-                    index === activeTab && "text-brand font-bold text-base"
+                    "text-sm text-[#878787] font-medium px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out rounded-md  relative z-50 pointer-events-auto bg-transparent",
+                    index === activeTab &&
+                      "text-brand font-bold text-base bg-white/5"
                   )}
                   onClick={(e) => handleTabClick(e, tab.id, index)}
+                  style={{
+                    pointerEvents: "auto",
+                    minHeight: "44px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 >
                   {tab.title}
-                </a>
+                </button>
               ))}
             </div>
             <div
