@@ -81,6 +81,7 @@ const HeroSection = () => {
                 fill
                 className="object-cover z-0 transition-opacity duration-1000 ease-in-out rounded-b-4xl"
                 priority
+                quality={100}
               />
 
               {/* Animate text only for active slide */}
