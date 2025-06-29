@@ -10,74 +10,56 @@ import GradientTextSection from "./gradient-text-section";
 gsap.registerPlugin(ScrollTrigger);
 
 const CombinedSection = () => {
-  const videoRef = useRef(null);
-  const containerRef = useRef(null);
-  const tweenRef = useRef(null); // track gsap tween
+  const backgroundImageRef = useRef();
+  const containerRef = useRef();
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video || typeof window === "undefined") return;
-
-    const handleMetadata = () => {
-      video.pause();
-      video.currentTime = 0;
-
-      const duration = video.duration;
-
-      let currentTime = 0;
-      let targetTime = 0;
-
-      const updateVideo = (self) => {
-        targetTime = self.progress * duration;
-
-        if (tweenRef.current) tweenRef.current.kill(); // kill previous tween
-
-        tweenRef.current = gsap.to(video, {
-          currentTime: targetTime,
-          duration: 0.3,
-          ease: "power2.out",
-          overwrite: true,
-        });
-      };
-
-      const scrollTrigger = ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "+=1500",
-        scrub: 1,
-        onUpdate: updateVideo,
-        markers: false,
+    if (typeof window !== "undefined") {
+      // Set initial state with will-change for better performance
+      gsap.set(backgroundImageRef.current, {
+        yPercent: 0,
+        willChange: "transform",
       });
 
+      const scrollTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 15%",
+          end: "bottom 70%",
+          scrub: 0.5, // Reduced scrub value for smoother animation
+          markers: false,
+          anticipatePin: 1, // Add anticipation to prevent jerk
+          fastScrollEnd: true, // Optimize for fast scrolling
+        },
+      });
+
+      scrollTimeline.to(
+        backgroundImageRef.current,
+        {
+          yPercent: -190,
+          ease: "power1.inOut", // Smoother easing
+          duration: 1,
+        },
+        0
+      );
+
       return () => {
-        scrollTrigger.kill();
-        gsap.killTweensOf(video);
+        scrollTimeline.kill();
         ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       };
-    };
-
-    if (video.readyState >= 1) {
-      handleMetadata();
-    } else {
-      video.addEventListener("loadedmetadata", handleMetadata);
     }
-
-    return () => {
-      video.removeEventListener("loadedmetadata", handleMetadata);
-    };
   }, []);
 
   return (
     <div className="relative overflow-hidden" ref={containerRef}>
-      {/* Scroll-Scrubbed Background Video */}
-      <div className="absolute inset-0 w-full h-full z-1 pointer-events-none will-change-transform">
-        <video
-          ref={videoRef}
-          src="/video/gradient-video_smooth.mp4"
-          className="object-cover w-full h-full will-change-transform"
-          muted
-          playsInline
-          preload="auto"
+      <div
+        ref={backgroundImageRef}
+        className="md:block hidden absolute inset-0 top-0 left-0 w-screen h-full z-[1] pointer-events-none"
+      >
+        <img
+          src="/gradients/bg-gradient.svg"
+          alt="gradient background"
+          className="object-cover w-full"
         />
       </div>
 
