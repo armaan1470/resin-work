@@ -1,6 +1,13 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useLayoutEffect,
+  useCallback,
+  useMemo,
+} from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Play } from "lucide-react";
@@ -39,8 +46,8 @@ const initScrollAnimations = ({
     stagger: 0,
     scrollTrigger: {
       trigger: scrollContainer,
-      start: "top -120%",
-      end: "+=180px",
+      start: "top -60%",
+      end: "top -70%",
       scrub: true,
     },
   });
@@ -102,49 +109,53 @@ const TimelineSection = () => {
   const [currentYoutubeUrl, setCurrentYoutubeUrl] = useState("");
   const [hasScrolled, setHasScrolled] = useState(false);
 
-  const tabs: Tab[] = [
-    {
-      id: "tab1",
-      title: "Research and Development",
-      heading: "In-House R&D",
-      content:
-        "Our in-house R&D facility located in Germany & India is a hub of innovation, where advanced materials science meets industry-driven solutions to create groundbreaking 3D printing resins. By pushing the boundaries of performance and customization, we empower industries to achieve unprecedented results in additive manufacturing.",
-      video: "/video/video1.mp4",
-      isYoutube: false,
-    },
-    {
-      id: "tab2",
-      title: "Manufacturing",
-      heading: "In-House Manufacturing ",
-      content:
-        "With state-of-the-art manufacturing facilities, we deliver consistent, high-quality 3D printing resins at scale. Our production processes combine precision engineering with rigorous quality control, ensuring each batch meets the exacting standards demanded by industrial applications across diverse sectors.",
-      video: "https://youtu.be/swD7peONcaE?si=an8lkJW_0q2KROLi",
-      display_video: "/video/video2.mp4",
-      isYoutube: true,
-    },
-    {
-      id: "tab3",
-      title: "CDMO",
-      heading: "Contract Development and Manufacturing Organization",
-      content:
-        "Contract Development and Manufacturing Organization. With state-of-the-art manufacturing facilities, we deliver consistent, high-quality 3D printing resins at scale. Our production processes combine precision engineering with rigorous quality control, ensuring each batch meets the exacting standards demanded by industrial applications across diverse sectors.",
-      video: "https://youtu.be/DStoMEQx8DY?si=u0Ylj2T6XlRbxxOr",
-      display_video: "/video/video3.mp4",
-      isYoutube: true,
-    },
-    {
-      id: "tab4",
-      title: "Technology",
-      heading: "Technology Innovation",
-      content:
-        "With state-of-the-art manufacturing facilities, we deliver consistent, high-quality 3D printing resins at scale. Our production processes combine precision engineering with rigorous quality control, ensuring each batch meets the exacting standards demanded by industrial applications across diverse sectors.",
-      video: "https://youtu.be/ZLx9TeeG0bc?si=RWvS0yqlTVLPdU6p",
-      display_video: "/video/video4.mp4",
-      isYoutube: true,
-    },
-  ];
+  // Memoize tabs array to prevent recreating on every render
+  const tabs: Tab[] = useMemo(
+    () => [
+      {
+        id: "tab1",
+        title: "Research and Development",
+        heading: "In-House R&D",
+        content:
+          "Our in-house R&D facility located in Germany & India is a hub of innovation, where advanced materials science meets industry-driven solutions to create groundbreaking 3D printing resins. By pushing the boundaries of performance and customization, we empower industries to achieve unprecedented results in additive manufacturing.",
+        video: "/video/video1.mp4",
+        isYoutube: false,
+      },
+      {
+        id: "tab2",
+        title: "Manufacturing",
+        heading: "In-House Manufacturing ",
+        content:
+          "With state-of-the-art manufacturing facilities, we deliver consistent, high-quality 3D printing resins at scale. Our production processes combine precision engineering with rigorous quality control, ensuring each batch meets the exacting standards demanded by industrial applications across diverse sectors.",
+        video: "https://youtu.be/swD7peONcaE?si=an8lkJW_0q2KROLi",
+        display_video: "/video/video2.mp4",
+        isYoutube: true,
+      },
+      {
+        id: "tab3",
+        title: "CDMO",
+        heading: "Contract Development and Manufacturing Organization",
+        content:
+          "Contract Development and Manufacturing Organization. With state-of-the-art manufacturing facilities, we deliver consistent, high-quality 3D printing resins at scale. Our production processes combine precision engineering with rigorous quality control, ensuring each batch meets the exacting standards demanded by industrial applications across diverse sectors.",
+        video: "https://youtu.be/DStoMEQx8DY?si=u0Ylj2T6XlRbxxOr",
+        display_video: "/video/video3.mp4",
+        isYoutube: true,
+      },
+      {
+        id: "tab4",
+        title: "Technology",
+        heading: "Technology Innovation",
+        content:
+          "With state-of-the-art manufacturing facilities, we deliver consistent, high-quality 3D printing resins at scale. Our production processes combine precision engineering with rigorous quality control, ensuring each batch meets the exacting standards demanded by industrial applications across diverse sectors.",
+        video: "https://youtu.be/ZLx9TeeG0bc?si=RWvS0yqlTVLPdU6p",
+        display_video: "/video/video4.mp4",
+        isYoutube: true,
+      },
+    ],
+    []
+  );
 
-  // Create separate refs for headings and content
+  // Create separate refs for headings and content - memoized
   const headingRefs = useRef(
     tabs.map(() => React.createRef<HTMLHeadingElement>())
   );
@@ -172,88 +183,102 @@ const TimelineSection = () => {
     );
   }, []);
 
-  // Handle content animations when tab changes
+  // Handle content animations when tab changes - optimized with useCallback
+  const animateTabContent = useCallback(
+    (tabIndex: number) => {
+      // Animate in heading and content together
+      gsap.fromTo(
+        [
+          headingRefs.current[tabIndex].current,
+          contentRefs.current[tabIndex].current,
+        ],
+        {
+          x: -100,
+          opacity: 0,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        }
+      );
+
+      // Hide all other contents
+      tabs.forEach((_, index) => {
+        if (index !== tabIndex) {
+          gsap.set(
+            [
+              headingRefs.current[index].current,
+              contentRefs.current[index].current,
+            ],
+            {
+              opacity: 0,
+              x: 100,
+            }
+          );
+        }
+      });
+    },
+    [tabs]
+  );
+
   useEffect(() => {
-    // Animate in heading and content together
-    gsap.fromTo(
-      [
-        headingRefs.current[activeTab].current,
-        contentRefs.current[activeTab].current,
-      ],
-      {
-        x: -100,
-        opacity: 0,
-      },
-      {
-        x: 0,
-        opacity: 1,
-        duration: 0.5,
-        ease: "power2.out",
-      }
-    );
+    animateTabContent(activeTab);
+  }, [activeTab, animateTabContent]);
 
-    // Hide all other contents
-    tabs.forEach((_, index) => {
-      if (index !== activeTab) {
-        gsap.set(
-          [
-            headingRefs.current[index].current,
-            contentRefs.current[index].current,
-          ],
-          {
-            opacity: 0,
-            x: 100,
-          }
-        );
-      }
-    });
-  }, [activeTab]);
-
-  const openModal = (url: string) => {
+  // Memoized modal functions
+  const openModal = useCallback((url: string) => {
     setCurrentYoutubeUrl(url);
     setModalIsOpen(true);
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setModalIsOpen(false);
-  };
+  }, []);
 
-  const handleTabClick = (
-    e: React.MouseEvent,
-    tabId: string,
-    index: number
-  ) => {
-    e.preventDefault();
-    setActiveTab(index);
+  const handleTabClick = useCallback(
+    (e: React.MouseEvent, tabId: string, index: number) => {
+      e.preventDefault();
+      setActiveTab(index);
 
-    // Handle video change immediately
-    const currentTab = tabs[index];
-    if (!currentTab.isYoutube && videoRef.current) {
-      videoRef.current.src = currentTab.video;
-      videoRef.current.load();
-      videoRef.current
-        .play()
-        .catch((e) => console.log("Video play failed:", e));
-    }
-  };
+      // Handle video change immediately
+      const currentTab = tabs[index];
+      if (!currentTab.isYoutube && videoRef.current) {
+        videoRef.current.src = currentTab.video;
+        videoRef.current.load();
+        videoRef.current
+          .play()
+          .catch((e) => console.log("Video play failed:", e));
+      }
+    },
+    [tabs]
+  );
 
-  // Handle scroll events to update active tab
-  useEffect(() => {
+  // Throttled scroll handler for better performance - FIXED with higher threshold
+  const throttledScrollHandler = useCallback(() => {
+    let ticking = false;
+
     const handleScroll = () => {
       if (!hasScrolled) setHasScrolled(true);
 
       const scrollPosition = window.scrollY;
       const viewportHeight = window.innerHeight;
 
-      // Calculate active tab based on scroll position
+      // FIXED: Increased threshold from 40vh to 100vh per tab transition
+      // This makes it much harder to accidentally skip tabs during scrolling
+      const SCROLL_THRESHOLD_PER_TAB = 100; // vh units
+      const INITIAL_THRESHOLD = 300; // vh units for first tab
+
+      // Calculate active tab based on scroll position with higher threshold
       let newActiveTab: number;
-      if (scrollPosition < (300 * viewportHeight) / 100) {
+      if (scrollPosition < (INITIAL_THRESHOLD * viewportHeight) / 100) {
         newActiveTab = 0;
       } else {
         newActiveTab = Math.min(
           Math.floor(
-            (scrollPosition - (300 * viewportHeight) / 100) /
-              ((40 * viewportHeight) / 100) +
+            (scrollPosition - (INITIAL_THRESHOLD * viewportHeight) / 100) /
+              ((SCROLL_THRESHOLD_PER_TAB * viewportHeight) / 100) +
               1
           ),
           tabs.length - 1
@@ -263,25 +288,109 @@ const TimelineSection = () => {
       if (newActiveTab !== activeTab) {
         setActiveTab(newActiveTab);
       }
+      ticking = false;
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      if (!ticking) {
+        requestAnimationFrame(handleScroll);
+        ticking = true;
+      }
+    };
   }, [activeTab, hasScrolled, tabs.length]);
 
-  // Handle video changes when activeTab changes
+  // Handle scroll events to update active tab - optimized
+  useEffect(() => {
+    const scrollHandler = throttledScrollHandler();
+    window.addEventListener("scroll", scrollHandler, { passive: true });
+    return () => window.removeEventListener("scroll", scrollHandler);
+  }, [throttledScrollHandler]);
+
+  // Handle video changes when activeTab changes - optimized
   useEffect(() => {
     const currentTab = tabs[activeTab];
     if (!currentTab.isYoutube && videoRef.current) {
-      videoRef.current.src = currentTab.video;
-      videoRef.current.load();
+      const video = videoRef.current;
+
+      // Only change source if it's different
+      if (video.src !== currentTab.video) {
+        video.src = currentTab.video;
+        video.load();
+      }
+
       if (hasScrolled) {
-        videoRef.current
-          .play()
-          .catch((e) => console.log("Video play failed:", e));
+        video.play().catch((e) => console.log("Video play failed:", e));
       }
     }
-  }, [activeTab, hasScrolled]);
+  }, [activeTab, hasScrolled, tabs]);
+
+  // Function to update progress bar based on active tab - optimized with useCallback
+  const updateProgressBar = useCallback(
+    (activeIndex: number) => {
+      const firstButton = buttonRefs.current[0];
+      const activeButton = buttonRefs.current[activeIndex];
+      const lastButton = buttonRefs.current[tabs.length - 1];
+      const progressBar = progressBarRef.current;
+      const progressFill = progressFillRef.current;
+      const progressDot = progressDotRef.current;
+
+      if (
+        firstButton &&
+        activeButton &&
+        lastButton &&
+        progressBar &&
+        progressFill &&
+        progressDot
+      ) {
+        const progressBarWidth = progressBar.offsetWidth;
+
+        // --- Calculate Fill ---
+        const fillStartX = firstButton.offsetLeft;
+        let fillEndX: number;
+
+        if (activeIndex === 0) {
+          fillEndX = firstButton.offsetLeft;
+        } else if (activeIndex === tabs.length - 1) {
+          fillEndX = lastButton.offsetLeft + lastButton.offsetWidth;
+        } else {
+          fillEndX = activeButton.offsetLeft + activeButton.offsetWidth / 2;
+        }
+
+        const fillWidth = fillEndX - fillStartX;
+        const fillScale =
+          progressBarWidth > 0 ? fillWidth / progressBarWidth : 0;
+
+        gsap.to(progressFill, {
+          x: fillStartX,
+          scaleX: fillScale >= 0 ? fillScale : 0,
+          transformOrigin: "left center",
+          duration: 0.5,
+          ease: "power2.out",
+        });
+
+        // --- Calculate Dot ---
+        let dotOffset: number;
+        const dotCenter = progressDot.offsetWidth / 2;
+
+        if (activeIndex === 0) {
+          dotOffset = firstButton.offsetLeft - dotCenter;
+        } else if (activeIndex === tabs.length - 1) {
+          dotOffset =
+            lastButton.offsetLeft + lastButton.offsetWidth - dotCenter;
+        } else {
+          dotOffset =
+            activeButton.offsetLeft + activeButton.offsetWidth / 2 - dotCenter;
+        }
+
+        gsap.to(progressDot, {
+          x: dotOffset,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      }
+    },
+    [tabs.length]
+  );
 
   // Handle progress bar updates
   useLayoutEffect(() => {
@@ -297,70 +406,7 @@ const TimelineSection = () => {
     };
   }, [activeTab]);
 
-  // Function to update progress bar based on active tab
-  const updateProgressBar = (activeIndex: number) => {
-    const firstButton = buttonRefs.current[0];
-    const activeButton = buttonRefs.current[activeIndex];
-    const lastButton = buttonRefs.current[tabs.length - 1];
-    const progressBar = progressBarRef.current;
-    const progressFill = progressFillRef.current;
-    const progressDot = progressDotRef.current;
-
-    if (
-      firstButton &&
-      activeButton &&
-      lastButton &&
-      progressBar &&
-      progressFill &&
-      progressDot
-    ) {
-      const progressBarWidth = progressBar.offsetWidth;
-
-      // --- Calculate Fill ---
-      const fillStartX = firstButton.offsetLeft;
-      let fillEndX: number;
-
-      if (activeIndex === 0) {
-        fillEndX = firstButton.offsetLeft;
-      } else if (activeIndex === tabs.length - 1) {
-        fillEndX = lastButton.offsetLeft + lastButton.offsetWidth;
-      } else {
-        fillEndX = activeButton.offsetLeft + activeButton.offsetWidth / 2;
-      }
-
-      const fillWidth = fillEndX - fillStartX;
-      const fillScale = progressBarWidth > 0 ? fillWidth / progressBarWidth : 0;
-
-      gsap.to(progressFill, {
-        x: fillStartX,
-        scaleX: fillScale >= 0 ? fillScale : 0,
-        transformOrigin: "left center",
-        duration: 0.5,
-        ease: "power2.out",
-      });
-
-      // --- Calculate Dot ---
-      let dotOffset: number;
-      const dotCenter = progressDot.offsetWidth / 2;
-
-      if (activeIndex === 0) {
-        dotOffset = firstButton.offsetLeft - dotCenter;
-      } else if (activeIndex === tabs.length - 1) {
-        dotOffset = lastButton.offsetLeft + lastButton.offsetWidth - dotCenter;
-      } else {
-        dotOffset =
-          activeButton.offsetLeft + activeButton.offsetWidth / 2 - dotCenter;
-      }
-
-      gsap.to(progressDot, {
-        x: dotOffset,
-        duration: 0.5,
-        ease: "power2.out",
-      });
-    }
-  };
-
-  // Initialize component
+  // Initialize component - optimized
   useEffect(() => {
     // Set initial content states - show first tab immediately
     tabs.forEach((_, index) => {
@@ -389,10 +435,10 @@ const TimelineSection = () => {
       }
     });
 
-    // Set scroll container height
+    // FIXED: Updated scroll container height calculation to match new threshold
     if (scrollContainerRef.current) {
       const firstTabHeight = 300; // 300vh for first tab
-      const otherTabsHeight = 40 * (tabs.length - 1); // 40vh for others
+      const otherTabsHeight = 100 * (tabs.length - 1); // 100vh for others (increased from 40vh)
       const totalHeight = firstTabHeight + otherTabsHeight;
       scrollContainerRef.current.style.height = `${totalHeight}vh`;
     }
@@ -405,24 +451,31 @@ const TimelineSection = () => {
 
     // Load first video
     if (videoRef.current && !tabs[0].isYoutube) {
-      videoRef.current.src = tabs[0].video;
-      videoRef.current.load();
-      videoRef.current.muted = true;
+      const video = videoRef.current;
+      video.src = tabs[0].video;
+      video.load();
+      video.muted = true;
     }
 
     return () => {
       cleanupScrollAnimations();
       animationCleanup();
     };
-  }, []);
+  }, [tabs]);
 
-  // Function to extract YouTube ID from URL
-  const getYouTubeId = (url: string) => {
+  // Function to extract YouTube ID from URL - memoized
+  const getYouTubeId = useCallback((url: string) => {
     const regExp =
       /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
     return match && match[2].length === 11 ? match[2] : null;
-  };
+  }, []);
+
+  // Memoize YouTube ID to prevent recalculation
+  const youtubeId = useMemo(
+    () => getYouTubeId(currentYoutubeUrl),
+    [currentYoutubeUrl, getYouTubeId]
+  );
 
   return (
     <div className="relative z-20">
@@ -441,6 +494,7 @@ const TimelineSection = () => {
                     autoPlay
                     loop
                     playsInline
+                    preload="metadata"
                     className="absolute top-0 left-0 w-full h-full object-cover will-change-transform"
                   >
                     <source
@@ -465,6 +519,7 @@ const TimelineSection = () => {
                   autoPlay
                   loop
                   playsInline
+                  preload="metadata"
                   className="w-full h-full object-cover will-change-transform"
                 >
                   <source src={tabs[activeTab].video} type="video/mp4" />
@@ -571,9 +626,7 @@ const TimelineSection = () => {
             <iframe
               width="100%"
               height="100%"
-              src={`https://www.youtube.com/embed/${getYouTubeId(
-                currentYoutubeUrl
-              )}?autoplay=1&mute=0`}
+              src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=0`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               title="YouTube Video"
