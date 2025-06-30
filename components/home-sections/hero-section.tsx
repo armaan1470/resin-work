@@ -70,7 +70,7 @@ const HeroSection = () => {
         effect="fade"
         speed={1000}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-        className="relative w-[96vw] lg:w[92vw] h-[95vh] flex justify-center rounded-b-4xl"
+        className="relative w-[96vw] lg:w[92vw] h-[80vh] lg:[95vh] flex justify-center rounded-b-4xl"
       >
         {slides.map((slide, idx) => (
           <SwiperSlide key={idx}>
