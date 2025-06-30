@@ -6,6 +6,7 @@ import CombinedSection from "@/components/home-sections/combined-section";
 import HeroSection from "@/components/home-sections/hero-section";
 import SolutionsSection from "@/components/home-sections/solutions-section";
 import TimelineSection from "@/components/home-sections/timeline-section";
+import TimelineSectionSample from "@/components/home-sections/timeline-section-sample";
 import VideoTabSection from "@/components/home-sections/video-tab-section";
 import Link from "next/link";
 
@@ -44,6 +45,8 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <HeroSection />
+
+      {/* <TimelineSectionSample /> */}
 
       <TimelineSection />
 

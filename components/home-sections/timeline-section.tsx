@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Play } from "lucide-react";
@@ -36,7 +36,7 @@ const initScrollAnimations = ({
   // Content animations
   gsap.to("#heading, #paragraph", {
     x: 0,
-    stagger: 0.1,
+    stagger: 0,
     scrollTrigger: {
       trigger: scrollContainer,
       start: "top -120%",
@@ -95,6 +95,7 @@ const TimelineSection = () => {
   const progressFillRef = useRef<HTMLDivElement>(null);
   const progressDotRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const [activeTab, setActiveTab] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -104,19 +105,19 @@ const TimelineSection = () => {
   const tabs: Tab[] = [
     {
       id: "tab1",
-      title: "In-house R&D",
-      heading: "Core Capabilities",
+      title: "Research and Development",
+      heading: "In-House R&D",
       content:
-        "Our in-house R&D facility located in Germany & India is a hub of innovation where cutting-edge research meets practical application. We focus on developing breakthrough technologies and solutions that address real-world challenges across multiple industries.",
+        "Our in-house R&D facility located in Germany & India is a hub of innovation, where advanced materials science meets industry-driven solutions to create groundbreaking 3D printing resins. By pushing the boundaries of performance and customization, we empower industries to achieve unprecedented results in additive manufacturing.",
       video: "/video/video1.mp4",
       isYoutube: false,
     },
     {
       id: "tab2",
       title: "Manufacturing",
-      heading: "Manufacturing Excellence",
+      heading: "In-House Manufacturing ",
       content:
-        "With state-of-the-art manufacturing facilities, we deliver consistent quality and reliability across all our products. Our manufacturing processes are optimized for efficiency, sustainability, and scalability while maintaining the highest industry standards.",
+        "With state-of-the-art manufacturing facilities, we deliver consistent, high-quality 3D printing resins at scale. Our production processes combine precision engineering with rigorous quality control, ensuring each batch meets the exacting standards demanded by industrial applications across diverse sectors.",
       video: "https://youtu.be/swD7peONcaE?si=an8lkJW_0q2KROLi",
       display_video: "/video/video2.mp4",
       isYoutube: true,
@@ -124,9 +125,9 @@ const TimelineSection = () => {
     {
       id: "tab3",
       title: "CDMO",
-      heading: "CDMO Services",
+      heading: "Contract Development and Manufacturing Organization",
       content:
-        "Our Contract Development and Manufacturing Organization services provide comprehensive solutions from concept to commercialization. We partner with clients to develop, manufacture, and scale their products efficiently while ensuring quality and compliance at every step.",
+        "Contract Development and Manufacturing Organization. With state-of-the-art manufacturing facilities, we deliver consistent, high-quality 3D printing resins at scale. Our production processes combine precision engineering with rigorous quality control, ensuring each batch meets the exacting standards demanded by industrial applications across diverse sectors.",
       video: "https://youtu.be/DStoMEQx8DY?si=u0Ylj2T6XlRbxxOr",
       display_video: "/video/video3.mp4",
       isYoutube: true,
@@ -136,7 +137,7 @@ const TimelineSection = () => {
       title: "Technology",
       heading: "Technology Innovation",
       content:
-        "We leverage cutting-edge technology including advanced analytics, artificial intelligence, and automation systems to drive innovation and create competitive advantages. Our technology stack enables new possibilities and delivers future-ready solutions.",
+        "With state-of-the-art manufacturing facilities, we deliver consistent, high-quality 3D printing resins at scale. Our production processes combine precision engineering with rigorous quality control, ensuring each batch meets the exacting standards demanded by industrial applications across diverse sectors.",
       video: "https://youtu.be/ZLx9TeeG0bc?si=RWvS0yqlTVLPdU6p",
       display_video: "/video/video4.mp4",
       isYoutube: true,
@@ -171,10 +172,10 @@ const TimelineSection = () => {
     );
   }, []);
 
-  // Handle content animations when tab changes with staggered effect
+  // Handle content animations when tab changes
   useEffect(() => {
-    // Animate out current content together
-    gsap.to(
+    // Animate in heading and content together
+    gsap.fromTo(
       [
         headingRefs.current[activeTab].current,
         contentRefs.current[activeTab].current,
@@ -182,27 +183,12 @@ const TimelineSection = () => {
       {
         x: -100,
         opacity: 0,
-        duration: 0.3,
-        ease: "power2.in",
-        onComplete: () => {
-          // Animate in heading and content together
-          gsap.fromTo(
-            [
-              headingRefs.current[activeTab].current,
-              contentRefs.current[activeTab].current,
-            ],
-            {
-              x: -100,
-              opacity: 0,
-            },
-            {
-              x: 0,
-              opacity: 1,
-              duration: 0.5,
-              ease: "power2.out",
-            }
-          );
-        },
+      },
+      {
+        x: 0,
+        opacity: 1,
+        duration: 0.5,
+        ease: "power2.out",
       }
     );
 
@@ -240,9 +226,6 @@ const TimelineSection = () => {
     e.preventDefault();
     setActiveTab(index);
 
-    // Update progress bar based on active tab
-    updateProgressBar(index);
-
     // Handle video change immediately
     const currentTab = tabs[index];
     if (!currentTab.isYoutube && videoRef.current) {
@@ -254,32 +237,7 @@ const TimelineSection = () => {
     }
   };
 
-  // Function to update progress bar based on active tab
-  const updateProgressBar = (activeIndex: number) => {
-    const progress = activeIndex / (tabs.length - 1);
-
-    if (progressFillRef.current) {
-      gsap.to(progressFillRef.current, {
-        scaleX: progress,
-        transformOrigin: "left center",
-        duration: 0.5,
-        ease: "power2.out",
-      });
-    }
-
-    if (progressDotRef.current && progressBarRef.current) {
-      const progressBarWidth = progressBarRef.current.offsetWidth;
-      const dotOffset = progress * progressBarWidth;
-
-      gsap.to(progressDotRef.current, {
-        x: dotOffset,
-        duration: 0.5,
-        ease: "power2.out",
-      });
-    }
-  };
-
-  // Handle scroll events to update active tab and progress
+  // Handle scroll events to update active tab
   useEffect(() => {
     const handleScroll = () => {
       if (!hasScrolled) setHasScrolled(true);
@@ -304,7 +262,6 @@ const TimelineSection = () => {
 
       if (newActiveTab !== activeTab) {
         setActiveTab(newActiveTab);
-        updateProgressBar(newActiveTab);
       }
     };
 
@@ -324,7 +281,84 @@ const TimelineSection = () => {
           .catch((e) => console.log("Video play failed:", e));
       }
     }
-  }, [activeTab, hasScrolled, tabs]);
+  }, [activeTab, hasScrolled]);
+
+  // Handle progress bar updates
+  useLayoutEffect(() => {
+    // A timeout is used here as a more forceful way to ensure the calculation
+    // happens after the browser has completed all rendering and layout updates
+    // that result from the change in the active tab's style.
+    const timeoutId = setTimeout(() => {
+      updateProgressBar(activeTab);
+    }, 200); // Increased delay for more reliability.
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [activeTab]);
+
+  // Function to update progress bar based on active tab
+  const updateProgressBar = (activeIndex: number) => {
+    const firstButton = buttonRefs.current[0];
+    const activeButton = buttonRefs.current[activeIndex];
+    const lastButton = buttonRefs.current[tabs.length - 1];
+    const progressBar = progressBarRef.current;
+    const progressFill = progressFillRef.current;
+    const progressDot = progressDotRef.current;
+
+    if (
+      firstButton &&
+      activeButton &&
+      lastButton &&
+      progressBar &&
+      progressFill &&
+      progressDot
+    ) {
+      const progressBarWidth = progressBar.offsetWidth;
+
+      // --- Calculate Fill ---
+      const fillStartX = firstButton.offsetLeft;
+      let fillEndX: number;
+
+      if (activeIndex === 0) {
+        fillEndX = firstButton.offsetLeft;
+      } else if (activeIndex === tabs.length - 1) {
+        fillEndX = lastButton.offsetLeft + lastButton.offsetWidth;
+      } else {
+        fillEndX = activeButton.offsetLeft + activeButton.offsetWidth / 2;
+      }
+
+      const fillWidth = fillEndX - fillStartX;
+      const fillScale = progressBarWidth > 0 ? fillWidth / progressBarWidth : 0;
+
+      gsap.to(progressFill, {
+        x: fillStartX,
+        scaleX: fillScale >= 0 ? fillScale : 0,
+        transformOrigin: "left center",
+        duration: 0.5,
+        ease: "power2.out",
+      });
+
+      // --- Calculate Dot ---
+      let dotOffset: number;
+      const dotCenter = progressDot.offsetWidth / 2;
+
+      if (activeIndex === 0) {
+        dotOffset = firstButton.offsetLeft - dotCenter;
+      } else if (activeIndex === tabs.length - 1) {
+        dotOffset = lastButton.offsetLeft + lastButton.offsetWidth - dotCenter;
+      } else {
+        dotOffset =
+          activeButton.offsetLeft + activeButton.offsetWidth / 2 - dotCenter;
+      }
+
+      gsap.to(progressDot, {
+        x: dotOffset,
+        duration: 0.5,
+        ease: "power2.out",
+      });
+    }
+  };
 
   // Initialize component
   useEffect(() => {
@@ -376,9 +410,6 @@ const TimelineSection = () => {
       videoRef.current.muted = true;
     }
 
-    // Initialize progress bar
-    updateProgressBar(0);
-
     return () => {
       cleanupScrollAnimations();
       animationCleanup();
@@ -394,12 +425,9 @@ const TimelineSection = () => {
   };
 
   return (
-    <div className="relative z-20 md:mx-40">
-      <div
-        className="hidden md:block relative z-20 rounded-2xl"
-        ref={scrollContainerRef}
-      >
-        <div className="sticky top-0 h-screen w-full">
+    <div className="relative z-20">
+      <div className="" ref={scrollContainerRef}>
+        <div className="sticky top-0 h-screen w-full max-w-[1600px] mx-auto">
           <div className="h-full w-full flex justify-center items-center">
             <div
               className="relative w-[90%] max-w-[1200px] aspect-[16/9] bg-[#111] rounded-md overflow-hidden scale-[1] translate-x-0 z-10"
@@ -453,7 +481,7 @@ const TimelineSection = () => {
                   key={tab.id}
                   id={tab.id}
                   className={cn(
-                    "w-full translate-y-0",
+                    "flex flex-col justify-start items-start w-[80%] xl:w-full translate-y-0",
                     index === activeTab
                       ? "visible h-full top-0 translate-x-0 pointer-events-auto absolute z-30"
                       : "invisible pointer-events-none"
@@ -498,8 +526,11 @@ const TimelineSection = () => {
               {tabs.map((tab, index) => (
                 <button
                   key={tab.id}
+                  ref={(el) => {
+                    buttonRefs.current[index] = el;
+                  }}
                   className={cn(
-                    "text-sm text-[#878787] font-medium px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out rounded-md  relative z-50 pointer-events-auto bg-transparent",
+                    "text-sm text-[#878787] font-medium cursor-pointer transition-all duration-200 ease-in-out rounded-md  relative z-50 pointer-events-auto bg-transparent",
                     index === activeTab &&
                       "text-brand font-bold text-base bg-white/5"
                   )}
