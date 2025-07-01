@@ -298,7 +298,7 @@ const MobileDentalProductSection: React.FC = () => {
 
                               {/* Content Section */}
                               <div
-                                className={`transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                                className={`${
                                   activeIndices[product.id] === idx
                                     ? "max-h-[500px] opacity-100 pb-4 px-4"
                                     : "max-h-0 opacity-0"
