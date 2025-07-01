@@ -1,3 +1,4 @@
+// src/components/home-secions/BentoCardsSection.jsx
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -83,11 +84,12 @@ const BentoCardsSection = () => {
       icon: "/home-section/5.svg",
     },
   ];
+
   return (
-    <div className=" sticky top-0 bg-[var(--bg-primary)]  z-10 container-f">
+    <div className="sticky top-0 bg-[var(--bg-primary)]   z-[30] container-f">
       <div
         ref={stickySection}
-        className="md:sticky top-0 bg-[var(--bg-primary)]  container-f"
+        className="md:sticky top-0 bg-[var(--bg-primary)] z-[30] container-f"
       >
         <div className="relative z-[12]">
           <div className="p-[1rem] md:p-[4rem] max-w-7xl mx-auto home-sec5">

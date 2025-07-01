@@ -1,26 +1,18 @@
-// src/components/home-secions/SolutionsSection.tsx
-"use client";
-
+// src/components/home-secions/SolutionsSection.jsx
 import React, { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
+import Link from "next/link";
 gsap.registerPlugin(ScrollTrigger);
 
-interface SolutionItem {
-  id: number;
-  title: string;
-  image: string;
-  description: string;
-}
-
-const SolutionsSection: React.FC = () => {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const contentRef = useRef<HTMLDivElement | null>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  const backgroundImages: string[] = [
+const SolutionsSection = () => {
+  const [hoveredCard, setHoveredCard] = useState<number | null>(0);
+  const containerRef = useRef(null);
+  const contentRef = useRef(null);
+  const cardsRef = useRef<(HTMLElement | null)[]>([]);
+  const ourSolutionTextRef = useRef(null);
+  const mobileContainerRef = useRef(null);
+  const backgroundImages = [
     "/our-solution/1.png",
     "/our-solution/2.png",
     "/our-solution/3.png",
@@ -28,11 +20,12 @@ const SolutionsSection: React.FC = () => {
     "/our-solution/5.png",
   ];
 
-  const data: SolutionItem[] = [
+  const data = [
     {
       id: 1,
       title: "Dental",
       image: "/our-solution/1.png",
+      navigate: "/dental",
       description:
         "Custom dental models, appliances and aligners produced with medical-grade materials for perfect patient fit.",
     },
@@ -59,7 +52,6 @@ const SolutionsSection: React.FC = () => {
     },
     {
       id: 5,
-      title: "Filaments",
       image: "/our-solution/5.png",
       description:
         "Specialized resins and filaments for unique applications with custom properties.",
@@ -70,11 +62,9 @@ const SolutionsSection: React.FC = () => {
     const content = contentRef.current;
     const container = containerRef.current;
 
-    if (!content || !container) return;
-
     gsap.fromTo(
       content,
-      { y: 100 },
+      { y: 0 },
       {
         y: 0,
         opacity: 1,
@@ -87,21 +77,18 @@ const SolutionsSection: React.FC = () => {
       }
     );
   }, []);
-
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
     gsap.fromTo(
-      container,
-      { opacity: 0 },
+      containerRef.current,
+      { opacity: 1, y: 0 },
       {
         x: 0,
+        y: 0,
         opacity: 1,
         scrollTrigger: {
-          trigger: container,
-          start: "top 35%",
-          end: "top 10%",
+          trigger: containerRef.current,
+          start: "top 95%",
+          end: "top 80%",
           scrub: 1,
         },
       }
@@ -110,32 +97,62 @@ const SolutionsSection: React.FC = () => {
 
   useEffect(() => {
     backgroundImages.forEach((img) => {
-      const preloadedImage = new Image();
-      preloadedImage.src = img;
+      new Image().src = img;
     });
+  }, []);
+
+  useEffect(() => {
+    if (ourSolutionTextRef.current && mobileContainerRef.current) {
+      ScrollTrigger.create({
+        trigger: ourSolutionTextRef.current,
+        pin: true,
+        start: "top 10%",
+        endTrigger: mobileContainerRef.current,
+        end: "bottom 65%", // when mobileContainer bottom hits 40% from top of viewport
+        scrub: true,
+      });
+    }
   }, []);
 
   return (
     <div>
-      {/* Mobile View */}
-      <div className="hidden max-sm:block overflow-hidden  w-screen max-h-screen">
-        <div className="grid grid-cols-12 bg-[#d9d9d9]">
-          <div className="transform mt-[-15rem] rotate-[-90deg] col-span-2 flex items-center justify-start text-[1.5rem]">
-            <h2 className="whitespace-nowrap text-[2.4rem] font-black text-[#848383]">
-              OUR SOLUTIONS
+      <div
+        ref={mobileContainerRef}
+        className="hidden mt-[] max-sm:block overflow-hidden  w-screen mt-[-30%]"
+      >
+        <div className="grid grid-cols-12 relative bg-[#d9d9d9]">
+          <div className="col-span-2"></div>
+          <div className="absolute  top-[5%] left-4 transform mt-[-10%]  col-span-2 flex items-center justify-start text-[1.5rem]">
+            <h2
+              ref={ourSolutionTextRef}
+              className="mt-[3rem] text-[2.4rem] font-black text-[#848383] flex flex-col items-center leading-[81%]"
+            >
+              {[...`OUR SOLUTIONS`].reverse().map((char, index) => (
+                <span
+                  key={index}
+                  className={`-rotate-90 text-[40px] ${
+                    index === 8 ? "mb-6" : "" // adds extra gap after 'R'
+                  }`}
+                >
+                  {char}
+                </span>
+              ))}
             </h2>
           </div>
           <div className="col-span-10 space-y-2 pe-2 pb-2">
-            <div className="relative">
-              <img src="/our-solution/1.png" alt="" />
-              <h3 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[32px] text-white z-2 inter font-bold">
-                Dental
-              </h3>
-              <div className="absolute bg-black/30 inset-0"></div>
-            </div>
+            <Link href="/dental">
+              {" "}
+              <div className="relative">
+                <img src="/our-solution/1.png" alt="" />
+                <h3 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[32px] text-white z-2 inter font-bold">
+                  Dental
+                </h3>
+                <div className="absolute bg-black/30 inset-0"></div>
+              </div>
+            </Link>
             <div className="relative">
               <img
-                src="/our-solution/2.png"
+                src="/our-solution/5.png"
                 alt=""
                 className="h-[271px] object-cover w-full"
               />
@@ -165,7 +182,7 @@ const SolutionsSection: React.FC = () => {
               </div>
             </div>
             <div className="relative">
-              <img src="/our-solution/5.png" alt="" />
+              <img src="/our-solution/2.png" alt="" />
               <h3 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[32px] text-white z-2 inter font-bold">
                 Engineering
               </h3>
@@ -174,20 +191,22 @@ const SolutionsSection: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Desktop View */}
       <div
         ref={containerRef}
-        className="max-sm:hidden relative z-30 mt-[-199vh] py-[3rem] pt-[10rem] px-[15rem]"
+        className="max-sm:hidden  relative z-[30] bg-white
+      xxxxxmb-[-30%]
+        mt-[-23%]  min-h-screen py-[3rem] pt-[1rem] px-[15rem]"
       >
-        <div ref={contentRef} className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <div ref={contentRef} className="max-w-7xl  mx-auto mt-[1%]">
+          {/* Header */}
+          <div className=" grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             <div>
-              <h2 className="text-[4rem] font-semibold text-gray-500 mb-4 text-nowrap">
+              <h2 className="text-[4rem] font-semibold  text-gray-500 mb-4 text-nowrap">
                 OUR SOLUTIONS
               </h2>
             </div>
           </div>
+          {/* Cards */}
 
           <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-10 gap-3 min-h-screen">
             {data.map((item, index) => {
@@ -198,7 +217,7 @@ const SolutionsSection: React.FC = () => {
               else if (index === 3) gridClasses = "col-span-5 row-span-4";
               else if (index === 4) gridClasses = "col-span-3 row-span-4";
 
-              return (
+              const cardContent = (
                 <div
                   key={item.id}
                   ref={(el) => {
@@ -208,45 +227,61 @@ const SolutionsSection: React.FC = () => {
                   onMouseEnter={() => setHoveredCard(item.id)}
                   onMouseLeave={() => setHoveredCard(null)}
                 >
+                  {/* Background Image */}
                   <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] "
                     style={{
                       backgroundImage: `url(${backgroundImages[index]})`,
                     }}
                   ></div>
 
+                  {/* Dark Overlay */}
                   <div
                     className="absolute inset-0 bg-black/5 transition-opacity duration-500"
                     style={{ opacity: hoveredCard === item.id ? 0.3 : 0 }}
                   ></div>
 
+                  {/* Content with Smooth Expand */}
                   <div
                     className={`
-                      absolute bottom-0 left-0 right-0
-                      bg-black/40 backdrop-blur-md
-                      text-white px-6 overflow-hidden
-                      transition-all duration-[800ms] 
-                      ${
-                        hoveredCard === item.id
-                          ? "py-1 max-h-[400px]"
-                          : "py-1 max-h-[80px]"
-                      }
-                    `}
+            absolute bottom-0 left-0 right-0
+            bg-black/40 backdrop-blur-md
+            text-white px-6 overflow-hidden
+            transition-all duration-700 ease-in-out
+            ${
+              hoveredCard === item.id
+                ? "py-4 max-h-[400px]"
+                : "py-2 max-h-[80px]"
+            }
+          `}
                   >
                     <h3 className="text-xl font-bold md:text-2xl">
                       {item.title}
                     </h3>
                     <div
                       className={`
-                        mt-2 text-white/90 text-sm leading-relaxed
-                        transition-all duration-[500ms] 
-                        ${hoveredCard === item.id ? "block" : "hidden"}
-                      `}
+              mt-2 text-white/90 text-sm leading-relaxed
+              transition-all duration-700 ease-in-out
+              ${
+                hoveredCard === item.id
+                  ? "opacity-100 translate-y-0 max-h-[300px]"
+                  : "opacity-0 translate-y-2 max-h-0"
+              }
+            `}
+                      style={{ overflow: "hidden" }}
                     >
                       {item.description}
                     </div>
                   </div>
                 </div>
+              );
+
+              return index === 0 ? (
+                <Link href="/dental" key={item.id} className="contents">
+                  {cardContent}
+                </Link>
+              ) : (
+                cardContent
               );
             })}
           </div>

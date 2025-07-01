@@ -10,7 +10,6 @@ import TimelineSection from "@/components/home-sections/timeline-section";
 import TimelineSectionSample from "@/components/home-sections/timeline-section-sample";
 import VideoTabSection from "@/components/home-sections/video-tab-section";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import Link from "next/link";
 
 export default function Home() {
   const isMobile = useIsMobile();
@@ -23,7 +22,8 @@ export default function Home() {
 
       {isMobile ? <MobileTimelineSection /> : <TimelineSection />}
 
-      <CombinedSection />
+      {/* <CombinedSection /> */}
+      {isMobile ? null : <CombinedSection />}
 
       <SolutionsSection />
 
