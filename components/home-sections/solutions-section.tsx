@@ -178,7 +178,7 @@ const SolutionsSection: React.FC = () => {
       {/* Desktop View */}
       <div
         ref={containerRef}
-        className="max-sm:hidden relative z-[30] mt-[-199vh] min-h-screen py-[3rem] pt-[10rem] px-[15rem]"
+        className="max-sm:hidden relative z-30 mt-[-199vh] py-[3rem] pt-[10rem] px-[15rem]"
       >
         <div ref={contentRef} className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">

@@ -84,168 +84,171 @@ const BentoCardsSection = () => {
     },
   ];
   return (
-    <div
-      ref={stickySection}
-      className="md:sticky top-0 bg-[var(--bg-primary)] z-[30] container-f"
-    >
-      <div className="relative z-[12]">
-        <div className="p-[1rem] md:p-[4rem] max-w-7xl mx-auto home-sec5">
-          <h2 className="text-[1.8rem] md:text-[2.53rem] text-[var(--color-primary)] text-center font-medium">
-            Fast, efficient, reliable 3D Printing Solutions
-          </h2>
-          <p className="text-[0.9rem] hidden md:block md:text-[1rem] t1 opacity-70 text-center px-[1rem] md:px-[14rem] mt-[1rem]">
-            At Resinwork, we provide cutting-edge 3D printing resins designed to
-            deliver high-quality, precise results with speed and consistency.
-            Whether you're in manufacturing, prototyping, or product
-            development, our solutions are engineered to meet the demands of any
-            industry-helping you innovate faster and more efficiently.
-          </p>
-          <div className="hidden md:block">
-            {/* First Row - Full width */}
-            <div className=" grid grid-cols-1 md:grid-cols-3 gap-[1rem] mt-[2rem] md:mt-[3rem] overflow-hidden">
-              {firstRow.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
-                >
-                  <div className="flex items-start pt-[.61rem]">
-                    <img
-                      src={item.icon}
-                      alt={item.title}
-                      className="w-[4rem] md:w-[6rem]"
-                    />
+    <div className=" sticky top-0 bg-[var(--bg-primary)]  z-10 container-f">
+      <div
+        ref={stickySection}
+        className="md:sticky top-0 bg-[var(--bg-primary)]  container-f"
+      >
+        <div className="relative z-[12]">
+          <div className="p-[1rem] md:p-[4rem] max-w-7xl mx-auto home-sec5">
+            <h2 className="text-[1.8rem] md:text-[2.53rem] text-[var(--color-primary)] text-center font-medium">
+              Fast, efficient, reliable 3D Printing Solutions
+            </h2>
+            <p className="text-[0.9rem] hidden md:block md:text-[1rem] t1 opacity-70 text-center px-[1rem] md:px-[14rem] mt-[1rem]">
+              At Resinwork, we provide cutting-edge 3D printing resins designed
+              to deliver high-quality, precise results with speed and
+              consistency. Whether you're in manufacturing, prototyping, or
+              product development, our solutions are engineered to meet the
+              demands of any industry-helping you innovate faster and more
+              efficiently.
+            </p>
+            <div className="hidden md:block">
+              {/* First Row - Full width */}
+              <div className=" grid grid-cols-1 md:grid-cols-3 gap-[1rem] mt-[2rem] md:mt-[3rem] overflow-hidden">
+                {firstRow.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                  >
+                    <div className="flex items-start pt-[.61rem]">
+                      <img
+                        src={item.icon}
+                        alt={item.title}
+                        className="w-[4rem] md:w-[6rem]"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="t1 text-[1rem] md:text-[1.1rem] font-medium">
+                        {item.title}
+                      </h3>
+                      <p className="t1 opacity-70 text-[0.65rem] md:text-[.7rem]">
+                        {item.desc}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="t1 text-[1rem] md:text-[1.1rem] font-medium">
-                      {item.title}
-                    </h3>
-                    <p className="t1 opacity-70 text-[0.65rem] md:text-[.7rem]">
-                      {item.desc}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
 
-            {/* Second Row Alternative */}
-            <div
-              className="relative flex flex-col md:flex-row gap-[1rem] mt-[1rem] md:transform md:translate-x-[15%] mx-auto"
-              style={{ width: "fit-content" }}
-            >
-              {secondRow.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex gap-[.51rem] w-full md:w-[34%] bg-[var(--service-box)] p-[1rem] rounded-lg"
-                >
+              {/* Second Row Alternative */}
+              <div
+                className="relative flex flex-col md:flex-row gap-[1rem] mt-[1rem] md:transform md:translate-x-[15%] mx-auto"
+                style={{ width: "fit-content" }}
+              >
+                {secondRow.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex gap-[.51rem] w-full md:w-[34%] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                  >
+                    <div className="flex items-start pt-[.61rem]">
+                      <img
+                        src={item.icon}
+                        alt={item.title}
+                        className="w-[4rem] md:w-[5rem]"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="t1 text-[1rem] md:text-[1.1rem] font-medium">
+                        {item.title}
+                      </h3>
+                      <p className="t1 opacity-70 text-[0.65rem] md:text-[.7rem]">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="md:hidden mt-[2rem]">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
                   <div className="flex items-start pt-[.61rem]">
                     <img
-                      src={item.icon}
-                      alt={item.title}
-                      className="w-[4rem] md:w-[5rem]"
+                      src={secondRow[0].icon}
+                      alt={secondRow[0].title}
+                      className="w-[3rem] md:w-[6rem]"
                     />
                   </div>
                   <div>
-                    <h3 className="t1 text-[1rem] md:text-[1.1rem] font-medium">
-                      {item.title}
+                    <h3 className="t1 text-[.81rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
+                      {secondRow[0].title}
                     </h3>
-                    <p className="t1 opacity-70 text-[0.65rem] md:text-[.7rem]">
-                      {item.desc}
-                    </p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-          <div className="md:hidden mt-[2rem]">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
-                <div className="flex items-start pt-[.61rem]">
-                  <img
-                    src={secondRow[0].icon}
-                    alt={secondRow[0].title}
-                    className="w-[4rem] md:w-[6rem]"
-                  />
-                </div>
-                <div>
-                  <h3 className="t1 text-[1rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
-                    {secondRow[0].title}
-                  </h3>
+                <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                  <div className="flex items-start pt-[.61rem]">
+                    <img
+                      src={firstRow[1].icon}
+                      alt={firstRow[1].title}
+                      className="w-[3rem] md:w-[6rem]"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="t1 text-[.81rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
+                      {firstRow[1].title}
+                    </h3>
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
-                <div className="flex items-start pt-[.61rem]">
-                  <img
-                    src={firstRow[1].icon}
-                    alt={firstRow[1].title}
-                    className="w-[4rem] md:w-[6rem]"
-                  />
-                </div>
-                <div>
-                  <h3 className="t1 text-[1rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
-                    {firstRow[1].title}
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div className="grid my-2">
-              <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
-                <div className="flex items-start pt-[.61rem]">
-                  <img
-                    src={firstRow[0].icon}
-                    alt={secondRow[0].title}
-                    className="w-[4rem] md:w-[6rem]"
-                  />
-                </div>
-                <div>
-                  <h3 className="t1 text-[1rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
-                    {firstRow[0].title}
-                  </h3>
+              <div className="grid my-2">
+                <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                  <div className="flex items-start pt-[.61rem]">
+                    <img
+                      src={firstRow[0].icon}
+                      alt={secondRow[0].title}
+                      className="w-[3rem] md:w-[6rem]"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="t1 text-[.81rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
+                      {firstRow[0].title}
+                    </h3>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="grid my-2">
-              <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
-                <div className="flex items-start pt-[.61rem]">
-                  <img
-                    src={firstRow[2].icon}
-                    alt={firstRow[2].title}
-                    className="w-[4rem] md:w-[6rem]"
-                  />
-                </div>
-                <div>
-                  <h3 className="t1 text-[1rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
-                    {firstRow[2].title}
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
-                <div className="flex items-start pt-[.61rem]">
-                  <img
-                    src={secondRow[1].icon}
-                    alt={secondRow[1].title}
-                    className="w-[4rem] md:w-[6rem]"
-                  />
-                </div>
-                <div>
-                  <h3 className="t1 text-[1rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
-                    {secondRow[1].title}
-                  </h3>
+              <div className="grid my-2">
+                <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                  <div className="flex items-start pt-[.61rem]">
+                    <img
+                      src={firstRow[2].icon}
+                      alt={firstRow[2].title}
+                      className="w-[3rem] md:w-[6rem]"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="t1 text-[.81rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
+                      {firstRow[2].title}
+                    </h3>
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
-                <div className="flex items-start pt-[.61rem]">
-                  <img
-                    src={firstRow[1].icon}
-                    alt={firstRow[1].title}
-                    className="w-[4rem] md:w-[6rem]"
-                  />
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                  <div className="flex items-start pt-[.61rem]">
+                    <img
+                      src={secondRow[1].icon}
+                      alt={secondRow[1].title}
+                      className="w-[2.7rem] md:w-[6rem]"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="t1 text-[.81rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
+                      {secondRow[1].title}
+                    </h3>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="t1 text-[1rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
-                    {firstRow[1].title}
-                  </h3>
+                <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                  <div className="flex items-start pt-[.61rem]">
+                    <img
+                      src={firstRow[1].icon}
+                      alt={firstRow[1].title}
+                      className="w-[3rem] md:w-[6rem]"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="t1 text-[.81rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
+                      {firstRow[1].title}
+                    </h3>
+                  </div>
                 </div>
               </div>
             </div>

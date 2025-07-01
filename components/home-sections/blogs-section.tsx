@@ -25,7 +25,7 @@ const BlogsSection = () => {
 
   return (
     <div>
-      <div className="hidden md:block p-[4rem] pt-[13rem] relative ">
+      <div className="hidden md:block p-[4rem] pt-[13rem] relative z-20">
         <div className="grid grid-cols-12 bg-white text-black rounded-xl s1">
           <div className="col-span-4 p-[3rem]">
             <div className="flex items-center justify-start gap-2">
