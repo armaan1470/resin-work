@@ -61,57 +61,59 @@ const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="relative flex justify-center -top-24 bg-primary min-h-screen w-full overflow-hidden">
-      <Swiper
-        modules={[Autoplay, Pagination, EffectFade]}
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
-        pagination={{ clickable: true }}
-        loop
-        effect="fade"
-        speed={1000}
-        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-        className="relative w-[96vw] lg:w[92vw] h-[80vh] lg:h-[95vh] flex justify-center rounded-b-4xl"
-      >
-        {slides.map((slide, idx) => (
-          <SwiperSlide key={idx}>
-            <div className="relative w-full h-full text-white">
-              <Image
-                src={slide.image}
-                alt={slide.heading}
-                fill
-                className="object-cover z-0 transition-opacity duration-1000 ease-in-out rounded-b-4xl"
-                priority
-                quality={100}
-              />
+    <section className="relative flex justify-center -top-24 bg-primary min-h-screen w-full">
+      <div className="w-[96vw] lg:w-[92vw] h-[80vh] sm:h-[95vh] overflow-hidden rounded-b-4xl">
+        <Swiper
+          modules={[Autoplay, Pagination, EffectFade]}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
+          pagination={{ clickable: true }}
+          loop
+          // effect="fade"
+          speed={800}
+          onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+          className="relative w-full h-full flex justify-center"
+        >
+          {slides.map((slide, idx) => (
+            <SwiperSlide key={idx}>
+              <div className="relative w-full h-full text-white">
+                <Image
+                  src={slide.image}
+                  alt={slide.heading}
+                  fill
+                  className="object-cover z-0 transition-opacity duration-1000 ease-in-out"
+                  priority
+                  quality={100}
+                />
 
-              {/* Animate text only for active slide */}
-              <AnimatePresence mode="wait">
-                {activeIndex === idx && (
-                  <motion.div
-                    key={idx}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    variants={contentVariants}
-                    className="absolute left-6 bottom-12 md:left-16 lg:left-24 md:bottom-1/5 max-w-[80%] lg:max-w-[40%] xl:max-w-[30%] z-10"
-                  >
-                    <h2 className="text-4xl font-bold mb-4 text-wrap font-family-satoshi">
-                      {slide.heading}
-                    </h2>
-                    <p className="mb-8">{slide.text}</p>
-                    <Button
-                      size="lg"
-                      className="cursor-pointer px-8 py-6 text-base bg-brand text-white rounded-md border-1 border-brand transition-colors hover:bg-transparent hover:border-1 hover:border-white"
+                {/* Animate text only for active slide */}
+                <AnimatePresence mode="wait">
+                  {activeIndex === idx && (
+                    <motion.div
+                      key={idx}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      variants={contentVariants}
+                      className="absolute left-6 bottom-12 md:left-16 lg:left-24 md:bottom-1/5 max-w-[80%] lg:max-w-[40%] xl:max-w-[30%] z-10"
                     >
-                      {slide.buttonText}
-                    </Button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+                      <h2 className="text-4xl font-bold mb-4 text-wrap font-family-satoshi">
+                        {slide.heading}
+                      </h2>
+                      <p className="mb-8">{slide.text}</p>
+                      <Button
+                        size="lg"
+                        className="cursor-pointer px-8 py-6 text-base bg-brand text-white rounded-md border-1 border-brand transition-colors hover:bg-transparent hover:border-1 hover:border-white"
+                      >
+                        {slide.buttonText}
+                      </Button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </section>
   );
 };
