@@ -42,6 +42,7 @@ export default function Navbar() {
                   alt="Resin Work"
                   width={240}
                   height={48}
+                  quality={100}
                 />
               </Link>
             </div>
