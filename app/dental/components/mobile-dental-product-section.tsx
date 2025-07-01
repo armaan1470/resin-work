@@ -230,7 +230,7 @@ const MobileDentalProductSection: React.FC = () => {
             className="min-h-screen grid grid-cols-1   relative pb-[20rem] last:pb-0 px-[1rem] md:px-[5rem]"
           >
             <div className="py-5  md:py-10  order-2 md:order-1">
-              <div className="space-y-2 mt-14 pe-0 md:pe-[4rem] px-4">
+              <div className="space-y-2 mt-26 pe-0 md:pe-[4rem] px-4">
                 {product.description
                   .split(".")
                   .filter((sentence: string) => sentence.trim().length > 0)
