@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
-import { Search, Menu } from "lucide-react";
+import { Search, Menu, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Sheet,
@@ -13,20 +13,40 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 import { Separator } from "./ui/separator";
+import navData from "@/data/nav-links.json";
+
+interface Product {
+  id: number;
+  name: string;
+  navic_id: string;
+  description: string;
+}
+
+interface NavItem {
+  name: string;
+  href: string;
+  hasSubmenu: boolean;
+  image?: string;
+  products?: Product[];
+}
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
-  const navItems = [
-    { name: "Dental", href: "/dental" },
-    { name: "Jewellery", href: "/jewellery" },
-    { name: "Functionality", href: "/functionality" },
-    { name: "Filaments", href: "/filaments" },
-    { name: "Company", href: "/company" },
-  ];
+  const navItems: NavItem[] = navData.navItems;
 
   const handleNavClick = () => {
     setIsOpen(false);
+    setOpenSubmenu(null);
+  };
+
+  const handleSubmenuEnter = (itemName: string) => {
+    setOpenSubmenu(itemName);
+  };
+
+  const handleSubmenuLeave = () => {
+    setOpenSubmenu(null);
   };
 
   return (
@@ -51,13 +71,84 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center space-x-14 px-6">
               <div className="flex space-x-4">
                 {navItems.map((item) => (
-                  <Link
+                  <div
                     key={item.name}
-                    href={item.href}
-                    className="text-white hover:text-brand px-3 py-2 rounded-md text-sm transition-colors"
+                    className="relative"
+                    onMouseEnter={() =>
+                      item.hasSubmenu && handleSubmenuEnter(item.name)
+                    }
+                    onMouseLeave={() => item.hasSubmenu && handleSubmenuLeave()}
                   >
-                    {item.name}
-                  </Link>
+                    <Link
+                      href={item.href}
+                      className="flex items-center text-white hover:text-brand px-3 py-2 rounded-md text-sm transition-colors group"
+                    >
+                      {item.name}
+                      {item.hasSubmenu && (
+                        <ChevronRight
+                          className={`ml-1 h-3 w-3 transition-transform duration-300 ${
+                            openSubmenu === item.name ? "rotate-90" : "rotate-0"
+                          }`}
+                        />
+                      )}
+                    </Link>
+
+                    {/* Submenu */}
+                    {item.hasSubmenu && item.products && (
+                      <div
+                        className={`fixed left-0 right-0 bg-black/70 backdrop-blur-lg h-screen shadow-lg transition-all duration-500 z-50 ${
+                          openSubmenu === item.name
+                            ? "opacity-100 translate-y-0 pointer-events-auto"
+                            : "opacity-0 -translate-y-3 pointer-events-none"
+                        }`}
+                        style={{ top: "100%" }}
+                      >
+                        <div className="w-full mx-auto px-16 py-16 bg-[var(--bg-primary)]">
+                          <div className="grid grid-cols-12 gap-5">
+                            {/* Product Image */}
+                            <div className="col-span-4 flex justify-center items-center">
+                              {item.image && (
+                                <Image
+                                  src={item.image}
+                                  alt={item.name}
+                                  width={400}
+                                  height={300}
+                                  className="rounded-lg object-cover"
+                                />
+                              )}
+                            </div>
+
+                            {/* Products Grid */}
+                            <div className="col-span-8 grid grid-cols-3 grid-rows-2 gap-2">
+                              {item.products.slice(0, 6).map((product) => (
+                                <Link
+                                  key={product.id}
+                                  href={`${item.href}#${product.navic_id}`}
+                                  className="block h-full"
+                                  onClick={handleNavClick}
+                                >
+                                  <div className="bg-[var(--bg-accent)] rounded-2xl h-full p-8 cursor-pointer hover:opacity-80 transition">
+                                    <h3 className="text-[var(--color-primary)] text-[1.62rem] font-semibold">
+                                      {product.name}
+                                    </h3>
+                                    {product.description && (
+                                      <p className="text-[13px] leading-[23px] text-[#848484] line-clamp-3">
+                                        {product.description}
+                                      </p>
+                                    )}
+                                  </div>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          onMouseEnter={handleSubmenuLeave}
+                          className="h-full w-full"
+                        ></div>
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
 
@@ -79,7 +170,7 @@ export default function Navbar() {
                   <Search className="size-5" />
                 </Button>
 
-                <Button className="text-xs bg-brand text-white px-4 py-2 rounded-md border border-brand transition-colors hover:bg-transparent hover:border-white">
+                <Button className="text-xs cursor-pointer bg-brand text-white px-4 py-2 rounded-md border border-brand transition-colors hover:bg-transparent hover:border-white">
                   Partner with us
                 </Button>
               </div>
@@ -111,7 +202,7 @@ export default function Navbar() {
 
                 <SheetContent
                   side="top"
-                  className="w-full h-auto  bg-black/60 backdrop-blur-[3rem] border-b border-white/20 text-white shadow-2xl"
+                  className="w-full h-auto bg-black/60 backdrop-blur-[3rem] border-b border-white/20 text-white shadow-2xl"
                 >
                   {/* Professional Header with Logo */}
                   <SheetHeader className="border-b border-white/10 pb-6 mb-8">

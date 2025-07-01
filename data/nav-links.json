@@ -1,0 +1,149 @@
+{
+    "navItems": [
+      {
+        "name": "Dental",
+        "href": "/dental",
+        "hasSubmenu": true,
+        "image": "/product-img/4.png",
+        "products": [
+          {
+            "id": 1,
+            "name": "Model 3",
+            "navic_id": "model_3",
+            "description": "Resinwork Model 3 is a IPA & water-washable photopolymer resin for 3D printing dental models..."
+          },
+          {
+            "id": 2,
+            "name": "Model 2",
+            "navic_id": "model_2",
+            "description": "Resinwork Model 2 is a water-washable photopolymer resin for 3D printing dental models..."
+          },
+          {
+            "id": 3,
+            "name": "Digital Dentures",
+            "navic_id": "dentures",
+            "description": "Help fight the rise in grinding and clenching by delivering more night guards with Resinwork..."
+          },
+          {
+            "id": 4,
+            "name": "Surgical Guides",
+            "navic_id": "surgical_guide",
+            "description": "Receive all the clinical benefits of guided surgery with rapid turnaround times..."
+          },
+          {
+            "id": 5,
+            "name": "Crown & Bridge",
+            "navic_id": "crown_bridge",
+            "description": "Help fight the rise in grinding and clenching by delivering more night guards with Resinwork..."
+          }
+        ]
+      },
+      {
+        "name": "Jewellery",
+        "href": "/jewellery",
+        "hasSubmenu": true,
+        "image": "/category-home/5.png",
+        "products": [
+          {
+            "id": 1,
+            "name": "Casting / Burnout",
+            "navic_id": "casting_burnout",
+            "description": ""
+          },
+          {
+            "id": 2,
+            "name": "Waxable Resin",
+            "navic_id": "waxable_resin",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "name": "Functionality",
+        "href": "/functionality",
+        "hasSubmenu": true,
+        "image": "/category-home/2.png",
+        "products": [
+          {
+            "id": 1,
+            "name": "Flexible",
+            "navic_id": "flexible",
+            "description": ""
+          },
+          {
+            "id": 2,
+            "name": "Flex & Elongation",
+            "navic_id": "flex_elongation",
+            "description": ""
+          },
+          {
+            "id": 3,
+            "name": "Super tough",
+            "navic_id": "super_tough",
+            "description": ""
+          },
+          {
+            "id": 4,
+            "name": "Hard",
+            "navic_id": "hard",
+            "description": ""
+          },
+          {
+            "id": 5,
+            "name": "ABS-Like",
+            "navic_id": "abs_like",
+            "description": ""
+          },
+          {
+            "id": 6,
+            "name": "Standard",
+            "navic_id": "standard",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "name": "Filaments",
+        "href": "/filaments",
+        "hasSubmenu": true,
+        "image": "/category-home/4.png",
+        "products": [
+          {
+            "id": 1,
+            "name": "PLA",
+            "navic_id": "pla",
+            "description": "Resinwork Model 3 is a IPA & water-washable photopolymer resin for 3D printing dental models..."
+          },
+          {
+            "id": 2,
+            "name": "PLA+",
+            "navic_id": "pla_plus",
+            "description": ""
+          },
+          {
+            "id": 3,
+            "name": "PEEK",
+            "navic_id": "peek",
+            "description": "Help fight the rise in grinding and clenching by delivering more night guards with Resinwork..."
+          },
+          {
+            "id": 4,
+            "name": "Carbon Fibre",
+            "navic_id": "carbon_fibre",
+            "description": "Receive all the clinical benefits of guided surgery with rapid turnaround times..."
+          },
+          {
+            "id": 5,
+            "name": "PLA + Additive",
+            "navic_id": "pla_additive",
+            "description": "Help fight the rise in grinding and clenching by delivering more night guards with Resinwork..."
+          }
+        ]
+      },
+      {
+        "name": "Company",
+        "href": "/company",
+        "hasSubmenu": false
+      }
+    ]
+  }
