@@ -104,16 +104,17 @@ export default function Navbar() {
                         style={{ top: "100%" }}
                       >
                         <div className="w-full mx-auto px-16 py-16 bg-[var(--bg-primary)]">
-                          <div className="grid grid-cols-12 gap-5">
+                          <div className="grid grid-cols-12 gap-4">
                             {/* Product Image */}
-                            <div className="col-span-4 flex justify-center items-center">
+                            <div className="col-span-4 flex justify-start items-center">
                               {item.image && (
                                 <Image
                                   src={item.image}
                                   alt={item.name}
                                   width={400}
                                   height={300}
-                                  className="rounded-lg object-cover"
+                                  quality={100}
+                                  className="rounded-lg w-full h-full object-cover"
                                 />
                               )}
                             </div>
