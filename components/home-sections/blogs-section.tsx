@@ -78,12 +78,12 @@ const BlogsSection = () => {
                 Case Studies
               </button>
             </div>
-            <h4 className="text-[1.9rem] font-normal line-clamp-2 mt-[1.4rem] mb-[1rem]">
+            <h4 className="text-[1.9rem] text-black font-normal line-clamp-2 mt-[1.4rem] mb-[1rem]">
               {activeTab === "blogs"
                 ? "Featured Blog Heading Blog Heading Lorem Ipsum is simply dummy text"
                 : "Featured Case Studies Showcasing Our Solutions"}
             </h4>
-            <p className="text-[.91rem]">
+            <p className="text-[.91rem] text-black/80">
               {activeTab === "blogs"
                 ? "Featured Blog Heading Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
                 : "Explore real-world applications of our products through these detailed case studies demonstrating innovation and problem-solving across industries."}
@@ -103,7 +103,9 @@ const BlogsSection = () => {
               >
                 <div className="grid grid-cols-12 gap-2">
                   <div className="col-span-2">
-                    <h4 className="text-[1rem] font-thin">{item.date}</h4>
+                    <h4 className="text-[1rem] text-black/60 font-thin">
+                      {item.date}
+                    </h4>
                   </div>
                   <div className="col-span-8 px-[1rem]">
                     <h4 className="text-[1.3rem] font-medium line-clamp-2 text-black/60">
@@ -115,7 +117,7 @@ const BlogsSection = () => {
                       Learn More
                     </button>
                   </div>
-                  <h4 className="col-span-12 text-[1rem] font-light text-start">
+                  <h4 className="col-span-12 text-black/60 text-[1rem] font-light text-start">
                     {item.desc}
                   </h4>
                 </div>
