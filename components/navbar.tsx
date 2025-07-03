@@ -101,7 +101,7 @@ export default function Navbar() {
                             ? "opacity-100 translate-y-0 pointer-events-auto"
                             : "opacity-0 -translate-y-3 pointer-events-none"
                         }`}
-                        style={{ top: "100%" }}
+                        // style={{ top: "100%" }}
                       >
                         <div className="w-full mx-auto px-16 py-16 bg-[var(--bg-primary)]">
                           <div className="grid grid-cols-12 gap-4">
