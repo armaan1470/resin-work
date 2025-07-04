@@ -1,12 +1,12 @@
 "use client";
 
-// src/components/category/DentalProductSection.tsx
 import { dentalProducts as productData } from "../../../public/data/dental";
-import React, { useEffect, useRef, useState } from "react";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { usePathname, useSearchParams } from "next/navigation";
 import { FileText } from "lucide-react";
+import { useHashNavigation } from "@/hooks/useHashNavigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,23 +59,15 @@ const DentalProductSection: React.FC = () => {
     null
   );
 
-  // useEffect(() => {
-  //   const hash = window.location.hash;
-
-  //   if (hash) {
-  //     setTimeout(() => {
-  //       const element = document.querySelector(hash);
-  //       if (element) {
-  //         element.scrollIntoView({
-  //           behavior: "smooth",
-  //           block: "start",
-  //         });
-  //       }
-  //     }, 100);
-  //   } else {
-  //     window.scrollTo(0, 0);
-  //   }
-  // }, [pathname]);
+  // Use the generic hash navigation hook with longer delay for GSAP animations
+  const { isPageReady } = useHashNavigation({
+    scrollDelay: 0, // No delay
+    offset: 0, // No offset
+    debug: process.env.NODE_ENV === "development",
+    onHashNavigation: (hash) => {
+      console.log("🎯 Navigated to dental section:", hash);
+    },
+  });
 
   const [mainImages, setMainImages] = useState<MainImageState>(() => {
     return productData.reduce((acc, product) => {
@@ -119,7 +111,6 @@ const DentalProductSection: React.FC = () => {
       ...prev,
       [productId]: prev[productId] === index ? null : index,
     }));
-
     setTimeout(() => {
       ScrollTrigger.refresh();
     }, 350);
@@ -138,14 +129,12 @@ const DentalProductSection: React.FC = () => {
         source: sourceType,
       },
     }));
-
     if (sourceType === "thumbnail" && typeof imageIndex === "number") {
       setActiveThumbnailIndices((prev) => ({
         ...prev,
         [productId]: imageIndex,
       }));
     }
-
     if (image.color) {
       setActiveColors((prev) => ({
         ...prev,
@@ -163,15 +152,27 @@ const DentalProductSection: React.FC = () => {
     }
   };
 
+  // Initialize GSAP ScrollTrigger animations only after page is ready
   useEffect(() => {
+    if (!isPageReady) {
+      if (process.env.NODE_ENV === "development") {
+        console.log(
+          "⏳ Waiting for page to be ready before initializing GSAP..."
+        );
+      }
+      return;
+    }
+
+    if (process.env.NODE_ENV === "development") {
+      console.log("🎬 Initializing GSAP ScrollTrigger animations...");
+    }
+
     ScrollTrigger.getAll().forEach((instance) => instance.kill());
 
     sections.current.forEach((section, index) => {
       if (!section) return;
-
       const imageContainer = imageContainerRefs.current[index];
       if (!imageContainer) return;
-
       const isLastSection = index === sections.current.length - 1;
 
       ScrollTrigger.create({
@@ -197,22 +198,18 @@ const DentalProductSection: React.FC = () => {
     return () => {
       ScrollTrigger.getAll().forEach((instance) => instance.kill());
     };
-  }, [activeIndex]);
+  }, [isPageReady, activeIndex]);
 
   useEffect(() => {
     if (!autoCycling) return;
-
     const intervals = productData.map((product) => {
       const nonColorImages = product.images.filter((img) => !img.color);
       if (nonColorImages.length <= 1) return null;
-
       return window.setInterval(() => {
         if (userSelectedColor) return;
-
         setActiveThumbnailIndices((prev) => {
           const currentIndex = prev[String(product.id)] ?? 0;
           const nextIndex = (currentIndex + 1) % nonColorImages.length;
-
           setMainImages((prevImages) => ({
             ...prevImages,
             [String(product.id)]: {
@@ -220,7 +217,6 @@ const DentalProductSection: React.FC = () => {
               source: "thumbnail",
             },
           }));
-
           return {
             ...prev,
             [String(product.id)]: nextIndex,
@@ -228,7 +224,6 @@ const DentalProductSection: React.FC = () => {
         });
       }, 5000);
     });
-
     return () => {
       intervals.forEach((interval) => {
         if (interval !== null) clearInterval(interval);
@@ -263,7 +258,7 @@ const DentalProductSection: React.FC = () => {
                   .map((sentence, idx) => (
                     <p
                       key={idx}
-                      className="text-gray-500 shadow-2xl  text-justify bg-white p-[1rem] rounded-lg my-[.6rem] lg:text-[1rem] xl:text-[1.3rem]"
+                      className="text-gray-500 shadow-2xl text-justify bg-white p-[1rem] rounded-lg my-[.6rem] lg:text-[1rem] xl:text-[1.3rem]"
                     >
                       {sentence.trim()}
                       {idx < product.description.split(".").length - 2
@@ -272,7 +267,6 @@ const DentalProductSection: React.FC = () => {
                     </p>
                   ))}
               </div>
-
               <div className="grid grid-cols-12 mt-4 me-[3rem]">
                 <div className="col-span-12">
                   {product.features.map((feature, idx) => (
@@ -305,7 +299,6 @@ const DentalProductSection: React.FC = () => {
                                   {feature.title}
                                 </h4>
                               </div>
-
                               {/* SVG Icon */}
                               <svg
                                 className={`w-5 h-5 text-[var(--text-subheading)] transition-all duration-300 ${
@@ -321,14 +314,12 @@ const DentalProductSection: React.FC = () => {
                               >
                                 {/* Always render horizontal line (minus line) */}
                                 <line x1="5" y1="12" x2="19" y2="12" />
-
                                 {/* Render vertical line (to form plus) only when NOT hovered */}
                                 {activeIndices[product.id] !== idx && (
                                   <line x1="12" y1="5" x2="12" y2="19" />
                                 )}
                               </svg>
                             </div>
-
                             {/* Content Section */}
                             <div
                               className={`${
@@ -345,7 +336,6 @@ const DentalProductSection: React.FC = () => {
                                 {feature.description}
                               </p>
                             </div>
-
                             <div className="bg-[#5D5D5D] h-[.5px] w-[90%]"></div>
                           </div>
                         </div>
@@ -355,7 +345,6 @@ const DentalProductSection: React.FC = () => {
                 </div>
               </div>
             </div>
-
             {/* Right side - image */}
             <div
               ref={(el) => {
@@ -370,7 +359,8 @@ const DentalProductSection: React.FC = () => {
                     <img
                       src={
                         mainImages[product.id]?.image?.img ||
-                        product.images[0].img
+                        product.images[0].img ||
+                        "/placeholder.svg"
                       }
                       alt={product.name}
                       className="xl:w-[34rem] xl:h-[22rem] mx-auto lg:w-[21] lg:h-[20rem] rounded-lg shadow-md object-cover transition-opacity duration-500"
@@ -380,7 +370,6 @@ const DentalProductSection: React.FC = () => {
                       }
                     />
                   </div>
-
                   <div className="flex justify-between items-center bg-[var(--bg-primary)]">
                     {/* Thumbnail Images */}
                     <div className="flex space-x-1 mt-4 col-span-6 items-center h-full ms-3">
@@ -408,7 +397,7 @@ const DentalProductSection: React.FC = () => {
                               }`}
                             >
                               <img
-                                src={image.img}
+                                src={image.img || "/placeholder.svg"}
                                 alt={`${product.name} thumbnail`}
                                 className="w-[3rem] h-[3rem] rounded-lg object-cover"
                               />
@@ -416,7 +405,6 @@ const DentalProductSection: React.FC = () => {
                           );
                         })}
                     </div>
-
                     {/* Color Swatches */}
                     {product.images.some((image) => image.color) && (
                       <div className="col-span-5 mt-4 flex items-center space-x-2 h-full">
@@ -461,7 +449,7 @@ const DentalProductSection: React.FC = () => {
                     )}
                   </div>
                   <div className="bg-[var(--bg-primary)]">
-                    <button className=" text-[var(--text-subheading)]  px-4  rounded-md py-[2rem] flex space-x-2 items-center cursor-pointer">
+                    <button className="text-[var(--text-subheading)] px-4 rounded-md py-[2rem] flex space-x-2 items-center cursor-pointer">
                       <span>Download product data sheet</span>
                       <FileText />
                     </button>

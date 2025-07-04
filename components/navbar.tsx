@@ -14,6 +14,7 @@ import {
 } from "./ui/sheet";
 import { Separator } from "./ui/separator";
 import navData from "@/data/nav-links.json";
+import { useNavigation } from "@/hooks/useNavigation";
 
 interface Product {
   id: number;
@@ -33,8 +34,12 @@ interface NavItem {
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
-
   const navItems: NavItem[] = navData.navItems;
+
+  // Use the generic navigation hook
+  const { handleSectionClick, isNavigating } = useNavigation({
+    debug: process.env.NODE_ENV === "development",
+  });
 
   const handleNavClick = () => {
     setIsOpen(false);
@@ -47,6 +52,27 @@ export default function Navbar() {
 
   const handleSubmenuLeave = () => {
     setOpenSubmenu(null);
+  };
+
+  const handleProductClick = (basePath: string, sectionId: string) => {
+    if (process.env.NODE_ENV === "development") {
+      console.log("🎯 Product clicked:", { basePath, sectionId });
+    }
+
+    // Close the menu first
+    handleNavClick();
+
+    // Use the generic navigation handler
+    handleSectionClick(
+      basePath,
+      sectionId,
+      () => {
+        console.log(`🚀 Starting navigation to ${basePath}#${sectionId}`);
+      },
+      () => {
+        console.log(`✅ Navigation to ${basePath}#${sectionId} initiated`);
+      }
+    );
   };
 
   return (
@@ -92,7 +118,6 @@ export default function Navbar() {
                         />
                       )}
                     </Link>
-
                     {/* Submenu */}
                     {item.hasSubmenu && item.products && (
                       <div
@@ -101,34 +126,42 @@ export default function Navbar() {
                             ? "opacity-100 translate-y-0 pointer-events-auto"
                             : "opacity-0 -translate-y-3 pointer-events-none"
                         }`}
-                        // style={{ top: "100%" }}
                       >
                         <div className="w-full mx-auto px-16 py-16 bg-[var(--bg-primary)]">
-                          <div className="grid grid-cols-12 gap-4">
+                          <div className="grid grid-cols-12 gap-8">
                             {/* Product Image */}
                             <div className="col-span-4 flex justify-start items-center">
-                              {item.image && (
-                                <Image
-                                  src={item.image}
-                                  alt={item.name}
-                                  width={400}
-                                  height={300}
-                                  quality={100}
-                                  className="rounded-lg w-full h-full object-cover"
-                                />
-                              )}
+                              {item.image &&
+                                (console.log(item.image),
+                                (
+                                  <img
+                                    src={item.image}
+                                    alt={item.name}
+                                    // width={400}
+                                    // height={300}
+                                    // quality={100}
+                                    className="rounded-lg w-full h-full object-cover"
+                                  />
+                                ))}
                             </div>
-
                             {/* Products Grid */}
-                            <div className="col-span-8 grid grid-cols-3 grid-rows-2 gap-2">
+                            <div className="col-span-8 grid grid-cols-3 grid-rows-2 gap-6">
                               {item.products.slice(0, 6).map((product) => (
-                                <Link
+                                <div
                                   key={product.id}
-                                  href={`${item.href}#${product.navic_id}`}
-                                  className="block h-full"
-                                  onClick={handleNavClick}
+                                  onClick={() =>
+                                    handleProductClick(
+                                      item.href,
+                                      product.navic_id
+                                    )
+                                  }
+                                  className={`block h-full cursor-pointer transition-all duration-200 ${
+                                    isNavigating
+                                      ? "opacity-50 pointer-events-none scale-95"
+                                      : "hover:opacity-80 hover:scale-105"
+                                  }`}
                                 >
-                                  <div className="bg-[var(--bg-accent)] rounded-2xl h-full p-8 cursor-pointer hover:opacity-80 transition">
+                                  <div className="bg-[var(--bg-accent)] rounded-2xl h-full p-8 transition-all duration-200">
                                     <h3 className="text-[var(--color-primary)] text-[1.62rem] font-semibold">
                                       {product.name}
                                     </h3>
@@ -138,7 +171,7 @@ export default function Navbar() {
                                       </p>
                                     )}
                                   </div>
-                                </Link>
+                                </div>
                               ))}
                             </div>
                           </div>
@@ -152,25 +185,20 @@ export default function Navbar() {
                   </div>
                 ))}
               </div>
-
               {/* Right side actions - Desktop */}
               <div className="flex items-center space-x-4">
-                {/* Language Selector */}
                 <Button
                   variant="ghost"
                   className="p-0 cursor-pointer text-2xl hover:bg-transparent"
                 >
                   🇺🇸
                 </Button>
-
-                {/* Search Icon */}
                 <Button
                   variant="ghost"
                   className="p-0 cursor-pointer text-white hover:bg-transparent"
                 >
                   <Search className="size-5" />
                 </Button>
-
                 <Button className="text-xs cursor-pointer bg-brand text-white px-4 py-2 rounded-md border border-brand transition-colors hover:bg-transparent hover:border-white">
                   Partner with us
                 </Button>
@@ -179,7 +207,6 @@ export default function Navbar() {
 
             {/* Mobile Actions */}
             <div className="lg:hidden flex items-center space-x-2">
-              {/* Mobile Search Icon */}
               <Button
                 variant="ghost"
                 size="icon"
@@ -187,8 +214,6 @@ export default function Navbar() {
               >
                 <Search className="size-5" />
               </Button>
-
-              {/* Mobile Menu Sheet */}
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
                   <Button
@@ -200,12 +225,10 @@ export default function Navbar() {
                     <span className="sr-only">Open menu</span>
                   </Button>
                 </SheetTrigger>
-
                 <SheetContent
                   side="top"
                   className="w-full h-auto bg-black/60 backdrop-blur-[3rem] border-b border-white/20 text-white shadow-2xl"
                 >
-                  {/* Professional Header with Logo */}
                   <SheetHeader className="border-b border-white/10 pb-6 mb-8">
                     <SheetTitle className="sr-only">Resin Work</SheetTitle>
                     <div className="flex items-center justify-center">
@@ -220,10 +243,7 @@ export default function Navbar() {
                       </Link>
                     </div>
                   </SheetHeader>
-
-                  {/* Navigation Content */}
                   <div className="px-2 pb-8">
-                    {/* Navigation Links */}
                     <div className="space-y-2 mb-8">
                       <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider px-4 mb-4">
                         Navigation
@@ -241,10 +261,7 @@ export default function Navbar() {
                         </Link>
                       ))}
                     </div>
-
                     <Separator className="my-8 bg-white/20" />
-
-                    {/* Language & Settings */}
                     <div className="mb-8">
                       <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider px-4 mb-4">
                         Settings
@@ -261,10 +278,7 @@ export default function Navbar() {
                         </Button>
                       </div>
                     </div>
-
                     <Separator className="my-8 bg-white/20" />
-
-                    {/* Call to Action */}
                     <div className="px-4">
                       <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider mb-4">
                         Get Started
@@ -276,8 +290,6 @@ export default function Navbar() {
                         Partner with us
                       </Button>
                     </div>
-
-                    {/* Bottom Padding for Professional Spacing */}
                     <div className="h-8"></div>
                   </div>
                 </SheetContent>
