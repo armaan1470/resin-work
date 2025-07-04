@@ -24,6 +24,8 @@ const GradientTextSection = () => {
       }
 
       animationFrame.current = requestAnimationFrame(() => {
+        if (!containerRef.current) return;
+
         const triggerPosition = window.innerHeight * 0.7;
         const segments = document.querySelectorAll(".text-segment");
         const scrollPosition = window.scrollY + triggerPosition;

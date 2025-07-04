@@ -63,7 +63,7 @@ const VideoTabSection = () => {
   useEffect(() => {
     if (mobileVideoRef.current) {
       const handleCanPlay = () => {
-        const playPromise = mobileVideoRef.current!.play();
+        const playPromise = mobileVideoRef.current?.play();
         if (playPromise !== undefined) {
           playPromise
             .then((_: unknown) => setIsMobileVideoReady(true))
