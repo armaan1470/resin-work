@@ -14,6 +14,12 @@ import {
   ChevronDown,
   ArrowRight,
 } from "lucide-react";
+import {
+  BsInstagram,
+  BsTwitterX,
+  BsLinkedin,
+  BsFacebook,
+} from "react-icons/bs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -79,23 +85,23 @@ const Footer: React.FC = () => {
   });
 
   const social: SocialLink[] = [
+    // {
+    //   icon: <Facebook className="w-6 h-6" />,
+    //   link: "https://www.facebook.com/",
+    //   label: "Facebook",
+    // },
+    // {
+    //   icon: <Instagram className="w-6 h-6" />,
+    //   link: "https://www.instagram.com/",
+    //   label: "Instagram",
+    // },
+    // {
+    //   icon: <Twitter className="w-6 h-6" />,
+    //   link: "https://twitter.com/",
+    //   label: "Twitter",
+    // },
     {
-      icon: <Facebook className="w-6 h-6" />,
-      link: "https://www.facebook.com/",
-      label: "Facebook",
-    },
-    {
-      icon: <Instagram className="w-6 h-6" />,
-      link: "https://www.instagram.com/",
-      label: "Instagram",
-    },
-    {
-      icon: <Twitter className="w-6 h-6" />,
-      link: "https://twitter.com/",
-      label: "Twitter",
-    },
-    {
-      icon: <Linkedin className="w-6 h-6" />,
+      icon: <BsLinkedin />,
       link: "https://www.linkedin.com/",
       label: "LinkedIn",
     },
@@ -340,14 +346,14 @@ const Footer: React.FC = () => {
       <div className="hidden md:block">
         <div className="px-[1.5rem] md:px-[6rem] py-[2rem] md:py-[4rem] grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4">
           {/* Logo and Address */}
-          <div className="col-span-3 order-1">
+          <div className="flex flex-col justify-between col-span-3 order-1">
             <div className="flex justify-start">
               <Image
                 src="/logo.svg"
                 alt="Logo"
                 width={200}
                 height={60}
-                className="mb-4 w-[80%] md:w-auto md:ms-[-5%]"
+                className="mb-4 w-full md:ms-[-5%]"
               />
             </div>
             <div className="text-white text-[12px] leading-[1.6]">
@@ -356,15 +362,15 @@ const Footer: React.FC = () => {
               <br />5 / B5 / 1, TSIIC Automotive Park,
               <br />
               Kallakal - 502336 Telangana, India.
-              <br />
-              <br />
-              <strong className="text-[var(--color-primary)]">GERMANY</strong>
+              {/* <br />
+              <br /> */}
+              {/* <strong className="text-[var(--color-primary)]">GERMANY</strong>
               <br />
               Graichen Produktions - und Vertriebs GmbH
               <br />
               Darmstädter Str.127, Bensheim 64625, Germany.
               <br />
-              Tel.: +49 6251 770788 - 0
+              Tel.: +49 6251 770788 - 0 */}
             </div>
           </div>
 
@@ -380,6 +386,14 @@ const Footer: React.FC = () => {
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
                   Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/jewellery"
+                  className="hover:text-[var(--color-primary)] transition-colors"
+                >
+                  Jewellery
                 </Link>
               </li>
               <li>
@@ -408,26 +422,10 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  href="/diy"
+                  href="/company"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  DIY
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/offer-zone"
-                  className="hover:text-[var(--color-primary)] transition-colors"
-                >
-                  Offer Zone
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/featured"
-                  className="hover:text-[var(--color-primary)] transition-colors"
-                >
-                  Featured
+                  Company
                 </Link>
               </li>
             </ul>
@@ -541,12 +539,7 @@ const Footer: React.FC = () => {
               <br />
               Mon - Sun - 10 AM - 7 PM
             </p>
-            <p className="mt-4">
-              Resellers
-              <br />
-              ?? ?? ??
-            </p>
-            <p className="mt-2">!!!!!!</p>
+            <p className="mt-4">Resellers</p>
           </div>
 
           {/* Bottom Links and Social */}
@@ -606,7 +599,7 @@ const Footer: React.FC = () => {
 
       {/* Mobile Footer */}
       <div className="md:hidden px-5 py-6">
-        <div className="grid grid-cols-2 gap-4 py-4">
+        <div className="flex justify-between gap-4 py-4">
           <Image src="/logo.svg" alt="Logo" width={120} height={40} />
           <div className="flex gap-6 text-[24px]">
             {social.map((item, index) => (
@@ -844,13 +837,13 @@ const Footer: React.FC = () => {
             <br />5 / B5 / 1, TSIIC Automotive Park,
             <br />
             Kallakal - 502336 Telangana, India.
-            <br />
+            {/* <br />
             <br />
             <strong className="text-[var(--color-primary)]">GERMANY</strong>
             <br />
             Graichen Produktions - und Vertriebs GmbH
             <br />
-            Darmstädter Str.127, Bensheim 64625, Germany.
+            Darmstädter Str.127, Bensheim 64625, Germany. */}
           </div>
         </div>
 

@@ -267,7 +267,7 @@ const TimelineSection = () => {
 
       // FIXED: Increased threshold from 40vh to 100vh per tab transition
       // This makes it much harder to accidentally skip tabs during scrolling
-      const SCROLL_THRESHOLD_PER_TAB = 100; // vh units
+      const SCROLL_THRESHOLD_PER_TAB = 80; // vh units
       const INITIAL_THRESHOLD = 300; // vh units for first tab
 
       // Calculate active tab based on scroll position with higher threshold
@@ -438,7 +438,7 @@ const TimelineSection = () => {
     // FIXED: Updated scroll container height calculation to match new threshold
     if (scrollContainerRef.current) {
       const firstTabHeight = 300; // 300vh for first tab
-      const otherTabsHeight = 100 * (tabs.length - 1); // 100vh for others (increased from 40vh)
+      const otherTabsHeight = 80 * (tabs.length - 1); // 100vh for others (increased from 40vh)
       const totalHeight = firstTabHeight + otherTabsHeight;
       scrollContainerRef.current.style.height = `${totalHeight}vh`;
     }
@@ -586,8 +586,7 @@ const TimelineSection = () => {
                   }}
                   className={cn(
                     "text-sm text-[#878787] font-medium cursor-pointer transition-all duration-200 ease-in-out rounded-md  relative z-50 pointer-events-auto bg-transparent",
-                    index === activeTab &&
-                      "text-brand font-bold text-base bg-white/5"
+                    index === activeTab && "text-brand font-bold text-base"
                   )}
                   onClick={(e) => handleTabClick(e, tab.id, index)}
                   style={{
