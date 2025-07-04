@@ -353,7 +353,7 @@ const Footer: React.FC = () => {
                 alt="Logo"
                 width={200}
                 height={60}
-                className="mb-4 w-full md:ms-[-5%]"
+                className="mb-4 w-[60%] md:ms-[-5%]"
               />
             </div>
             <div className="text-white text-[12px] leading-[1.6]">
