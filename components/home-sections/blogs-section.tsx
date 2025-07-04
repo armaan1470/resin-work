@@ -82,7 +82,7 @@ const BlogsSection: React.FC = () => {
                       className={`relative px-8 py-4 rounded-full font-medium transition-all duration-500 ${
                         activeTab === "blogs"
                           ? "text-white"
-                          : "text-gray-600 hover:text-gray-900"
+                          : "text-gray-600 hover:text-brand"
                       }`}
                     >
                       {activeTab === "blogs" && (
@@ -95,7 +95,7 @@ const BlogsSection: React.FC = () => {
                       className={`relative px-8 py-4 rounded-full font-medium transition-all duration-500 ${
                         activeTab === "caseStudies"
                           ? "text-white"
-                          : "text-gray-600 hover:text-gray-900"
+                          : "text-gray-600 hover:text-brand"
                       }`}
                     >
                       {activeTab === "caseStudies" && (
