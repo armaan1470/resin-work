@@ -175,7 +175,7 @@ const VideoTabSection = () => {
         </div>
 
         {/* Scrollable tabs */}
-        <div className="overflow-x-auto pb-4 hide-scrollbar ps-2">
+        <div className="overflow-x-auto pb-4 hide-scrollbar scroll-smooth ps-4">
           <div
             className="flex gap-3"
             style={{ width: `${videoTab.length * 120}px` }}
@@ -184,7 +184,7 @@ const VideoTabSection = () => {
               <button
                 key={`mobile-tab-${index}`}
                 onClick={() => handleTabClick(index)}
-                className={`px-4 py-4 rounded-lg whitespace-nowrap border text-sm font-medium text-[#545454] transition-colors ${
+                className={`px-6 py-2 rounded-lg whitespace-nowrap border text-sm font-medium text-[#545454] transition-colors ${
                   index === activeIndex
                     ? "border-[var(--color-primary)] bg-white "
                     : "bg-white border-gray-600 hover:border-gray-400"
