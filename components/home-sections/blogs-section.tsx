@@ -93,7 +93,7 @@ const BlogsSection = () => {
                 ? "Explore More Blogs"
                 : "View All Case Studies"}
             </button>
-            <img src="/img/blog.png" alt="" className="rounded-lg" />
+            <img src="/images/blog.png" alt="" className="rounded-lg" />
           </div>
           <div className="col-span-8 p-[3rem]">
             {currentData.map((item) => (

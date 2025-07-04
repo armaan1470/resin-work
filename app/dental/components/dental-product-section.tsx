@@ -106,14 +106,42 @@ const DentalProductSection: React.FC = () => {
     }, {} as IndexState);
   });
 
-  const toggleAccordion = (productId: number, index: number) => {
-    setActiveIndices((prev) => ({
-      ...prev,
-      [productId]: prev[productId] === index ? null : index,
-    }));
-    setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 350);
+  // const toggleAccordion = (productId: number, index: number) => {
+  //   setActiveIndices((prev) => ({
+  //     ...prev,
+  //     [productId]: prev[productId] === index ? null : index,
+  //   }));
+  //   setTimeout(() => {
+  //     ScrollTrigger.refresh();
+  //   }, 350);
+  // };
+
+  const hoverTimers = useRef<Record<string, NodeJS.Timeout | null>>({});
+
+  const handleAccordionHover = (
+    productId: number,
+    index: number,
+    isEntering: boolean
+  ) => {
+    const key = `${productId}-${index}`;
+
+    // Clear any existing timer
+    if (hoverTimers.current[key]) {
+      clearTimeout(hoverTimers.current[key]!);
+      hoverTimers.current[key] = null;
+    }
+
+    // Set new timer based on enter/leave
+    hoverTimers.current[key] = setTimeout(
+      () => {
+        setActiveIndices((prev) => ({
+          ...prev,
+          [productId]: isEntering ? index : null,
+        }));
+        ScrollTrigger.refresh();
+      },
+      isEntering ? 200 : 150
+    ); // adjust delay as needed
   };
 
   const handleImageChange = (
@@ -284,13 +312,10 @@ const DentalProductSection: React.FC = () => {
                             <div
                               className="flex items-center justify-between cursor-pointer p-[1rem] transition-colors duration-150"
                               onMouseEnter={() =>
-                                toggleAccordion(product.id, idx)
+                                handleAccordionHover(product.id, idx, true)
                               }
                               onMouseLeave={() =>
-                                setActiveIndices((prev) => ({
-                                  ...prev,
-                                  [product.id]: null,
-                                }))
+                                handleAccordionHover(product.id, idx, false)
                               }
                             >
                               <div className="flex items-center space-x-3">
