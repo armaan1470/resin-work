@@ -17,20 +17,20 @@ import "./hero-section.css";
 const slides = [
   {
     image: "/hero-section/slider1.png",
-    heading: "Engineered for Precision, Designed for Dentistry!",
-    text: "Our resins are the trusted choice for dental professionals who demand accuracy and reliability. Delivering high-performance solutions for every dental application.",
+    heading: "Engineered for Precision, <br /> Designed for Dentistry!",
+    text: "Our resins are the trusted choice for dental professionals who demand accuracy and reliability.",
     buttonText: "Explore More",
   },
   {
     image: "/hero-section/slider2.png",
-    heading: "Smooth, Accurate, and Ready to Cast",
-    text: "From intricate details to smooth surface finishes, our Resins ensures that your jewellery designs are brought to life with exceptional clarity and precision, ready for casting.",
+    heading: "Smooth, Accurate, <br />  & Ready to Cast",
+    text: "Bring jewellery designs to life with clarity and precision, ready for casting.",
     buttonText: "Discover Products",
   },
   {
     image: "/hero-section/slider3.png",
-    heading: "Engineered for Precision, Designed for Dentistry!",
-    text: "Our resins are the trusted choice for dental professionals who demand accuracy and reliability. Delivering high-performance solutions for every dental application.",
+    heading: "Engineered for Precision, <br /> Designed for Dentistry!",
+    text: "Trusted by dental professionals for high-performance results.",
     buttonText: "Learn More",
   },
 ];
@@ -93,15 +93,16 @@ const HeroSection = () => {
                     animate="animate"
                     exit="exit"
                     variants={contentVariants}
-                    className="absolute left-6 bottom-12 md:left-16 lg:left-24 md:bottom-1/5 max-w-[80%] lg:max-w-[40%] xl:max-w-[30%] z-10"
+                    className="absolute left-6 bottom-6 md:left-16 lg:left-24 md:bottom-1/5 max-w-[80%] lg:max-w-[40%] xl:max-w-[30%] z-10"
                   >
-                    <h2 className="text-4xl font-bold mb-4 text-wrap font-family-satoshi">
-                      {slide.heading}
-                    </h2>
-                    <p className="mb-8">{slide.text}</p>
+                    <h2
+                      dangerouslySetInnerHTML={{ __html: slide.heading }}
+                      className="text-2xl lg:text-4xl font-bold mb-3 md:mb-4 text-wrap font-family-satoshi"
+                    ></h2>
+                    <p className="md:mb-8 text-sm">{slide.text}</p>
                     <Button
                       size="lg"
-                      className="cursor-pointer px-8 py-6 text-base bg-brand text-white rounded-md border-1 border-brand transition-colors hover:bg-transparent hover:border-1 hover:border-white"
+                      className="hidden md:flex cursor-pointer px-8 py-6 text-base bg-brand text-white rounded-md border-1 border-brand transition-colors hover:bg-transparent hover:border-1 hover:border-white"
                     >
                       {slide.buttonText}
                     </Button>
