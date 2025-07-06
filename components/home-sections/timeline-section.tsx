@@ -13,6 +13,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Play } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -620,7 +621,8 @@ const TimelineSection = () => {
 
       {/* YouTube Modal */}
       <Dialog open={modalIsOpen} onOpenChange={setModalIsOpen}>
-        <DialogContent className="max-w-4xl w-[90vw] h-[80vh] p-0 bg-transparent border-none">
+        <DialogTitle className="sr-only">This is Youtube Dialog</DialogTitle>
+        <DialogContent className="w-[100%] h-[38%] lg:min-w-[1200px] lg:min-h-[675px] p-0 bg-transparent border-none">
           <div className="w-full h-full">
             <iframe
               width="100%"
