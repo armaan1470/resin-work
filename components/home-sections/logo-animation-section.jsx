@@ -165,7 +165,7 @@ const LogoAnimationSection = () => {
       .to(lRef.current, {
         x: "-35%",
         rotate: -30,
-        y: "-20vh",
+        // y: "20vh",
         opacity: 0.1,
         zIndex: 13,
         ease: "power1.inOut",
@@ -248,10 +248,6 @@ const LogoAnimationSection = () => {
 
   return (
     <div className="relative hidden md:block">
-      {/* Animation Step Indicator - Fixed to viewport */}
-      {/* <div className="fixed top-4 left-4 bg-black/50 text-white px-4 py-2 rounded-lg z-[9999]">
-        Current Step: {currentStep}
-      </div> */}
       <div className="grid grid-cols-2 relative py-[16rem] z-[10]">
         <div className="">
           <div

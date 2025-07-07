@@ -108,7 +108,7 @@ const SolutionsSection = () => {
         pin: true,
         start: "top 10%",
         endTrigger: mobileContainerRef.current,
-        end: "bottom 65%", // when mobileContainer bottom hits 40% from top of viewport
+        end: "bottom top", // when mobileContainer bottom hits 40% from top of viewport
         scrub: true,
       });
     }
@@ -118,7 +118,7 @@ const SolutionsSection = () => {
     <div>
       <div
         ref={mobileContainerRef}
-        className="hidden mt-[] max-sm:block overflow-hidden  w-screen mt-[-30%]"
+        className="hidden mt-[] max-sm:block overflow-hidden  w-screen md:mt-[-30%]"
       >
         <div className="grid grid-cols-12 relative bg-[#d9d9d9]">
           <div className="col-span-2"></div>

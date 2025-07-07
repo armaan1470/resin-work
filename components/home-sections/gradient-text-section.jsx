@@ -26,7 +26,7 @@ const GradientTextSection = () => {
       animationFrame.current = requestAnimationFrame(() => {
         if (!containerRef.current) return;
 
-        const triggerPosition = window.innerHeight * 0.7;
+        const triggerPosition = window.innerHeight * 0.5;
         const segments = document.querySelectorAll(".text-segment");
         const scrollPosition = window.scrollY + triggerPosition;
 
@@ -79,16 +79,15 @@ const GradientTextSection = () => {
   }, [activeIndex]);
 
   const getTransitionClass = (index) => {
-    if (index === activeIndex) return "duration-700";
-    if (index === previousIndex) return "duration-200";
-    return "duration-100";
+    // Use consistent, longer transition for smoother effect
+    return "duration-1000 ease-out";
   };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: containerRef.current,
-        start: "top 5%",
+        start: "top 0%",
         end: "bottom -200%", // Changed from -150% to -100%
         pin: true,
         pinSpacing: true,
@@ -100,13 +99,13 @@ const GradientTextSection = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative ">
+    <div ref={containerRef} className="relative  ">
       <div className="sticky top-0 h-screen flex items-center z-[30] px-[1rem] md:px-[12rem]">
         <p className="text-[2rem] md:text-[3rem] md:leading-[4.6rem] leading-[120%]">
           {segments.map((segment, index) => (
             <span
               key={index}
-              className={`text-segment font-semibold transition-colors ease-in-out ${getTransitionClass(
+              className={`text-segment font-semibold transition-colors ${getTransitionClass(
                 index
               )} ${
                 index === activeIndex

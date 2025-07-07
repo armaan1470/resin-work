@@ -32,11 +32,15 @@ const MobileTimelineSection = () => {
   const progressBarRef = useRef<HTMLDivElement>(null);
   const progressFillRef = useRef<HTMLDivElement>(null);
   const textContainerRef = useRef<HTMLDivElement>(null);
+  const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
 
   const [activeTab, setActiveTab] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentYoutubeUrl, setCurrentYoutubeUrl] = useState("");
   const [isPinned, setIsPinned] = useState(false);
+
+  // Use ref to track current tab to avoid stale closures
+  const activeTabRef = useRef(0);
 
   const tabs: Tab[] = useMemo(
     () => [
@@ -83,6 +87,16 @@ const MobileTimelineSection = () => {
     []
   );
 
+  // Update progress bar based on scroll progress
+  const updateProgressBar = useCallback((progress: number) => {
+    if (progressFillRef.current) {
+      gsap.set(progressFillRef.current, {
+        scaleX: progress,
+        transformOrigin: "left center",
+      });
+    }
+  }, []);
+
   // Initialize scroll-triggered pinning and tab changes
   useEffect(() => {
     if (!scrollContainerRef.current || !viewContainerRef.current) return;
@@ -90,80 +104,109 @@ const MobileTimelineSection = () => {
     const scrollContainer = scrollContainerRef.current;
     const viewContainer = viewContainerRef.current;
 
-    // Calculate heights
-    const tabHeight = window.innerHeight * 0.8; // 80vh per tab
-    const totalScrollHeight = tabHeight * tabs.length;
+    // Clean up previous ScrollTrigger
+    if (scrollTriggerRef.current) {
+      scrollTriggerRef.current.kill();
+    }
 
-    // Set container height
-    scrollContainer.style.height = `${
-      totalScrollHeight + window.innerHeight
-    }px`;
+    // Calculate heights more precisely
+    const viewportHeight = window.innerHeight;
+    const sectionHeight = viewportHeight * 4; // Total scroll distance for all tabs
 
-    // Create pinning animation
-    const pinTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: scrollContainer,
-        start: "top top",
-        end: `+=${totalScrollHeight}`,
-        scrub: true,
-        pin: viewContainer,
-        pinSpacing: false,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const currentIndex = Math.floor(progress * tabs.length);
-          const clampedIndex = Math.min(currentIndex, tabs.length - 1);
+    // Set container height to create scroll distance
+    scrollContainer.style.height = `${sectionHeight + viewportHeight}px`;
 
-          if (clampedIndex !== activeTab) {
-            setActiveTab(clampedIndex);
-          }
+    // Create the main ScrollTrigger with proper calculations
+    scrollTriggerRef.current = ScrollTrigger.create({
+      trigger: scrollContainer,
+      start: "top top",
+      end: `+=${sectionHeight}`,
+      scrub: true,
+      pin: viewContainer,
+      pinSpacing: false,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        const progress = self.progress;
 
-          // Update progress bar
-          updateProgressBar(progress);
+        // Calculate which tab should be active
+        const tabProgress = progress * tabs.length;
+        const newActiveTab = Math.floor(tabProgress);
+        const clampedTab = Math.min(Math.max(newActiveTab, 0), tabs.length - 1);
 
-          // Set pinned state
-          if (progress > 0 && progress < 1) {
-            setIsPinned(true);
-          } else {
-            setIsPinned(false);
-          }
-        },
+        // Update progress bar
+        updateProgressBar(progress);
+
+        // Only update active tab if it actually changed
+        if (clampedTab !== activeTabRef.current) {
+          activeTabRef.current = clampedTab;
+          setActiveTab(clampedTab);
+        }
+
+        // Update pinned state
+        const shouldBePinned = progress > 0.01 && progress < 0.99;
+        setIsPinned(shouldBePinned);
+      },
+      onRefresh: () => {
+        // Reset to first tab on refresh
+        activeTabRef.current = 0;
+        setActiveTab(0);
+        setIsPinned(false);
       },
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      if (scrollTriggerRef.current) {
+        scrollTriggerRef.current.kill();
+        scrollTriggerRef.current = null;
+      }
     };
-  }, [tabs.length]);
-
-  // Update progress bar based on scroll progress
-  const updateProgressBar = useCallback((progress: number) => {
-    if (progressFillRef.current) {
-      gsap.set(progressFillRef.current, {
-        scaleX: progress,
-      });
-    }
-  }, []);
+  }, [tabs.length, updateProgressBar]);
 
   // Handle video changes when activeTab changes
   useEffect(() => {
     const currentTab = tabs[activeTab];
+    if (!currentTab) return;
+
     if (!currentTab.isYoutube && videoRef.current) {
       const video = videoRef.current;
+
+      // Only change video source if it's different
       if (video.src !== currentTab.video) {
         video.src = currentTab.video;
         video.load();
       }
-      video.play().catch((e) => console.log("Video play failed:", e));
+
+      // Play video with error handling
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((e) => {
+          console.log("Video play failed:", e);
+        });
+      }
     }
   }, [activeTab, tabs]);
 
-  // Animate text content changes
+  // Animate text content changes with improved timing
   useEffect(() => {
     if (textContainerRef.current) {
+      // Kill any existing animation
+      gsap.killTweensOf(textContainerRef.current);
+
+      // Animate content change
       gsap.fromTo(
         textContainerRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
+        {
+          opacity: 0,
+          y: 50,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          ease: "power2.out",
+          delay: 0.1,
+        }
       );
     }
   }, [activeTab]);
@@ -193,7 +236,7 @@ const MobileTimelineSection = () => {
 
   // Initialize first video
   useEffect(() => {
-    if (videoRef.current && !tabs[0].isYoutube) {
+    if (videoRef.current && !tabs[0]?.isYoutube) {
       const video = videoRef.current;
       video.src = tabs[0].video;
       video.load();
@@ -201,16 +244,28 @@ const MobileTimelineSection = () => {
     }
   }, [tabs]);
 
+  // Refresh ScrollTrigger on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      ScrollTrigger.refresh();
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const currentTab = tabs[activeTab];
+
+  if (!currentTab) {
+    return null;
+  }
 
   return (
     <div className="relative lg:hidden">
-      {" "}
-      {/* Only show on mobile/tablet */}
       <div ref={scrollContainerRef} className="relative">
         <div
           ref={viewContainerRef}
-          className="relative flex flex-col h-screen w-full max-w-sm mx-auto px-4 py-8"
+          className="relative flex flex-col w-full max-w-sm mx-auto px-4 py-8"
         >
           {/* Video Container */}
           <div className="relative w-full aspect-video bg-[#111] rounded-lg overflow-hidden mb-6 mt-16">
@@ -253,15 +308,15 @@ const MobileTimelineSection = () => {
           </div>
 
           {/* Text Content */}
-          <div ref={textContainerRef} className="flex-1 flex flex-col">
+          <div ref={textContainerRef} className=" flex flex-col ">
             <h2 className="text-3xl font-bold mb-3 leading-tight">
               {currentTab.heading}
             </h2>
-            <p className="text-base leading-relaxed opacity-80  mb-6">
+            <p className="text-base leading-relaxed opacity-80 mb-6">
               {currentTab.content}
             </p>
 
-            {/* Tab Indicator (just numbers) */}
+            {/* Tab Indicator */}
             <div className="text-center mb-4">
               <span className="text-xs text-gray-500">
                 {activeTab + 1} of {tabs.length}
@@ -276,16 +331,17 @@ const MobileTimelineSection = () => {
               >
                 <div
                   ref={progressFillRef}
-                  className="h-full bg-[var(--color-primary)] origin-left scale-x-0 transition-transform duration-300 ease-out"
+                  className="h-full bg-[var(--color-primary)] origin-left scale-x-0"
                 />
               </div>
               <div className="flex justify-between mt-2 text-xs text-gray-500">
                 <span>Start</span>
                 <span>End</span>
               </div>
-              {/* Scroll Hint */}
+
+              {/* Scroll Hint - only show when not pinned */}
               {!isPinned && (
-                <div className="absolute -bottom-20 left-1/2 transform -translate-x-1/2  text-center">
+                <div className="absolute -bottom-20 left-1/2 transform -translate-x-1/2 text-center">
                   <div className="animate-bounce">
                     <div className="w-full flex justify-center">
                       <ChevronsUpIcon className="text-brand" />
@@ -300,6 +356,7 @@ const MobileTimelineSection = () => {
           </div>
         </div>
       </div>
+
       {/* YouTube Modal */}
       <Dialog open={modalIsOpen} onOpenChange={setModalIsOpen}>
         <DialogContent className="max-w-[95vw] w-full h-[50vh] p-0 bg-transparent border-none">
