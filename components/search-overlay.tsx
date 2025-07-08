@@ -65,7 +65,7 @@ export default function SearchOverlay({
                   const rect = inputRef.current.getBoundingClientRect();
                   if (rect.top < 0 || rect.bottom > window.innerHeight) {
                     window.scrollTo({
-                      top: window.scrollY + rect.top - 2, // minimal offset
+                      top: window.scrollY + rect.top - 1, // minimal offset
                       behavior: "smooth",
                     });
                   }
@@ -214,7 +214,7 @@ export default function SearchOverlay({
                             rect.bottom > window.innerHeight
                           ) {
                             window.scrollTo({
-                              top: window.scrollY + rect.top - 2, // minimal offset
+                              top: window.scrollY + rect.top - 1, // minimal offset
                               behavior: "smooth",
                             });
                           }
