@@ -87,7 +87,7 @@ export default function SearchOverlay({
             behavior: "smooth",
             block: "center",
           });
-        }, 1000);
+        }, 0);
       },
     });
   };
