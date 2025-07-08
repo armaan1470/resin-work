@@ -215,23 +215,26 @@ export default function SearchOverlay({
               placeholder="Search..."
               ref={inputRef}
               onFocus={() => {
-                setTimeout(() => {
-                  inputRef.current?.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                  });
+                // Fallback: only scroll if visualViewport is not available
+                if (typeof window !== "undefined" && !window.visualViewport) {
                   setTimeout(() => {
-                    if (inputRef.current) {
-                      const rect = inputRef.current.getBoundingClientRect();
-                      if (rect.top < 0 || rect.bottom > window.innerHeight) {
-                        window.scrollTo({
-                          top: window.scrollY + rect.top - 20,
-                          behavior: "smooth",
-                        });
+                    inputRef.current?.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                    setTimeout(() => {
+                      if (inputRef.current) {
+                        const rect = inputRef.current.getBoundingClientRect();
+                        if (rect.top < 0 || rect.bottom > window.innerHeight) {
+                          window.scrollTo({
+                            top: window.scrollY + rect.top - 20,
+                            behavior: "smooth",
+                          });
+                        }
                       }
-                    }
-                  }, 200);
-                }, 100);
+                    }, 200);
+                  }, 100);
+                }
               }}
               className="w-full text-[1.2rem] md:text-[1.5rem] rounded-full outline-none border-[2.5px] border-gray-100 px-6 py-4 text-sm text-white placeholder:text-gray-400 bg-transparent"
               autoFocus
