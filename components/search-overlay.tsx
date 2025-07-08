@@ -55,17 +55,23 @@ export default function SearchOverlay({
         viewportListener = () => {
           setTimeout(() => {
             inputRef.current?.focus();
-            setTimeout(() => {
-              if (inputRef.current) {
-                const rect = inputRef.current.getBoundingClientRect();
-                if (rect.top < 0 || rect.bottom > window.innerHeight) {
-                  window.scrollTo({
-                    top: window.scrollY + rect.top - 4, // minimal offset
-                    behavior: "smooth",
-                  });
+            if (inputRef.current) {
+              inputRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+              setTimeout(() => {
+                if (inputRef.current) {
+                  const rect = inputRef.current.getBoundingClientRect();
+                  if (rect.top < 0 || rect.bottom > window.innerHeight) {
+                    window.scrollTo({
+                      top: window.scrollY + rect.top - 2, // minimal offset
+                      behavior: "smooth",
+                    });
+                  }
                 }
-              }
-            }, 100);
+              }, 150);
+            }
           }, 100);
         };
         window.visualViewport.addEventListener("resize", viewportListener);
@@ -196,13 +202,24 @@ export default function SearchOverlay({
                 if (typeof window !== "undefined" && !window.visualViewport) {
                   setTimeout(() => {
                     if (inputRef.current) {
-                      const rect = inputRef.current.getBoundingClientRect();
-                      if (rect.top < 0 || rect.bottom > window.innerHeight) {
-                        window.scrollTo({
-                          top: window.scrollY + rect.top - 4, // minimal offset
-                          behavior: "smooth",
-                        });
-                      }
+                      inputRef.current.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                      });
+                      setTimeout(() => {
+                        if (inputRef.current) {
+                          const rect = inputRef.current.getBoundingClientRect();
+                          if (
+                            rect.top < 0 ||
+                            rect.bottom > window.innerHeight
+                          ) {
+                            window.scrollTo({
+                              top: window.scrollY + rect.top - 2, // minimal offset
+                              behavior: "smooth",
+                            });
+                          }
+                        }
+                      }, 150);
                     }
                   }, 100);
                 }

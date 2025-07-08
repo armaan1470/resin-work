@@ -265,7 +265,7 @@ const MobileTimelineSection = () => {
       <div ref={scrollContainerRef} className="relative">
         <div
           ref={viewContainerRef}
-          className="relative flex flex-col w-full min-h-screen max-w-sm mx-auto px-4 py-8"
+          className="relative flex flex-col w-full min-h-screen max-w-sm mx-auto px-4 pt-16 pb-4"
         >
           {/* Video Container */}
           <div className="relative w-full aspect-video bg-[#111] rounded-lg overflow-hidden mb-6 mt-16">
@@ -308,7 +308,7 @@ const MobileTimelineSection = () => {
           </div>
 
           {/* Progress Bar */}
-          <div className="relative py-8">
+          <div className="relative pt-8 pb-10">
             <div
               ref={progressBarRef}
               className="h-2 bg-gray-300 dark:bg-gray-700 rounded-full overflow-hidden "
