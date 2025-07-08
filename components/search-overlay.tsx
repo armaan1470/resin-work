@@ -65,7 +65,7 @@ export default function SearchOverlay({
                 const rect = inputRef.current.getBoundingClientRect();
                 if (rect.top < 0 || rect.bottom > window.innerHeight) {
                   window.scrollTo({
-                    top: window.scrollY + rect.top - 20,
+                    top: window.scrollY + rect.top - 10,
                     behavior: "smooth",
                   });
                 }
@@ -138,7 +138,7 @@ export default function SearchOverlay({
               const rect = inputRef.current.getBoundingClientRect();
               if (rect.top < 0 || rect.bottom > window.innerHeight) {
                 window.scrollTo({
-                  top: window.scrollY + rect.top - 20,
+                  top: window.scrollY + rect.top - 10,
                   behavior: "smooth",
                 });
               }
@@ -227,7 +227,7 @@ export default function SearchOverlay({
                         const rect = inputRef.current.getBoundingClientRect();
                         if (rect.top < 0 || rect.bottom > window.innerHeight) {
                           window.scrollTo({
-                            top: window.scrollY + rect.top - 20,
+                            top: window.scrollY + rect.top - 10,
                             behavior: "smooth",
                           });
                         }
