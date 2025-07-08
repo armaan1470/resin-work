@@ -20,28 +20,39 @@ export default function SearchOverlay({
   const modalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Escape key & scroll lock handling
   useEffect(() => {
     const escHandler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
 
+    const clickOutsideHandler = (e: MouseEvent) => {
+      if (
+        overlayRef.current &&
+        modalRef.current &&
+        !modalRef.current.contains(e.target as Node)
+      ) {
+        hideOverlay();
+      }
+    };
+
     if (isOpen) {
       document.body.style.overflow = "hidden";
       document.addEventListener("keydown", escHandler);
+      document.addEventListener("mousedown", clickOutsideHandler);
       showOverlay();
     } else {
       document.body.style.overflow = "";
       document.removeEventListener("keydown", escHandler);
+      document.removeEventListener("mousedown", clickOutsideHandler);
     }
 
     return () => {
       document.body.style.overflow = "";
       document.removeEventListener("keydown", escHandler);
+      document.removeEventListener("mousedown", clickOutsideHandler);
     };
   }, [isOpen]);
 
-  // Show animation with delayed input focus for mobile
   const showOverlay = () => {
     if (!overlayRef.current || !modalRef.current) return;
 
@@ -70,7 +81,6 @@ export default function SearchOverlay({
           { opacity: 1, y: 0, duration: 0.5 }
         );
 
-        // Delay focus to avoid layout shift on mobile
         setTimeout(() => {
           inputRef.current?.focus();
           inputRef.current?.scrollIntoView({
@@ -82,7 +92,6 @@ export default function SearchOverlay({
     });
   };
 
-  // Close animation
   const hideOverlay = () => {
     if (!overlayRef.current || !modalRef.current) return;
 
@@ -106,7 +115,6 @@ export default function SearchOverlay({
     });
   };
 
-  // Form submit handler
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const query = inputRef.current?.value.trim();
@@ -119,7 +127,7 @@ export default function SearchOverlay({
   return (
     <div
       ref={overlayRef}
-      className={`fixed bg-black/90 z-[9999] left-1/2 ${
+      className={`fixed bg-black/60 backdrop-blur-md z-[9999] left-1/2 ${
         isOpen ? "block" : "hidden"
       }`}
       style={{
@@ -130,7 +138,7 @@ export default function SearchOverlay({
         ref={modalRef}
         className="absolute inset-0 flex items-center justify-center opacity-0"
       >
-        <div className="relative h-full rounded-2xl shadow-2xl p-10 w-full mx-4 my-10 flex flex-col justify-center items-center">
+        <div className="relative h-full rounded-2xl shadow-2xl p-10 w-full mx-4 my-10 flex flex-col justify-center items-center bg-transparent">
           {/* Close button */}
           <button
             onClick={hideOverlay}
@@ -140,7 +148,7 @@ export default function SearchOverlay({
             <IoClose />
           </button>
 
-          {/* Search Form */}
+          {/* Search form */}
           <form
             onSubmit={handleSubmit}
             className="relative flex w-[90%] md:w-[70%] h-[4rem] items-center gap-2"
