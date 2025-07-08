@@ -21,6 +21,11 @@ export default function SearchOverlay({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    const isMobile =
+      typeof window !== "undefined" &&
+      /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
     const escHandler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -36,7 +41,9 @@ export default function SearchOverlay({
     };
 
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      if (!isMobile) {
+        document.body.style.overflow = "hidden";
+      }
       document.addEventListener("keydown", escHandler);
       document.addEventListener("mousedown", clickOutsideHandler);
       showOverlay();
@@ -81,17 +88,29 @@ export default function SearchOverlay({
           { opacity: 1, y: 0, duration: 0.5 }
         );
 
-        // Focus and scroll reliably after animation/layout
-        inputRef.current?.focus();
+        // Delay focus/scroll to ensure overlay is fully visible and keyboard is up
+        setTimeout(() => {
+          inputRef.current?.focus();
 
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            inputRef.current?.scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-            });
+          // Try scrollIntoView with block: "start"
+          inputRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
           });
-        });
+
+          // Fallback: scroll window if still not visible (for mobile)
+          setTimeout(() => {
+            if (inputRef.current) {
+              const rect = inputRef.current.getBoundingClientRect();
+              if (rect.top < 0 || rect.bottom > window.innerHeight) {
+                window.scrollTo({
+                  top: window.scrollY + rect.top - 20,
+                  behavior: "smooth",
+                });
+              }
+            }
+          }, 200);
+        }, 400); // Delay matches or exceeds animation duration
       },
     });
   };
