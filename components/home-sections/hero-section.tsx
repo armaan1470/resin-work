@@ -61,7 +61,7 @@ const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="relative flex justify-center -top-24 bg-primary w-full overflow-hidden">
+    <section className="relative flex justify-center -top-24 bg-primary h-screen w-full overflow-hidden">
       <Swiper
         modules={[Autoplay, Pagination, EffectFade]}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
