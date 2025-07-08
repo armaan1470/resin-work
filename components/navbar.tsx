@@ -131,18 +131,16 @@ export default function Navbar() {
                           <div className="grid grid-cols-12 gap-8">
                             {/* Product Image */}
                             <div className="col-span-4 flex justify-start items-center">
-                              {item.image &&
-                                (console.log(item.image),
-                                (
-                                  <img
-                                    src={item.image}
-                                    alt={item.name}
-                                    // width={400}
-                                    // height={300}
-                                    // quality={100}
-                                    className="rounded-lg w-full h-full object-cover"
-                                  />
-                                ))}
+                              {item.image && (
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  // width={400}
+                                  // height={300}
+                                  // quality={100}
+                                  className="rounded-lg w-full h-full object-cover"
+                                />
+                              )}
                             </div>
                             {/* Products Grid */}
                             <div className="col-span-8 grid grid-cols-3 grid-rows-2 gap-6">
