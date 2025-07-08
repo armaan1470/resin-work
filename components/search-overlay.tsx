@@ -55,22 +55,17 @@ export default function SearchOverlay({
         viewportListener = () => {
           setTimeout(() => {
             inputRef.current?.focus();
-            inputRef.current?.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-            // Fallback manual scroll
             setTimeout(() => {
               if (inputRef.current) {
                 const rect = inputRef.current.getBoundingClientRect();
                 if (rect.top < 0 || rect.bottom > window.innerHeight) {
                   window.scrollTo({
-                    top: window.scrollY + rect.top - 10,
+                    top: window.scrollY + rect.top - 4, // minimal offset
                     behavior: "smooth",
                   });
                 }
               }
-            }, 200);
+            }, 100);
           }, 100);
         };
         window.visualViewport.addEventListener("resize", viewportListener);
@@ -122,28 +117,10 @@ export default function SearchOverlay({
           { opacity: 1, y: 0, duration: 0.5 }
         );
 
-        // Delay focus/scroll to ensure overlay is fully visible and keyboard is up
+        // Delay focus to ensure overlay is fully visible and keyboard is up
         setTimeout(() => {
           inputRef.current?.focus();
-
-          // Try scrollIntoView with block: "start"
-          // inputRef.current?.scrollIntoView({
-          //   behavior: "smooth",
-          //   block: "start",
-          // });
-
-          // Fallback: scroll window if still not visible (for mobile)
-          setTimeout(() => {
-            if (inputRef.current) {
-              const rect = inputRef.current.getBoundingClientRect();
-              if (rect.top < 0 || rect.bottom > window.innerHeight) {
-                window.scrollTo({
-                  top: window.scrollY + rect.top - 5,
-                  behavior: "smooth",
-                });
-              }
-            }
-          }, 200);
+          // No scrollIntoView or manual scroll here; handled by viewportListener or onFocus fallback
         }, 400); // Delay matches or exceeds animation duration
       },
     });
@@ -218,21 +195,15 @@ export default function SearchOverlay({
                 // Fallback: only scroll if visualViewport is not available
                 if (typeof window !== "undefined" && !window.visualViewport) {
                   setTimeout(() => {
-                    inputRef.current?.scrollIntoView({
-                      behavior: "smooth",
-                      block: "start",
-                    });
-                    setTimeout(() => {
-                      if (inputRef.current) {
-                        const rect = inputRef.current.getBoundingClientRect();
-                        if (rect.top < 0 || rect.bottom > window.innerHeight) {
-                          window.scrollTo({
-                            top: window.scrollY + rect.top - 10,
-                            behavior: "smooth",
-                          });
-                        }
+                    if (inputRef.current) {
+                      const rect = inputRef.current.getBoundingClientRect();
+                      if (rect.top < 0 || rect.bottom > window.innerHeight) {
+                        window.scrollTo({
+                          top: window.scrollY + rect.top - 4, // minimal offset
+                          behavior: "smooth",
+                        });
                       }
-                    }, 200);
+                    }
                   }, 100);
                 }
               }}
