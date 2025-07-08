@@ -26,6 +26,8 @@ export default function SearchOverlay({
       /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent
       );
+    let viewportListener: (() => void) | null = null;
+
     const escHandler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -47,16 +49,48 @@ export default function SearchOverlay({
       document.addEventListener("keydown", escHandler);
       document.addEventListener("mousedown", clickOutsideHandler);
       showOverlay();
+
+      // VisualViewport resize listener for mobile keyboard
+      if (isMobile && typeof window !== "undefined" && window.visualViewport) {
+        viewportListener = () => {
+          setTimeout(() => {
+            inputRef.current?.focus();
+            inputRef.current?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+            // Fallback manual scroll
+            setTimeout(() => {
+              if (inputRef.current) {
+                const rect = inputRef.current.getBoundingClientRect();
+                if (rect.top < 0 || rect.bottom > window.innerHeight) {
+                  window.scrollTo({
+                    top: window.scrollY + rect.top - 20,
+                    behavior: "smooth",
+                  });
+                }
+              }
+            }, 200);
+          }, 100);
+        };
+        window.visualViewport.addEventListener("resize", viewportListener);
+      }
     } else {
       document.body.style.overflow = "";
       document.removeEventListener("keydown", escHandler);
       document.removeEventListener("mousedown", clickOutsideHandler);
+      if (viewportListener && window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", viewportListener);
+      }
     }
 
     return () => {
       document.body.style.overflow = "";
       document.removeEventListener("keydown", escHandler);
       document.removeEventListener("mousedown", clickOutsideHandler);
+      if (viewportListener && window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", viewportListener);
+      }
     };
   }, [isOpen]);
 
@@ -180,6 +214,25 @@ export default function SearchOverlay({
               type="text"
               placeholder="Search..."
               ref={inputRef}
+              onFocus={() => {
+                setTimeout(() => {
+                  inputRef.current?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                  setTimeout(() => {
+                    if (inputRef.current) {
+                      const rect = inputRef.current.getBoundingClientRect();
+                      if (rect.top < 0 || rect.bottom > window.innerHeight) {
+                        window.scrollTo({
+                          top: window.scrollY + rect.top - 20,
+                          behavior: "smooth",
+                        });
+                      }
+                    }
+                  }, 200);
+                }, 100);
+              }}
               className="w-full text-[1.2rem] md:text-[1.5rem] rounded-full outline-none border-[2.5px] border-gray-100 px-6 py-4 text-sm text-white placeholder:text-gray-400 bg-transparent"
               autoFocus
               aria-label="Search"
