@@ -265,7 +265,7 @@ const MobileTimelineSection = () => {
       <div ref={scrollContainerRef} className="relative">
         <div
           ref={viewContainerRef}
-          className="relative flex flex-col w-full max-w-sm mx-auto px-4 py-8"
+          className="relative flex flex-col w-full min-h-screen max-w-sm mx-auto px-4 py-8"
         >
           {/* Video Container */}
           <div className="relative w-full aspect-video bg-[#111] rounded-lg overflow-hidden mb-6 mt-16">
