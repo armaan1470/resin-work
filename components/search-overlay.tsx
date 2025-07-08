@@ -81,13 +81,17 @@ export default function SearchOverlay({
           { opacity: 1, y: 0, duration: 0.5 }
         );
 
-        setTimeout(() => {
-          inputRef.current?.focus();
-          inputRef.current?.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
+        // Focus and scroll reliably after animation/layout
+        inputRef.current?.focus();
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            inputRef.current?.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
           });
-        }, 0);
+        });
       },
     });
   };
