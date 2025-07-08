@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import { Search, Menu, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import {
   Sheet,
@@ -15,6 +16,7 @@ import {
 import { Separator } from "./ui/separator";
 import navData from "@/data/nav-links.json";
 import { useNavigation } from "@/hooks/useNavigation";
+import SearchOverlay from "./search-overlay";
 
 interface Product {
   id: number;
@@ -33,10 +35,11 @@ interface NavItem {
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
   const navItems: NavItem[] = navData.navItems;
+  const router = useRouter();
 
-  // Use the generic navigation hook
   const { handleSectionClick, isNavigating } = useNavigation({
     debug: process.env.NODE_ENV === "development",
   });
@@ -55,24 +58,21 @@ export default function Navbar() {
   };
 
   const handleProductClick = (basePath: string, sectionId: string) => {
-    if (process.env.NODE_ENV === "development") {
-      console.log("🎯 Product clicked:", { basePath, sectionId });
-    }
-
-    // Close the menu first
     handleNavClick();
-
-    // Use the generic navigation handler
     handleSectionClick(
       basePath,
       sectionId,
       () => {
-        console.log(`🚀 Starting navigation to ${basePath}#${sectionId}`);
+        console.log(`🚀 Navigating to ${basePath}#${sectionId}`);
       },
       () => {
-        console.log(`✅ Navigation to ${basePath}#${sectionId} initiated`);
+        console.log(`✅ Navigation complete`);
       }
     );
+  };
+
+  const handleSearch = (query: string) => {
+    router.push(`/products/${encodeURIComponent(query)}`);
   };
 
   return (
@@ -118,7 +118,6 @@ export default function Navbar() {
                         />
                       )}
                     </Link>
-                    {/* Submenu */}
                     {item.hasSubmenu && item.products && (
                       <div
                         className={`fixed left-0 right-0 bg-black/70 backdrop-blur-lg h-screen shadow-lg transition-all duration-500 z-50 ${
@@ -129,20 +128,15 @@ export default function Navbar() {
                       >
                         <div className="w-full mx-auto px-16 py-16 bg-[var(--bg-primary)]">
                           <div className="grid grid-cols-12 gap-8">
-                            {/* Product Image */}
                             <div className="col-span-4 flex justify-start items-center">
                               {item.image && (
                                 <img
                                   src={item.image}
                                   alt={item.name}
-                                  // width={400}
-                                  // height={300}
-                                  // quality={100}
                                   className="rounded-lg w-full h-full object-cover"
                                 />
                               )}
                             </div>
-                            {/* Products Grid */}
                             <div className="col-span-8 grid grid-cols-3 grid-rows-2 gap-6">
                               {item.products.slice(0, 6).map((product) => (
                                 <div
@@ -183,7 +177,8 @@ export default function Navbar() {
                   </div>
                 ))}
               </div>
-              {/* Right side actions - Desktop */}
+
+              {/* Right side - Desktop */}
               <div className="flex items-center space-x-4">
                 <Button
                   variant="ghost"
@@ -194,6 +189,8 @@ export default function Navbar() {
                 <Button
                   variant="ghost"
                   className="p-0 cursor-pointer text-white hover:bg-transparent"
+                  onClick={() => setSearchOpen(true)}
+                  aria-label="Open search"
                 >
                   <Search className="size-5" />
                 </Button>
@@ -209,6 +206,7 @@ export default function Navbar() {
                 variant="ghost"
                 size="icon"
                 className="text-white hover:bg-white/10"
+                onClick={() => setSearchOpen(true)}
               >
                 <Search className="size-5" />
               </Button>
@@ -296,6 +294,13 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
+
+      {/* Search Overlay */}
+      <SearchOverlay
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onSearch={handleSearch}
+      />
     </header>
   );
 }

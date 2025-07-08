@@ -24,13 +24,19 @@ const BentoCardsSection = () => {
     offset: ["start start", "end start"],
   });
 
-  // Transform values based on scroll progress
+  // Transform values based on scroll progress - more dramatic effects
   const scale = useTransform(
     scrollYProgress,
-    [0, 1],
-    [1, isDesktop ? 0.7 : 0.8]
+    [0, 0.3, 1],
+    [1, 0.95, isDesktop ? 0.6 : 0.65]
   );
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0]);
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.4, 0.8, 1],
+    [1, 1, 0.5, 0]
+  );
+  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const rotateX = useTransform(scrollYProgress, [0, 1], [0, 5]);
 
   const firstRow = [
     {
@@ -68,7 +74,7 @@ const BentoCardsSection = () => {
   return (
     <div className="relative">
       {/* Spacer div to create scroll distance */}
-      <div className="">
+      <div>
         <motion.div
           ref={containerRef}
           className="sticky top-0 bg-[var(--bg-primary)] z-[30] container-f h-screen overflow-hidden"
@@ -183,7 +189,10 @@ const BentoCardsSection = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
-                  <motion.div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                  <motion.div
+                    className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                    whileTap={{ scale: 0.95 }}
+                  >
                     <div className="flex items-start pt-[.61rem]">
                       <img
                         src={secondRow[0].icon}
@@ -197,7 +206,10 @@ const BentoCardsSection = () => {
                       </h3>
                     </div>
                   </motion.div>
-                  <motion.div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                  <motion.div
+                    className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                    whileTap={{ scale: 0.95 }}
+                  >
                     <div className="flex items-start pt-[.61rem]">
                       <img
                         src={firstRow[1].icon}
@@ -219,7 +231,10 @@ const BentoCardsSection = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
                 >
-                  <motion.div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                  <motion.div
+                    className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                    whileTap={{ scale: 0.95 }}
+                  >
                     <div className="flex items-start pt-[.61rem]">
                       <img
                         src={firstRow[0].icon}
@@ -241,7 +256,10 @@ const BentoCardsSection = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.8 }}
                 >
-                  <motion.div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                  <motion.div
+                    className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                    whileTap={{ scale: 0.95 }}
+                  >
                     <div className="flex items-start pt-[.61rem]">
                       <img
                         src={firstRow[2].icon}
@@ -263,7 +281,10 @@ const BentoCardsSection = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 1.0 }}
                 >
-                  <motion.div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                  <motion.div
+                    className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                    whileTap={{ scale: 0.95 }}
+                  >
                     <div className="flex items-start pt-[.61rem]">
                       <img
                         src={secondRow[1].icon}
@@ -277,7 +298,10 @@ const BentoCardsSection = () => {
                       </h3>
                     </div>
                   </motion.div>
-                  <motion.div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                  <motion.div
+                    className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                    whileTap={{ scale: 0.95 }}
+                  >
                     <div className="flex items-start pt-[.61rem]">
                       <img
                         src={firstRow[1].icon}
