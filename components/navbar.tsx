@@ -86,7 +86,7 @@ export default function Navbar() {
                 <Image
                   src="/logo.svg"
                   alt="Resin Work"
-                  width={240}
+                  width={200}
                   height={48}
                   quality={100}
                 />
@@ -227,14 +227,14 @@ export default function Navbar() {
                   side="top"
                   className="w-full h-auto bg-black/60 backdrop-blur-[3rem] border-b border-white/20 text-white shadow-2xl"
                 >
-                  <SheetHeader className="border-b border-white/10 pb-6 mb-8">
+                  <SheetHeader className="border-b border-white/10 py-6 mb-8">
                     <SheetTitle className="sr-only">Resin Work</SheetTitle>
                     <div className="flex items-center justify-start">
                       <Link href="/" onClick={handleNavClick}>
                         <Image
                           src="/logo.svg"
                           alt="Resin Work"
-                          width={240}
+                          width={200}
                           height={48}
                           quality={100}
                           className="opacity-90 hover:opacity-100 transition-opacity"
