@@ -307,6 +307,37 @@ const MobileTimelineSection = () => {
             )}
           </div>
 
+          {/* Progress Bar */}
+          <div className="relative py-8">
+            <div
+              ref={progressBarRef}
+              className="h-2 bg-gray-300 dark:bg-gray-700 rounded-full overflow-hidden "
+            >
+              <div
+                ref={progressFillRef}
+                className="h-full bg-[var(--color-primary)] origin-left scale-x-0"
+              />
+            </div>
+            {/* <div className="flex justify-between mt-2 text-xs text-gray-500">
+              <span>Start</span>
+              <span>End</span>
+            </div> */}
+
+            {/* Scroll Hint - only show when not pinned */}
+            {!isPinned && (
+              <div className="absolute -bottom-80 left-1/2 transform -translate-x-1/2 text-center">
+                <div className="animate-bounce">
+                  <div className="w-full flex justify-center">
+                    <ChevronsUpIcon className="text-brand" />
+                  </div>
+                  <span className="text-xs text-black dark:text-white">
+                    Scroll to explore
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* Text Content */}
           <div ref={textContainerRef} className=" flex flex-col ">
             <h2 className="text-3xl font-bold mb-3 leading-tight">
@@ -321,37 +352,6 @@ const MobileTimelineSection = () => {
               <span className="text-xs text-gray-500">
                 {activeTab + 1} of {tabs.length}
               </span>
-            </div>
-
-            {/* Progress Bar */}
-            <div className="relative">
-              <div
-                ref={progressBarRef}
-                className="h-1 bg-gray-700 rounded-full overflow-hidden"
-              >
-                <div
-                  ref={progressFillRef}
-                  className="h-full bg-[var(--color-primary)] origin-left scale-x-0"
-                />
-              </div>
-              <div className="flex justify-between mt-2 text-xs text-gray-500">
-                <span>Start</span>
-                <span>End</span>
-              </div>
-
-              {/* Scroll Hint - only show when not pinned */}
-              {!isPinned && (
-                <div className="absolute -bottom-20 left-1/2 transform -translate-x-1/2 text-center">
-                  <div className="animate-bounce">
-                    <div className="w-full flex justify-center">
-                      <ChevronsUpIcon className="text-brand" />
-                    </div>
-                    <span className="text-xs text-black dark:text-white">
-                      Scroll to explore
-                    </span>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>

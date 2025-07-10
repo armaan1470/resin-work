@@ -177,7 +177,7 @@ const VideoTabSection = () => {
         {/* Scrollable tabs */}
         <div className="overflow-x-auto pb-4 hide-scrollbar scroll-smooth ps-4">
           <div
-            className="flex gap-3"
+            className="flex gap-4"
             style={{ width: `${videoTab.length * 120}px` }}
           >
             {videoTab.map((item, index) => (
@@ -212,8 +212,13 @@ const VideoTabSection = () => {
               Your browser does not support the video tag.
             </video>
             {!isMobileVideoReady && (
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
-                <div className="text-gray-600">Loading video...</div>
+              <div className="absolute inset-0 flex items-center justify-center bg-black z-50">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="h-8 w-8 border-2 border-gray-300 dark:border-gray-600 border-t-black dark:border-t-white rounded-full animate-spin" />
+                  <div className="text-sm text-white font-medium tracking-wide">
+                    Loading video...
+                  </div>
+                </div>
               </div>
             )}
           </div>
