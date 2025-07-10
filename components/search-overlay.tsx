@@ -21,22 +21,77 @@ export default function SearchOverlay({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    const isMobile =
+      typeof window !== "undefined" &&
+      /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
+    let viewportListener: (() => void) | null = null;
+
     const escHandler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
 
+    const clickOutsideHandler = (e: MouseEvent) => {
+      if (
+        overlayRef.current &&
+        modalRef.current &&
+        !modalRef.current.contains(e.target as Node)
+      ) {
+        hideOverlay();
+      }
+    };
+
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      if (!isMobile) {
+        document.body.style.overflow = "hidden";
+      }
       document.addEventListener("keydown", escHandler);
+      document.addEventListener("mousedown", clickOutsideHandler);
       showOverlay();
+
+      // VisualViewport resize listener for mobile keyboard
+      if (isMobile && typeof window !== "undefined" && window.visualViewport) {
+        viewportListener = () => {
+          setTimeout(() => {
+            inputRef.current?.focus();
+            if (inputRef.current) {
+              inputRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+              setTimeout(() => {
+                if (inputRef.current) {
+                  const rect = inputRef.current.getBoundingClientRect();
+                  if (rect.top < 0 || rect.bottom > window.innerHeight) {
+                    window.scrollTo({
+                      top: window.scrollY + rect.top - 1, // minimal offset
+                      behavior: "smooth",
+                    });
+                  }
+                }
+              }, 150);
+            }
+          }, 100);
+        };
+        window.visualViewport.addEventListener("resize", viewportListener);
+      }
     } else {
       document.body.style.overflow = "";
       document.removeEventListener("keydown", escHandler);
+      document.removeEventListener("mousedown", clickOutsideHandler);
+      if (viewportListener && window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", viewportListener);
+      }
     }
 
     return () => {
       document.body.style.overflow = "";
       document.removeEventListener("keydown", escHandler);
+      document.removeEventListener("mousedown", clickOutsideHandler);
+      if (viewportListener && window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", viewportListener);
+      }
     };
   }, [isOpen]);
 
@@ -51,7 +106,7 @@ export default function SearchOverlay({
       top: "90%",
       left: "50%",
       xPercent: -50,
-      yPercent: 0, // <- ✅ Important fix: don't shift upward
+      yPercent: 0,
     });
 
     gsap.to(overlayRef.current, {
@@ -67,7 +122,12 @@ export default function SearchOverlay({
           { opacity: 0, y: 20 },
           { opacity: 1, y: 0, duration: 0.5 }
         );
-        inputRef.current?.focus();
+
+        // Delay focus to ensure overlay is fully visible and keyboard is up
+        setTimeout(() => {
+          inputRef.current?.focus();
+          // No scrollIntoView or manual scroll here; handled by viewportListener or onFocus fallback
+        }, 400); // Delay matches or exceeds animation duration
       },
     });
   };
@@ -107,12 +167,10 @@ export default function SearchOverlay({
   return (
     <div
       ref={overlayRef}
-      className={`fixed bg-black/90 z-[9999] left-1/2 ${
+      className={`fixed bg-black/60 backdrop-blur-md z-[9999] left-1/2 ${
         isOpen ? "block" : "hidden"
       }`}
       style={{
-        // ✅ Removed transform that was causing the overflow
-        // transform: "translate(-50%, -50%)",
         transform: "translateX(-50%)",
       }}
     >
@@ -120,7 +178,8 @@ export default function SearchOverlay({
         ref={modalRef}
         className="absolute inset-0 flex items-center justify-center opacity-0"
       >
-        <div className="relative h-full rounded-2xl shadow-2xl p-10 w-full mx-4 my-10 flex flex-col justify-center items-center">
+        <div className="relative h-full rounded-2xl shadow-2xl p-10 w-full mx-4 my-10 flex flex-col justify-center items-center bg-transparent">
+          {/* Close button */}
           <button
             onClick={hideOverlay}
             aria-label="Close search"
@@ -129,20 +188,48 @@ export default function SearchOverlay({
             <IoClose />
           </button>
 
+          {/* Search form */}
           <form
             onSubmit={handleSubmit}
-            className="relative flex w-[90%] md:w-[70%] h-[4rem] items-center gap-2 "
+            className="relative flex w-[90%] md:w-[70%] h-[4rem] items-center gap-2"
           >
             <input
               type="text"
               placeholder="Search..."
               ref={inputRef}
+              onFocus={() => {
+                // Fallback: only scroll if visualViewport is not available
+                if (typeof window !== "undefined" && !window.visualViewport) {
+                  setTimeout(() => {
+                    if (inputRef.current) {
+                      inputRef.current.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                      });
+                      setTimeout(() => {
+                        if (inputRef.current) {
+                          const rect = inputRef.current.getBoundingClientRect();
+                          if (
+                            rect.top < 0 ||
+                            rect.bottom > window.innerHeight
+                          ) {
+                            window.scrollTo({
+                              top: window.scrollY + rect.top - 1, // minimal offset
+                              behavior: "smooth",
+                            });
+                          }
+                        }
+                      }, 150);
+                    }
+                  }, 100);
+                }
+              }}
               className="w-full text-[1.2rem] md:text-[1.5rem] rounded-full outline-none border-[2.5px] border-gray-100 px-6 py-4 text-sm text-white placeholder:text-gray-400 bg-transparent"
               autoFocus
               aria-label="Search"
             />
             <button
-              className="absolute right-5 md:right-6 top-4 md:top-3.5 "
+              className="absolute right-5 md:right-6 top-4 md:top-3.5"
               type="submit"
               aria-label="Submit search"
             >
