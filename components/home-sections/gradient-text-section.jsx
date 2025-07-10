@@ -1,4 +1,3 @@
-// src/components/home-secions/GradientTextSection.jsx
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
@@ -11,11 +10,24 @@ const GradientTextSection = () => {
   const [previousIndex, setPreviousIndex] = useState(-1);
   const containerRef = useRef(null);
   const animationFrame = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   const text =
     "Precision, reliability, and innovation are the cornerstones that define RESINWORK. Proudly developed in Germany, each formulation is the result of extensive in-house. Where cutting-edge technology meets our state-of-the-art manufacturing process. Trusted by professionals across industries like Dental, Engineering, Jewellery and more. We enable you to achieve outstanding results, pushing the boundaries of what's possible in 3D Printing.";
 
   const segments = text.split(/(?<=\.)/g);
+
+  useEffect(() => {
+    // Check if mobile on component mount and on resize
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768); // Common breakpoint for mobile
+    };
+
+    checkIfMobile(); // Initial check
+    window.addEventListener("resize", checkIfMobile);
+
+    return () => window.removeEventListener("resize", checkIfMobile);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,7 +38,8 @@ const GradientTextSection = () => {
       animationFrame.current = requestAnimationFrame(() => {
         if (!containerRef.current) return;
 
-        const triggerPosition = window.innerHeight * 0.7;
+        // Use 0.5 for mobile, 0.7 for desktop
+        const triggerPosition = window.innerHeight * (isMobile ? 0.3 : 0.7);
         const segments = document.querySelectorAll(".text-segment");
         const scrollPosition = window.scrollY + triggerPosition;
 
@@ -76,10 +89,10 @@ const GradientTextSection = () => {
         cancelAnimationFrame(animationFrame.current);
       }
     };
-  }, [activeIndex]);
+  }, [activeIndex, isMobile]); // Add isMobile to dependencies
 
+  // ... rest of your component remains the same
   const getTransitionClass = (index) => {
-    // Use consistent, longer transition for smoother effect
     return "duration-1000 ease-out";
   };
 
@@ -88,7 +101,7 @@ const GradientTextSection = () => {
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: "top 0%",
-        end: "bottom -200%", // Changed from -150% to -100%
+        end: "bottom -200%",
         pin: true,
         pinSpacing: true,
         markers: false,
