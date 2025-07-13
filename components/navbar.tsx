@@ -44,6 +44,14 @@ export default function Navbar() {
     debug: process.env.NODE_ENV === "development",
   });
 
+  const handlePartnerWithUs = () => {
+    handleNavClick();
+    window.open(
+      "https://outlook.office.com/book/Resinwork@3akchemie.com/?ismsaljsauthenabled",
+      "_blank"
+    );
+  };
+
   const handleNavClick = () => {
     setIsOpen(false);
     setOpenSubmenu(null);
@@ -194,7 +202,10 @@ export default function Navbar() {
                 >
                   <Search className="size-5" />
                 </Button>
-                <Button className="text-xs cursor-pointer bg-brand text-white px-4 py-2 rounded-md border border-brand transition-colors hover:bg-transparent hover:border-white">
+                <Button
+                  onClick={handlePartnerWithUs}
+                  className="text-xs cursor-pointer bg-brand text-white px-4 py-2 rounded-md border border-brand transition-colors hover:bg-transparent hover:border-white"
+                >
                   Partner with us
                 </Button>
               </div>
@@ -223,9 +234,9 @@ export default function Navbar() {
                 </SheetTrigger>
                 <SheetContent
                   side="top"
-                  className="w-full h-auto bg-black/60 backdrop-blur-[3rem] border-b border-white/20 text-white shadow-2xl"
+                  className="w-full h-screen bg-black/60 backdrop-blur-[3rem] border-b border-white/20 text-white shadow-2xl"
                 >
-                  <SheetHeader className="border-b border-white/10 px-6 py-5 mb-8">
+                  <SheetHeader className="border-b border-white/10 px-6 py-5">
                     <SheetTitle className="sr-only">Resin Work</SheetTitle>
                     <div className="flex items-center justify-start">
                       <Link href="/" onClick={handleNavClick}>
@@ -240,7 +251,7 @@ export default function Navbar() {
                       </Link>
                     </div>
                   </SheetHeader>
-                  <div className="px-2 pb-8">
+                  <div className="px-2 py-8 overflow-y-scroll">
                     <div className="space-y-2 mb-8">
                       <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider px-4 mb-4">
                         Navigation
@@ -282,7 +293,7 @@ export default function Navbar() {
                       </h3>
                       <Button
                         className="w-full bg-brand hover:bg-brand/90 text-white font-semibold py-6 px-4 rounded-md transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
-                        onClick={handleNavClick}
+                        onClick={handlePartnerWithUs}
                       >
                         Partner with us
                       </Button>
