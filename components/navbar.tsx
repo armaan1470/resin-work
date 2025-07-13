@@ -201,7 +201,7 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Actions */}
-            <div className="lg:hidden flex items-center space-x-2">
+            <div className="lg:hidden flex items-center space-x-4">
               <Button
                 variant="ghost"
                 size="icon"
