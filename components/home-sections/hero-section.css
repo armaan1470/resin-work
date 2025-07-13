@@ -1,5 +1,5 @@
 
-  
+
 .swiper-pagination-bullet {
   width: 16px;
   height: 16px;
@@ -17,23 +17,52 @@
   border: 1px solid white;
 }
 
+.swiper-button-next,
+.swiper-button-prev {
+  display: none !important;
+}
 
+.swiper-pagination-fraction,
+.swiper-pagination-custom,
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: -40px;
+}
 
-.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
-  width: auto;
-  bottom: 15%;
-  width: 100%;
-  position: fixed;
+.swiper{
+  overflow: visible;
 }
 
 
-@media (min-width: 768px) {
-  .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
-    position: absolute;
-    width: auto;
-    bottom: 12%;
-    left: 100px;
-    display: flex;
-    gap: 3px;
+@media (width >= 1024px) {
+  .swiper-pagination-fraction,
+  .swiper-pagination-custom,
+  .swiper-horizontal > .swiper-pagination-bullets,
+  .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: 13%;
+    left: -35%;
+  }
+
+  .swiper{
+  overflow: hidden;
+}
+}
+
+@media (width >= 1440px) {
+  .swiper-pagination-fraction,
+  .swiper-pagination-custom,
+  .swiper-horizontal > .swiper-pagination-bullets,
+  .swiper-pagination-bullets.swiper-pagination-horizontal {
+    left: -39%;
   }
 }
+
+@media (width >= 1920px) {
+  .swiper-pagination-fraction,
+  .swiper-pagination-custom,
+  .swiper-horizontal > .swiper-pagination-bullets,
+  .swiper-pagination-bullets.swiper-pagination-horizontal {
+    left: -41%;
+  }
+}
+

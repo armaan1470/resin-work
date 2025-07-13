@@ -3,16 +3,24 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, EffectFade } from "swiper/modules";
+import {
+  Autoplay,
+  Pagination,
+  EffectFade,
+  Navigation,
+  Keyboard,
+} from "swiper/modules";
 import { motion, AnimatePresence } from "framer-motion";
 import { easeOut, easeIn } from "framer-motion";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 import { Button } from "../ui/button";
 import "./hero-section.css";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const slides = [
   {
@@ -62,28 +70,32 @@ const HeroSection = () => {
 
   return (
     <section className="relative flex justify-center -top-24 bg-primary min-h-screen w-full">
-      <div className="w-[96vw] h-[80vh] sm:h-[95vh] overflow-hidden rounded-b-4xl">
-        <Swiper
-          modules={[Autoplay, Pagination, EffectFade]}
-          autoplay={{ delay: 5000, disableOnInteraction: false }}
-          pagination={{ clickable: true }}
-          loop
-          // effect="fade"
-          speed={800}
-          onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-          className="relative w-full h-full flex justify-center"
-        >
-          {slides.map((slide, idx) => (
-            <SwiperSlide key={idx}>
-              <div className="relative w-full h-full text-white">
-                <Image
-                  src={slide.image}
-                  alt={slide.heading}
-                  fill
-                  className="object-cover z-0 transition-opacity duration-1000 ease-in-out"
-                  priority
-                  quality={100}
-                />
+      <Swiper
+        modules={[Autoplay, Pagination, Navigation, Keyboard, EffectFade]}
+        // autoplay={{ delay: 5000, disableOnInteraction: false }}
+        pagination={{ clickable: true }}
+        loop
+        // effect="fade"
+        speed={800}
+        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+        navigation={{
+          nextEl: ".custom-swiper-next",
+          prevEl: ".custom-swiper-prev",
+        }}
+        keyboard={{ enabled: true, onlyInViewport: true }}
+        className="relative w-full h-full flex justify-center bg-green"
+      >
+        {slides.map((slide, idx) => (
+          <SwiperSlide key={idx} className="flex justify-center">
+            <div className="relative flex justify-center mx-auto w-[96vw] h-[80vh] sm:h-[95vh] text-white rounded-4xl md:rounded-b-[3rem] overflow-clip">
+              <Image
+                src={slide.image}
+                alt={slide.heading}
+                fill
+                className="z-0 object-cover transition-opacity duration-1000 ease-in-out"
+                priority
+                quality={100}
+              />
 
               {/* Animate text only for active slide */}
               <AnimatePresence mode="wait">
@@ -100,13 +112,14 @@ const HeroSection = () => {
                       dangerouslySetInnerHTML={{ __html: slide.heading }}
                       className="text-2xl lg:text-4xl font-bold mb-3 md:mb-4 text-wrap font-family-satoshi"
                     ></h2>
-                    <p className="md:mb-8 text-sm">{slide.text}</p>
-                    <Button
+                    <p className="text-sm">{slide.text}</p>
+                    {/* button hidden temporarily */}
+                    {/* <Button
                       size="lg"
-                      className="hidden md:flex cursor-pointer px-8 py-6 text-base bg-brand text-white rounded-md border-1 border-brand transition-colors hover:bg-transparent hover:border-1 hover:border-white"
+                      className="hidden md:flex md:mt-8 cursor-pointer px-8 py-6 text-base bg-brand text-white rounded-md border-1 border-brand transition-colors hover:bg-transparent hover:border-1 hover:border-white"
                     >
                       {slide.buttonText}
-                    </Button>
+                    </Button> */}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -114,6 +127,20 @@ const HeroSection = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className="hidden lg:flex absolute z-20 w-full justify-between items-center h-full px-4 pointer-events-none">
+        <button
+          className="custom-swiper-prev cursor-pointer pointer-events-auto backdrop-blur-sm border border-white/20 bg-black/20 hover:bg-black/40 dark:bg-white/10  dark:hover:bg-white/20 text-white rounded-full p-4 transition"
+          aria-label="Previous"
+        >
+          <ChevronLeft size={28} />
+        </button>
+        <button
+          className="custom-swiper-next cursor-pointer pointer-events-auto backdrop-blur-sm border border-white/20 bg-black/20 hover:bg-black/40 dark:bg-white/10  dark:hover:bg-white/20 text-white rounded-full p-4 transition"
+          aria-label="Next"
+        >
+          <ChevronRight size={28} />
+        </button>
+      </div>
     </section>
   );
 };
