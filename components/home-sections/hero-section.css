@@ -26,26 +26,28 @@
 .swiper-pagination-custom,
 .swiper-horizontal > .swiper-pagination-bullets,
 .swiper-pagination-bullets.swiper-pagination-horizontal {
-  bottom: -40px;
+  bottom: 40px;
 }
 
-.swiper{
-  overflow: visible;
-}
 
+@media (width >= 768px) {
+  .swiper-pagination-fraction,
+  .swiper-pagination-custom,
+  .swiper-horizontal > .swiper-pagination-bullets,
+  .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: 14%;
+    left: -35.2%;
+  }
+}
 
 @media (width >= 1024px) {
   .swiper-pagination-fraction,
   .swiper-pagination-custom,
   .swiper-horizontal > .swiper-pagination-bullets,
   .swiper-pagination-bullets.swiper-pagination-horizontal {
-    bottom: 13%;
+    bottom: 14%;
     left: -35%;
   }
-
-  .swiper{
-  overflow: hidden;
-}
 }
 
 @media (width >= 1440px) {
@@ -62,7 +64,7 @@
   .swiper-pagination-custom,
   .swiper-horizontal > .swiper-pagination-bullets,
   .swiper-pagination-bullets.swiper-pagination-horizontal {
-    left: -41%;
+    left: -41.2%;
   }
 }
 
