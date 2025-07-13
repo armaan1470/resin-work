@@ -72,7 +72,7 @@ const HeroSection = () => {
     <section className="relative flex justify-center -top-24 bg-primary min-h-screen w-full">
       <Swiper
         modules={[Autoplay, Pagination, Navigation, Keyboard, EffectFade]}
-        // autoplay={{ delay: 5000, disableOnInteraction: false }}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         loop
         // effect="fade"
