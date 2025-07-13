@@ -1,10 +1,25 @@
 // src/components/home-secions/BentoCardsSection.jsx
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const BentoCardsSection = () => {
   const stickySection = useRef(null);
+  const mobileSection = useRef(null);
+
+  // Framer Motion scroll animations for mobile
+  const { scrollYProgress } = useScroll({
+    target: mobileSection,
+    offset: ["start start", "end start"],
+  });
+
+  const mobileScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0.6]);
+  const mobileOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.7, 1],
+    [1, 0.7, 0.3]
+  );
 
   useEffect(() => {
     const container = stickySection.current;
@@ -86,10 +101,11 @@ const BentoCardsSection = () => {
   ];
 
   return (
-    <div className="sticky top-0 bg-[var(--bg-primary)]   z-[30] container-f">
+    <>
+      {/* Desktop Version with GSAP */}
       <div
         ref={stickySection}
-        className="md:sticky top-0 bg-[var(--bg-primary)] z-[30] container-f"
+        className="hidden md:block sticky top-0 bg-[var(--bg-primary)] z-[30] container-f"
       >
         <div className="relative z-[12]">
           <div className="p-[1rem] md:p-[4rem] max-w-7xl mx-auto home-sec5">
@@ -160,104 +176,175 @@ const BentoCardsSection = () => {
                 ))}
               </div>
             </div>
-            <div className="md:hidden mt-[2rem]">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Version with Framer Motion */}
+      <motion.div
+        ref={mobileSection}
+        style={{
+          scale: mobileScale,
+          opacity: mobileOpacity,
+        }}
+        className="md:hidden bg-[var(--bg-primary)] z-[30] container-f"
+      >
+        <div className="relative z-[12]">
+          <div className="p-[1rem] max-w-7xl mx-auto home-sec5">
+            <h2 className="text-[1.8rem] text-[var(--color-primary)] text-center font-medium">
+              Fast, efficient, reliable 3D Printing Solutions
+            </h2>
+            <p className="text-[0.9rem] t1 opacity-70 text-center px-[1rem] mt-[1rem]">
+              At Resinwork, we provide cutting-edge 3D printing resins designed
+              to deliver high-quality, precise results with speed and
+              consistency.
+            </p>
+            <div className="mt-[2rem]">
+              <motion.div
+                className="grid grid-cols-2 gap-3"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+              >
+                <motion.div
+                  className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
                   <div className="flex items-start pt-[.61rem]">
                     <img
                       src={secondRow[0].icon}
                       alt={secondRow[0].title}
-                      className="w-[3rem] md:w-[6rem]"
+                      className="w-[3rem]"
                     />
                   </div>
                   <div>
-                    <h3 className="t1 text-[.81rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
+                    <h3 className="t1 text-[.81rem] font-bold text-center text-[#878787]">
                       {secondRow[0].title}
                     </h3>
                   </div>
-                </div>
-                <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                </motion.div>
+                <motion.div
+                  className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
                   <div className="flex items-start pt-[.61rem]">
                     <img
                       src={firstRow[1].icon}
                       alt={firstRow[1].title}
-                      className="w-[3rem] md:w-[6rem]"
+                      className="w-[3rem]"
                     />
                   </div>
                   <div>
-                    <h3 className="t1 text-[.81rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
+                    <h3 className="t1 text-[.81rem] font-bold text-center text-[#878787]">
                       {firstRow[1].title}
                     </h3>
                   </div>
-                </div>
-              </div>
-              <div className="grid my-2">
-                <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                </motion.div>
+              </motion.div>
+              <motion.div
+                className="grid my-2"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                <motion.div
+                  className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
                   <div className="flex items-start pt-[.61rem]">
                     <img
                       src={firstRow[0].icon}
                       alt={secondRow[0].title}
-                      className="w-[3rem] md:w-[6rem]"
+                      className="w-[3rem]"
                     />
                   </div>
                   <div>
-                    <h3 className="t1 text-[.81rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
+                    <h3 className="t1 text-[.81rem] font-bold text-center text-[#878787]">
                       {firstRow[0].title}
                     </h3>
                   </div>
-                </div>
-              </div>
-              <div className="grid my-2">
-                <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                </motion.div>
+              </motion.div>
+              <motion.div
+                className="grid my-2"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                viewport={{ once: true }}
+              >
+                <motion.div
+                  className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
                   <div className="flex items-start pt-[.61rem]">
                     <img
                       src={firstRow[2].icon}
                       alt={firstRow[2].title}
-                      className="w-[3rem] md:w-[6rem]"
+                      className="w-[3rem]"
                     />
                   </div>
                   <div>
-                    <h3 className="t1 text-[.81rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
+                    <h3 className="t1 text-[.81rem] font-bold text-center text-[#878787]">
                       {firstRow[2].title}
                     </h3>
                   </div>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                </motion.div>
+              </motion.div>
+              <motion.div
+                className="grid grid-cols-2 gap-3"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <motion.div
+                  className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
                   <div className="flex items-start pt-[.61rem]">
                     <img
                       src={secondRow[1].icon}
                       alt={secondRow[1].title}
-                      className="w-[2.7rem] md:w-[6rem]"
+                      className="w-[2.7rem]"
                     />
                   </div>
                   <div>
-                    <h3 className="t1 text-[.81rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
+                    <h3 className="t1 text-[.81rem] font-bold text-center text-[#878787]">
                       {secondRow[1].title}
                     </h3>
                   </div>
-                </div>
-                <div className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg">
+                </motion.div>
+                <motion.div
+                  className="flex flex-col items-center gap-[.51rem] bg-[var(--service-box)] p-[1rem] rounded-lg"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
                   <div className="flex items-start pt-[.61rem]">
                     <img
                       src={firstRow[1].icon}
                       alt={firstRow[1].title}
-                      className="w-[3rem] md:w-[6rem]"
+                      className="w-[3rem]"
                     />
                   </div>
                   <div>
-                    <h3 className="t1 text-[.81rem] md:text-[1.1rem] font-bold text-center text-[#878787]">
+                    <h3 className="t1 text-[.81rem] font-bold text-center text-[#878787]">
                       {firstRow[1].title}
                     </h3>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </>
   );
 };
 

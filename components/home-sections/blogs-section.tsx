@@ -79,10 +79,10 @@ const BlogsSection: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setActiveTab("blogs")}
-                      className={`relative px-8 py-4 rounded-full font-medium transition-all duration-500 ${
+                      className={`relative cursor-pointer px-8 py-4 rounded-full font-medium transition-all duration-500 ${
                         activeTab === "blogs"
                           ? "text-white"
-                          : "text-gray-600 hover:text-gray-900"
+                          : "text-gray-600 hover:text-brand"
                       }`}
                     >
                       {activeTab === "blogs" && (
@@ -92,10 +92,10 @@ const BlogsSection: React.FC = () => {
                     </button>
                     <button
                       onClick={() => setActiveTab("caseStudies")}
-                      className={`relative px-8 py-4 rounded-full font-medium transition-all duration-500 ${
+                      className={`relative cursor-pointer px-8 py-4 rounded-full font-medium transition-all duration-500 ${
                         activeTab === "caseStudies"
                           ? "text-white"
-                          : "text-gray-600 hover:text-gray-900"
+                          : "text-gray-600 hover:text-brand"
                       }`}
                     >
                       {activeTab === "caseStudies" && (
@@ -121,7 +121,7 @@ const BlogsSection: React.FC = () => {
                 ? "Featured Blog Heading Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
                 : "Explore real-world applications of our products through these detailed case studies demonstrating innovation and problem-solving across industries."}
             </p>
-            <button className="b1 text-white px-[3rem] py-[.51rem] rounded-lg my-[1.4rem] hover:opacity-90 transition-opacity">
+            <button className="b1 text-white bg-brand cursor-pointer px-[3rem] py-[.51rem] rounded-lg my-[1.4rem] hover:opacity-60 transition-opacity">
               {activeTab === "blogs"
                 ? "Explore More Blogs"
                 : "View All Case Studies"}

@@ -23,7 +23,7 @@ export default function Home() {
       {isMobile ? <MobileTimelineSection /> : <TimelineSection />}
 
       {/* <CombinedSection /> */}
-      {isMobile ? null : <CombinedSection />}
+      <CombinedSection />
 
       <SolutionsSection />
 

@@ -54,7 +54,7 @@ const CombinedSection = () => {
     <div className="relative overflow-hidden" ref={containerRef}>
       <div
         ref={backgroundImageRef}
-        className="md:block hidden absolute inset-0 top-0 left-0 w-screen h-full z-[1] pointer-events-none"
+        className=" absolute inset-0 top-0 left-0 w-screen h-full z-[1] pointer-events-none"
       >
         <img
           src="/gradients/bg-gradient.svg"

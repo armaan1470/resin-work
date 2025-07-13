@@ -10,7 +10,6 @@ const SolutionsSection = () => {
   const containerRef = useRef(null);
   const contentRef = useRef(null);
   const cardsRef = useRef<(HTMLElement | null)[]>([]);
-  const ourSolutionTextRef = useRef(null);
   const mobileContainerRef = useRef(null);
   const backgroundImages = [
     "/our-solution/1.png",
@@ -77,6 +76,7 @@ const SolutionsSection = () => {
       }
     );
   }, []);
+
   useEffect(() => {
     gsap.fromTo(
       containerRef.current,
@@ -101,43 +101,28 @@ const SolutionsSection = () => {
     });
   }, []);
 
-  useEffect(() => {
-    if (ourSolutionTextRef.current && mobileContainerRef.current) {
-      ScrollTrigger.create({
-        trigger: ourSolutionTextRef.current,
-        pin: true,
-        start: "top 10%",
-        endTrigger: mobileContainerRef.current,
-        end: "bottom 65%", // when mobileContainer bottom hits 40% from top of viewport
-        scrub: true,
-      });
-    }
-  }, []);
-
   return (
     <div>
       <div
         ref={mobileContainerRef}
-        className="hidden mt-[] max-sm:block overflow-hidden  w-screen mt-[-30%]"
+        className="max-sm:block hidden w-screen md:mt-[-30%] relative"
       >
         <div className="grid grid-cols-12 relative bg-[#d9d9d9]">
-          <div className="col-span-2"></div>
-          <div className="absolute  top-[5%] left-4 transform mt-[-10%]  col-span-2 flex items-center justify-start text-[1.5rem]">
-            <h2
-              ref={ourSolutionTextRef}
-              className="mt-[3rem] text-[2.4rem] font-black text-[#848383] flex flex-col items-center leading-[81%]"
-            >
-              {[...`OUR SOLUTIONS`].reverse().map((char, index) => (
-                <span
-                  key={index}
-                  className={`-rotate-90 text-[40px] ${
-                    index === 8 ? "mb-6" : "" // adds extra gap after 'R'
-                  }`}
-                >
-                  {char}
-                </span>
-              ))}
-            </h2>
+          <div className="col-span-2">
+            <div className="sticky top-20 mb-20">
+              <h2 className="mt-[3rem] text-[2.4rem] font-black text-[#848383] flex flex-col items-center leading-[81%]">
+                {[...`OUR SOLUTIONS`].reverse().map((char, index) => (
+                  <span
+                    key={index}
+                    className={`-rotate-90 text-[40px] ${
+                      index === 8 ? "mb-6" : "" // adds extra gap after 'R'
+                    }`}
+                  >
+                    {char}
+                  </span>
+                ))}
+              </h2>
+            </div>
           </div>
           <div className="col-span-10 space-y-2 pe-2 pb-2">
             <Link href="/dental">
@@ -193,8 +178,7 @@ const SolutionsSection = () => {
       </div>
       <div
         ref={containerRef}
-        className="max-sm:hidden  relative z-[30] bg-white
-      xxxxxmb-[-30%]
+        className="max-sm:hidden  relative z-[30] bg-white 
         mt-[-23%]  min-h-screen py-[3rem] pt-[1rem] px-[15rem]"
       >
         <div ref={contentRef} className="max-w-7xl  mx-auto mt-[1%]">

@@ -319,13 +319,13 @@ const Footer: React.FC = () => {
               control={mobileSubscribeForm.control}
               name="email"
               render={({ field }) => (
-                <FormItem className="w-[60%] my-[2rem]">
+                <FormItem className="w-[60%] m-[2rem]">
                   <FormControl>
                     <Input
                       {...field}
                       type="email"
                       placeholder="Enter your Email Address"
-                      className="py-2 px-3 mx-[2rem] rounded border border-[#C4C4C4] placeholder:text-black placeholder:opacity-60 bg-transparent text-black focus:ring-0 focus:border-[#FF4713]"
+                      className="py-2 px-3 rounded border border-[#C4C4C4] placeholder:text-black placeholder:opacity-60 bg-transparent text-black focus:ring-0 focus:border-[#FF4713]"
                     />
                   </FormControl>
                   <FormMessage />
@@ -353,7 +353,7 @@ const Footer: React.FC = () => {
                 alt="Logo"
                 width={200}
                 height={60}
-                className="mb-4 w-full md:ms-[-5%]"
+                className="mb-4 w-[80%] md:ms-[-5%]"
               />
             </div>
             <div className="text-white text-[12px] leading-[1.6]">
