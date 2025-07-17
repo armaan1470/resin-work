@@ -1,5 +1,3 @@
-
-
 .swiper-pagination-bullet {
   width: 16px;
   height: 16px;
@@ -29,42 +27,11 @@
   bottom: 40px;
 }
 
-
-@media (width >= 768px) {
+@media (width >= 770px) {
   .swiper-pagination-fraction,
   .swiper-pagination-custom,
   .swiper-horizontal > .swiper-pagination-bullets,
   .swiper-pagination-bullets.swiper-pagination-horizontal {
-    bottom: 14%;
-    left: -34%;
+    display: none;
   }
 }
-
-@media (width >= 1024px) {
-  .swiper-pagination-fraction,
-  .swiper-pagination-custom,
-  .swiper-horizontal > .swiper-pagination-bullets,
-  .swiper-pagination-bullets.swiper-pagination-horizontal {
-    bottom: 14%;
-    left: -34%;
-  }
-}
-
-@media (width >= 1440px) {
-  .swiper-pagination-fraction,
-  .swiper-pagination-custom,
-  .swiper-horizontal > .swiper-pagination-bullets,
-  .swiper-pagination-bullets.swiper-pagination-horizontal {
-    left: -41%;
-  }
-}
-
-/* @media (width >= 1920px) {
-  .swiper-pagination-fraction,
-  .swiper-pagination-custom,
-  .swiper-horizontal > .swiper-pagination-bullets,
-  .swiper-pagination-bullets.swiper-pagination-horizontal {
-    left: -42.2%;
-  }
-} */
-
