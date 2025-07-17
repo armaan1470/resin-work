@@ -8,6 +8,7 @@ import ScrollToTop from "../components/scroll-to-top";
 import { ThemeProvider } from "../components/theme-provider";
 import SmoothScroll from "@/components/smooth-scroll";
 import { satoshi } from "@/lib/fonts";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Resin Work - Professional Resin Solutions",
@@ -39,6 +40,23 @@ export default function RootLayout({
             <Footer />
             <ThemeToggle />
             <ScrollToTop />
+            <Toaster
+              toastOptions={{
+                unstyled: true,
+                classNames: {
+                  toast:
+                    "bg-white text-gray-800 shadow-lg px-4 py-2 rounded-lg",
+                  description: "text-sm text-gray-600",
+                  actionButton: "text-blue-600 hover:text-blue-800",
+                  closeButton: "text-gray-500 hover:text-gray-700",
+                  loader: "bg-blue-600",
+                  success: "bg-green-600 text-white",
+                  error: "bg-red-600 text-white",
+                  info: "bg-blue-500 text-white",
+                  warning: "bg-yellow-500 text-white",
+                },
+              }}
+            />
           </ThemeProvider>
         </SmoothScroll>
       </body>

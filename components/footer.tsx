@@ -32,6 +32,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import emailjs from "@emailjs/browser";
+import { toast } from "sonner";
 
 // Form validation schema
 const contactFormSchema = z.object({
@@ -58,7 +60,7 @@ interface SocialLink {
 const Footer: React.FC = () => {
   // Contact form
   const contactForm = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
+    // resolver: zodResolver(contactFormSchema),
     defaultValues: {
       phoneNumber: "",
       company: "",
@@ -107,9 +109,45 @@ const Footer: React.FC = () => {
     },
   ];
 
-  const onContactSubmit = (data: ContactFormData) => {
+  const onContactSubmit = async (data: ContactFormData) => {
     console.log("Contact form submitted:", data);
-    // Handle contact form submission
+
+    // Create form data object for EmailJS
+    const formData = {
+      phone: data.phoneNumber,
+      company: data.company,
+      name: data.name,
+      email: data.email,
+      message: data.message,
+    };
+
+    try {
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        "service_iy1s31g", // Replace with your EmailJS Service ID
+        "template_nhk69on", // Replace with your EmailJS Template ID
+        formData,
+        "cW06URmefv_pthwVt" // Replace with your EmailJS Public Key
+      );
+
+      console.log("Email sent:", result.text);
+
+      if (result.text == "OK") {
+        toast(
+          "Your message has been sent successfully. We will get back to you soon."
+        );
+      } else {
+        toast(
+          "There was an error sending your message. Please try again later."
+        );
+      }
+
+      // Reset form
+      contactForm.reset();
+    } catch (error) {
+      console.error("Error:", error);
+      toast("There was an error sending your message. Please try again later.");
+    }
   };
 
   const onSubscribeSubmit = (data: SubscribeFormData) => {
