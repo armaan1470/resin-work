@@ -10,13 +10,13 @@
             "id": 1,
             "name": "Model 3",
             "navic_id": "model_3",
-            "description": "Resinwork Model 3 is a IPA & water-washable photopolymer resin for 3D printing dental models..."
+            "description": "Resinwork® Model 3 is a IPA & water-washable photopolymer resin for 3D printing dental models..."
           },
           {
             "id": 2,
             "name": "Model 2",
             "navic_id": "model_2",
-            "description": "Resinwork Model 2 is a water-washable photopolymer resin for 3D printing dental models..."
+            "description": "Resinwork® Model 2 is a water-washable photopolymer resin for 3D printing dental models..."
           },
           {
             "id": 3,
@@ -112,7 +112,7 @@
             "id": 1,
             "name": "PLA",
             "navic_id": "pla",
-            "description": "Resinwork Model 3 is a IPA & water-washable photopolymer resin for 3D printing dental models..."
+            "description": "Resinwork® Model 3 is a IPA & water-washable photopolymer resin for 3D printing dental models..."
           },
           {
             "id": 2,

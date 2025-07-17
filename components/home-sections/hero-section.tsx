@@ -21,27 +21,7 @@ import "swiper/css/navigation";
 import { Button } from "../ui/button";
 import "./hero-section.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-const slides = [
-  {
-    image: "/hero-section/slider1.png",
-    heading: "Engineered for Precision, <br /> Designed for Dentistry!",
-    text: "Our resins are the trusted choice for dental professionals who demand accuracy and reliability.",
-    buttonText: "Explore More",
-  },
-  {
-    image: "/hero-section/slider2.png",
-    heading: "Smooth, Accurate, <br />  & Ready to Cast",
-    text: "Bring jewellery designs to life with clarity and precision, ready for casting.",
-    buttonText: "Discover Products",
-  },
-  {
-    image: "/hero-section/slider3.png",
-    heading: "Engineered for Precision, <br /> Designed for Dentistry!",
-    text: "Trusted by dental professionals for high-performance results.",
-    buttonText: "Learn More",
-  },
-];
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 // Animate entire block with entry delay
 const contentVariants = {
@@ -67,6 +47,38 @@ const contentVariants = {
 
 const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const isMobile = useIsMobile();
+
+  const slideOneImage = isMobile
+    ? "/hero-section/slider5.png"
+    : "/hero-section/slider4.png";
+
+  const slides = [
+    {
+      image: slideOneImage,
+      // heading: "Engineered for Precision, <br /> Designed for Dentistry!",
+      // text: "Trusted by dental professionals for high-performance results.",
+      // buttonText: "Learn More",
+    },
+    {
+      image: "/hero-section/slider1.png",
+      heading: "Engineered for Precision, <br /> Designed for Dentistry!",
+      text: "Our resins are the trusted choice for dental professionals who demand accuracy and reliability.",
+      buttonText: "Explore More",
+    },
+    {
+      image: "/hero-section/slider2.png",
+      heading: "Smooth, Accurate, <br />  & Ready to Cast",
+      text: "Bring jewellery designs to life with clarity and precision, ready for casting.",
+      buttonText: "Discover Products",
+    },
+    {
+      image: "/hero-section/slider3.png",
+      heading: "Engineered for Precision, <br /> Designed for Dentistry!",
+      text: "Trusted by dental professionals for high-performance results.",
+      buttonText: "Learn More",
+    },
+  ];
 
   return (
     <section className="relative flex justify-center -top-24 bg-primary min-h-screen w-full">
@@ -83,14 +95,14 @@ const HeroSection = () => {
           prevEl: ".custom-swiper-prev",
         }}
         keyboard={{ enabled: true, onlyInViewport: true }}
-        className="relative w-full flex justify-center h-[90vh] md:h-full"
+        className="relative w-full flex justify-center h-[100vh] md:h-full"
       >
         {slides.map((slide, idx) => (
           <SwiperSlide key={idx} className="flex justify-center">
-            <div className="relative flex justify-center mx-auto w-[96vw] h-[80vh] sm:h-[95vh] text-white rounded-4xl md:rounded-b-[3rem] overflow-clip">
+            <div className="relative flex justify-center mx-auto w-[96vw] h-[90vh] sm:h-[98vh] text-white rounded-4xl md:rounded-b-[3rem] overflow-clip">
               <Image
                 src={slide.image}
-                alt={slide.heading}
+                alt={slide.heading || "Slider Image"}
                 fill
                 className="z-0 object-cover transition-opacity duration-1000 ease-in-out"
                 priority
@@ -109,7 +121,7 @@ const HeroSection = () => {
                     className="absolute left-6 bottom-6 md:left-16 lg:left-24 md:bottom-1/5 max-w-[80%] lg:max-w-[40%] xl:max-w-[30%] z-10"
                   >
                     <h2
-                      dangerouslySetInnerHTML={{ __html: slide.heading }}
+                      dangerouslySetInnerHTML={{ __html: slide.heading || "" }}
                       className="text-2xl lg:text-4xl font-bold mb-3 md:mb-4 text-wrap font-family-satoshi"
                     ></h2>
                     <p className="text-sm">{slide.text}</p>

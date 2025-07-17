@@ -92,7 +92,7 @@ export default function Navbar() {
             <div className="flex items-center">
               <Link href="/" className="flex-shrink-0 flex items-center">
                 <Image
-                  src="/logo.svg"
+                  src="/logo2.svg"
                   alt="Resin Work"
                   width={200}
                   height={48}
@@ -241,7 +241,7 @@ export default function Navbar() {
                     <div className="flex items-center justify-start">
                       <Link href="/" onClick={handleNavClick}>
                         <Image
-                          src="/logo.svg"
+                          src="/logo2.svg"
                           alt="Resin Work"
                           width={200}
                           height={48}

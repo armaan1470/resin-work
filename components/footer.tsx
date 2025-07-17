@@ -387,7 +387,7 @@ const Footer: React.FC = () => {
           <div className="flex flex-col justify-between col-span-3 order-1">
             <div className="flex justify-start">
               <Image
-                src="/logo.svg"
+                src="/logo2.svg"
                 alt="Logo"
                 width={200}
                 height={60}
@@ -638,7 +638,7 @@ const Footer: React.FC = () => {
       {/* Mobile Footer */}
       <div className="md:hidden px-5 py-6">
         <div className="flex justify-between gap-4 py-4">
-          <Image src="/logo.svg" alt="Logo" width={120} height={40} />
+          <Image src="/logo2.svg" alt="Logo" width={120} height={40} />
           <div className="flex gap-6 text-[24px]">
             {social.map((item, index) => (
               <Link

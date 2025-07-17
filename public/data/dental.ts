@@ -33,7 +33,7 @@ export const productData: Product[] = [
     navic_id: "model_3",
     subTitle: "3D Photopolymer Dental resin for vacuum/pressure thermoforming",
     description:
-      "Resinwork®️ Model 3 is an advanced, IPA & water-washable 3D printing resin engineered specifically for dental thermoforming applications. Designed to deliver high thermal resistance and dimensional accuracy, Model 3 ensures reliable performance under vacuum and pressure forming conditions.Formulated with Resinwork's proprietary Anti-Stick Surface Chemistry, Model 3 enables effortless removal of thermoformed appliances—such as retainers, aligners, nightguards, and sportguards—without damage to the model or appliance. This unique surface release property significantly reduces the risk of breakage and enhances workflow efficiency in dental labs.Unlike conventional resins, Model 3 features a stable, matte finish that resists sticking to heated substrates and ensures consistent results. Its high pigment stability eliminates the need for frequent mixing, while its water-washable composition provides safe, eco- friendly handling—no alcohol or chemical cleaners required.Whether you're fabricating clear aligners or custom appliances, Resinwork Model 3 is your go-to solution for dependable, lab-grade performance.",
+      "Resinwork® Model 3 is an advanced, IPA & water-washable 3D printing resin engineered specifically for dental thermoforming applications. Designed to deliver high thermal resistance and dimensional accuracy, Model 3 ensures reliable performance under vacuum and pressure forming conditions.Formulated with Resinwork's proprietary Anti-Stick Surface Chemistry, Model 3 enables effortless removal of thermoformed appliances—such as retainers, aligners, nightguards, and sportguards—without damage to the model or appliance. This unique surface release property significantly reduces the risk of breakage and enhances workflow efficiency in dental labs.Unlike conventional resins, Model 3 features a stable, matte finish that resists sticking to heated substrates and ensures consistent results. Its high pigment stability eliminates the need for frequent mixing, while its water-washable composition provides safe, eco- friendly handling—no alcohol or chemical cleaners required.Whether you're fabricating clear aligners or custom appliances, Resinwork® Model 3 is your go-to solution for dependable, lab-grade performance.",
     features: [
       {
         id: 1,
@@ -57,7 +57,7 @@ export const productData: Product[] = [
         id: 4,
         title: "Lab Grade",
         description:
-          "Whether you're fabricating clear aligners or custom appliances, Resinwork Model 3 is your go-to solution for dependable, lab-grade performance.",
+          "Whether you're fabricating clear aligners or custom appliances, Resinwork® Model 3 is your go-to solution for dependable, lab-grade performance.",
       },
     ],
     images: [
@@ -80,7 +80,7 @@ export const productData: Product[] = [
     category: "Dental",
     subTitle: "Water-Washable Photopolymer for Dental Modelling ",
     description:
-      "Resinwork Model 2 is a water-washable photopolymer (light-curable) polymerisable resin for 3D printing dental models, which can be used for multiple purposes such as: Study Models, Removable Die-Models, Models to thermoform or fabricate aligners and retainers. It is a specially formulated precise dental resin with a gypsum like texture having excellent dimensional accuracy, thermoforming ability, offers very low shrinkage and high level of detail sufficient for accurate modelling of teeth at a low cost per part.",
+      "Resinwork® Model 2 is a water-washable photopolymer (light-curable) polymerisable resin for 3D printing dental models, which can be used for multiple purposes such as: Study Models, Removable Die-Models, Models to thermoform or fabricate aligners and retainers. It is a specially formulated precise dental resin with a gypsum like texture having excellent dimensional accuracy, thermoforming ability, offers very low shrinkage and high level of detail sufficient for accurate modelling of teeth at a low cost per part.",
     features: [
       {
         id: 1,
@@ -146,13 +146,13 @@ export const productData: Product[] = [
     subTitle:
       "3D print highly-accurate surgical guides for just a few dollars.",
     description:
-      "Receive all the clinical benefits of guided surgery with rapid turnaround times and minimal material cost by printing guides in-office. Upload your scan and CBCT data to Resinwork Cloud Design and receive printable 3D files designed specifically for Resinwork Pro. 3D print the surgical guide in as little as 30 minutes. Immediately insert surgical guide sleeves post-print for increased precision, then post-process and sterilize. Resinwork Surgical Guide 2 resin features excellent mechanical properties and can be sterilized using standard autoclave protocols without affecting dimensional accuracy.",
+      "Receive all the clinical benefits of guided surgery with rapid turnaround times and minimal material cost by printing guides in-office. Upload your scan and CBCT data to Resinwork® Cloud Design and receive printable 3D files designed specifically for Resinwork® Pro. 3D print the surgical guide in as little as 30 minutes. Immediately insert surgical guide sleeves post-print for increased precision, then post-process and sterilize. Resinwork® Surgical Guide 2 resin features excellent mechanical properties and can be sterilized using standard autoclave protocols without affecting dimensional accuracy.",
     features: [
       {
         id: 1,
         title: "Full-Arch Surgical Guides",
         description:
-          "With Resinwork Pro, you can fabricate surgical guides of all kinds, including full-arch multi-site implant guides, bone reduction guides, and more.",
+          "With Resinwork® Pro, you can fabricate surgical guides of all kinds, including full-arch multi-site implant guides, bone reduction guides, and more.",
         icon: "/category-section/1.svg",
       },
       {
@@ -166,7 +166,7 @@ export const productData: Product[] = [
         id: 3,
         title: "Fabricate precision",
         description:
-          "A recent university study found Resinwork Pro more accurate and consistent than traditional alginate methods. ",
+          "A recent university study found Resinwork® Pro more accurate and consistent than traditional alginate methods. ",
         icon: "/category-section/3.svg",
       },
       {
