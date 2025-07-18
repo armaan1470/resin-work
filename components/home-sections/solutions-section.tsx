@@ -15,8 +15,8 @@ const SolutionsSection = () => {
     "/our-solution/1.png",
     "/our-solution/2.png",
     "/our-solution/3.png",
-    "/our-solution/4.png",
     "/our-solution/5.png",
+    "/our-solution/4.png",
   ];
 
   const data = [
@@ -45,13 +45,14 @@ const SolutionsSection = () => {
     {
       id: 4,
       title: "Jewellery",
-      image: "/our-solution/4.png",
+      image: "/our-solution/5.png",
       description:
         "High-detail character models and prototypes for entertainment and gaming industries.",
     },
     {
       id: 5,
-      image: "/our-solution/5.png",
+      title: "Filaments",
+      image: "/our-solution/4.png",
       description:
         "Specialized resins and filaments for unique applications with custom properties.",
     },
