@@ -4,6 +4,7 @@ import BentoCardsSection from "@/components/home-sections/bento-cards-section";
 import BlogsSection from "@/components/home-sections/blogs-section";
 import CombinedSection from "@/components/home-sections/combined-section";
 import HeroSection from "@/components/home-sections/hero-section";
+import LogoAnimationSection from "@/components/home-sections/logo-animation-section";
 import MobileTimelineSection from "@/components/home-sections/mobile-timeline-section";
 import SolutionsSection from "@/components/home-sections/solutions-section";
 import TimelineSection from "@/components/home-sections/timeline-section";
@@ -23,7 +24,7 @@ export default function Home() {
       {isMobile ? <MobileTimelineSection /> : <TimelineSection />}
 
       {/* <CombinedSection /> */}
-      <CombinedSection />
+      <LogoAnimationSection />
 
       <SolutionsSection />
 
