@@ -32,14 +32,14 @@ const contentVariants = {
     transition: {
       duration: 0.6,
       ease: easeOut,
-      delay: 0.8, // ⏸️ Pause before text appears
+      delay: 0.5, // ⏸️ Pause before text appears
     },
   },
   exit: {
     opacity: 0,
     y: 20,
     transition: {
-      duration: 0.5,
+      duration: 0.2,
       ease: easeIn,
     },
   },
@@ -81,10 +81,11 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="relative flex justify-center -top-24 bg-primary min-h-screen w-full">
+    <section className="relative flex justify-center -top-36 md:-top-24 bg-primary min-h-screen w-full">
       <Swiper
         modules={[Autoplay, Pagination, Navigation, Keyboard, EffectFade]}
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        // autoplay={{ delay: 5000, disableOnInteraction: false }}
+        autoplay={false}
         pagination={{ clickable: true }}
         loop
         // effect="fade"
@@ -99,17 +100,16 @@ const HeroSection = () => {
       >
         {slides.map((slide, idx) => (
           <SwiperSlide key={idx} className="flex justify-center">
-            <div className="relative flex justify-center mx-auto w-[96vw] h-[90vh] sm:h-[98vh] text-white rounded-4xl md:rounded-b-[3rem] overflow-clip">
-              <Image
+            <div className="relative flex justify-center mx-auto w-[96vw] h-[90vh] sm:h-[100vh] text-white rounded-4xl md:rounded-b-[3rem] overflow-clip">
+              <img
                 src={slide.image}
                 alt={slide.heading || "Slider Image"}
-                fill
-                className="z-0 object-cover transition-opacity duration-1000 ease-in-out"
-                priority
-                quality={100}
+                // fill
+                className="z-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out"
+                // priority
+                // quality={100}
               />
-
-              {/* Animate text only for active slide */}
+              {/* Animate text only for active slide
               <AnimatePresence mode="wait">
                 {activeIndex === idx && (
                   <motion.div
@@ -125,19 +125,46 @@ const HeroSection = () => {
                       className="text-2xl lg:text-4xl font-bold mb-3 md:mb-4 text-wrap font-family-satoshi"
                     ></h2>
                     <p className="text-sm">{slide.text}</p>
-                    {/* button hidden temporarily */}
-                    {/* <Button
+
+                    <Button
+                      size="lg"
+                      className="hidden md:flex md:mt-8 cursor-pointer px-8 py-6 text-base bg-brand text-white rounded-md border-1 border-brand transition-colors hover:bg-transparent hover:border-1 hover:border-white"
+                    >
+                      {slide.buttonText}
+                    </Button>
+                  </motion.div>
+                )}
+              </AnimatePresence> */}
+            </div>
+          </SwiperSlide>
+        ))}
+        <AnimatePresence mode="wait">
+          {slides[activeIndex].heading && (
+            <motion.div
+              className="absolute bottom-28 md:bottom-48 left-6 md:left-16 lg:left-24 max-w-[80%] lg:max-w-[40%] xl:max-w-[30%] z-10"
+              key={activeIndex}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={contentVariants}
+            >
+              <h2
+                dangerouslySetInnerHTML={{
+                  __html: slides[activeIndex].heading,
+                }}
+                className="text-2xl lg:text-4xl font-bold mb-3 md:mb-4 text-white text-wrap font-family-satoshi"
+              />
+              <p className="text-white">{slides[activeIndex].text}</p>
+              {/* button hidden temporarily */}
+              {/* <Button
                       size="lg"
                       className="hidden md:flex md:mt-8 cursor-pointer px-8 py-6 text-base bg-brand text-white rounded-md border-1 border-brand transition-colors hover:bg-transparent hover:border-1 hover:border-white"
                     >
                       {slide.buttonText}
                     </Button> */}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </SwiperSlide>
-        ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </Swiper>
       <div className="hidden lg:flex absolute z-20 w-full justify-between items-center h-full px-4 pointer-events-none">
         <button
