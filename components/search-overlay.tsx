@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 import gsap from "gsap";
@@ -19,6 +19,7 @@ export default function SearchOverlay({
   const overlayRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   useEffect(() => {
     const isMobile =
@@ -26,7 +27,10 @@ export default function SearchOverlay({
       /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent
       );
+
     let viewportListener: (() => void) | null = null;
+    let initialViewportHeight = 0;
+    let scrollTimeout: NodeJS.Timeout | null = null;
 
     const escHandler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -42,40 +46,52 @@ export default function SearchOverlay({
       }
     };
 
+    // Handle viewport changes for mobile keyboard
+    const handleViewportChange = () => {
+      if (!isMobile || !window.visualViewport) return;
+
+      const currentHeight = window.visualViewport.height;
+      const heightDifference = initialViewportHeight - currentHeight;
+
+      // Clear any existing scroll timeout
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+
+      // If height decreased significantly (keyboard opened)
+      if (heightDifference > 150) {
+        setIsKeyboardOpen(true);
+        // Single scroll with smooth behavior for responsiveness
+        scrollTimeout = setTimeout(() => {
+          inputRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            // inline: "nearest",
+          });
+        }, 50);
+      } else {
+        setIsKeyboardOpen(false);
+      }
+    };
+
     if (isOpen) {
       if (!isMobile) {
         document.body.style.overflow = "hidden";
+      } else {
+        // Store initial viewport height
+        initialViewportHeight =
+          window.visualViewport?.height || window.innerHeight;
+
+        // Set up viewport listener for mobile
+        if (window.visualViewport) {
+          viewportListener = handleViewportChange;
+          window.visualViewport.addEventListener("resize", viewportListener);
+        }
       }
+
       document.addEventListener("keydown", escHandler);
       document.addEventListener("mousedown", clickOutsideHandler);
       showOverlay();
-
-      // VisualViewport resize listener for mobile keyboard
-      if (isMobile && typeof window !== "undefined" && window.visualViewport) {
-        viewportListener = () => {
-          setTimeout(() => {
-            inputRef.current?.focus();
-            if (inputRef.current) {
-              inputRef.current.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-              });
-              setTimeout(() => {
-                if (inputRef.current) {
-                  const rect = inputRef.current.getBoundingClientRect();
-                  if (rect.top < 0 || rect.bottom > window.innerHeight) {
-                    window.scrollTo({
-                      top: window.scrollY + rect.top - 1, // minimal offset
-                      behavior: "smooth",
-                    });
-                  }
-                }
-              }, 150);
-            }
-          }, 100);
-        };
-        window.visualViewport.addEventListener("resize", viewportListener);
-      }
     } else {
       document.body.style.overflow = "";
       document.removeEventListener("keydown", escHandler);
@@ -83,6 +99,7 @@ export default function SearchOverlay({
       if (viewportListener && window.visualViewport) {
         window.visualViewport.removeEventListener("resize", viewportListener);
       }
+      setIsKeyboardOpen(false);
     }
 
     return () => {
@@ -112,7 +129,7 @@ export default function SearchOverlay({
     gsap.to(overlayRef.current, {
       top: "0%",
       width: "100vw",
-      height: "100vh",
+      height: "100dvh",
       borderRadius: "0px",
       duration: 0.6,
       ease: "power3.inOut",
@@ -164,6 +181,18 @@ export default function SearchOverlay({
     }
   };
 
+  // Handle input focus event - single, quick scroll
+  const handleInputFocus = () => {
+    // Only scroll if not already handled by viewport listener
+    setTimeout(() => {
+      inputRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        // inline: "nearest",
+      });
+    }, 150);
+  };
+
   return (
     <div
       ref={overlayRef}
@@ -174,59 +203,39 @@ export default function SearchOverlay({
         transform: "translateX(-50%)",
       }}
     >
+      {/* Close button outside of modalRef */}
+      <button
+        onClick={hideOverlay}
+        aria-label="Close search"
+        className="fixed p-2 border border-gray-200/34 rounded-full top-4 right-4 text-white hover:border-transparent text-2xl z-[10000]"
+      >
+        <IoClose />
+      </button>
+
       <div
         ref={modalRef}
-        className="absolute inset-0 flex items-center justify-center opacity-0"
+        className={`absolute inset-0 flex items-center justify-center opacity-0 transition-transform duration-200 ease-out ${
+          isKeyboardOpen ? "items-start pt-16" : "items-center"
+        }`}
       >
-        <div className="relative h-full rounded-2xl shadow-2xl p-10 w-full mx-4 my-10 flex flex-col justify-center items-center bg-transparent">
-          {/* Close button */}
-          <button
-            onClick={hideOverlay}
-            aria-label="Close search"
-            className="absolute p-2 border border-gray-200/34 rounded-full top-4 right-4 text-white hover:border-transparent text-2xl"
-          >
-            <IoClose />
-          </button>
-
+        <div className="relative h-full rounded-2xl shadow-2xl p-10 w-full mx-2 my-10 flex flex-col justify-center items-center bg-transparent">
           {/* Search form */}
           <form
             onSubmit={handleSubmit}
-            className="relative flex w-[90%] md:w-[70%] h-[4rem] items-center gap-2"
+            className="relative flex w-full md:w-[70%] h-[4rem] items-center gap-2"
           >
             <input
               type="text"
               placeholder="Search..."
               ref={inputRef}
-              onFocus={() => {
-                // Fallback: only scroll if visualViewport is not available
-                if (typeof window !== "undefined" && !window.visualViewport) {
-                  setTimeout(() => {
-                    if (inputRef.current) {
-                      inputRef.current.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center",
-                      });
-                      setTimeout(() => {
-                        if (inputRef.current) {
-                          const rect = inputRef.current.getBoundingClientRect();
-                          if (
-                            rect.top < 0 ||
-                            rect.bottom > window.innerHeight
-                          ) {
-                            window.scrollTo({
-                              top: window.scrollY + rect.top - 1, // minimal offset
-                              behavior: "smooth",
-                            });
-                          }
-                        }
-                      }, 150);
-                    }
-                  }, 100);
-                }
-              }}
+              onFocus={handleInputFocus}
               className="w-full text-[1.2rem] md:text-[1.5rem] rounded-full outline-none border-[2.5px] border-gray-100 px-6 py-4 text-sm text-white placeholder:text-gray-400 bg-transparent"
               autoFocus
               aria-label="Search"
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
             />
             <button
               className="absolute right-5 md:right-6 top-4 md:top-3.5"
