@@ -21,7 +21,7 @@ export default function Home() {
 
       {/* <TimelineSectionSample /> */}
 
-      {isMobile ? <MobileTimelineSection /> : <TimelineSection />}
+      {/* {isMobile ? <MobileTimelineSection /> : <TimelineSection />} */}
 
       {/* <CombinedSection /> */}
       <LogoAnimationSection />

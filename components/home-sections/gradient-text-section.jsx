@@ -3,10 +3,13 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "motion/react";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const GradientTextSection = () => {
   const containerRef = useRef(null);
+  const textRef = useRef(null);
   const segmentsRef = useRef([]);
 
   const text =
@@ -19,15 +22,28 @@ const GradientTextSection = () => {
       const totalSegments = segments.length;
       const progressObj = { value: 0 };
 
+      // 🟢 Slow upward scroll animation
+      gsap.to(textRef.current, {
+        y: -100, // scroll upward by 100px over full duration
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: `+=${totalSegments * 600}vh`, // taller scroll area
+          scrub: true,
+          markers: false,
+        },
+      });
+
+      // 🔵 Highlight animation
       gsap.to(progressObj, {
         value: totalSegments - 1,
         ease: "none",
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top top",
-          end: `+=${totalSegments * 750}vh`,
+          start: "+=300vh",
+          end: `+=${totalSegments * 600}vh`,
           scrub: true,
-          pin: true,
           markers: false,
           onUpdate: () => {
             const progress = progressObj.value;
@@ -38,23 +54,14 @@ const GradientTextSection = () => {
                 opacity = 0.3 + 0.6 * (1 - diff);
               }
               if (el) {
-                gsap.to(el, { opacity, duration: 0.3, overwrite: "auto" });
+                gsap.to(el, {
+                  opacity,
+                  duration: 0.3,
+                  overwrite: "auto",
+                });
               }
             });
           },
-          // onUpdate: (self) => {
-          //   const progress = progressObj.value;
-          //   segmentsRef.current.forEach((el, i) => {
-          //     // Calculate opacity: 1 at active, 0.3 at inactive, crossfade in between
-          //     const diff = Math.abs(progress - i);
-          //     let opacity = 0.3;
-          //     if (diff < 1) {
-          //       // Crossfade region
-          //       opacity = 0.3 + 0.6 * (1 - diff);
-          //     }
-          //     el && (el.style.opacity = opacity);
-          //   });
-          // },
         },
       });
     }, containerRef);
@@ -64,9 +71,19 @@ const GradientTextSection = () => {
 
   return (
     <>
-      <div ref={containerRef} className="relative">
-        <div className="sticky top-0 h-screen flex items-center z-30  px-48 mx-auto">
-          <p className="text-5xl leading-[4.5rem] tracking-normal">
+      <div
+        ref={containerRef}
+        className="relative min-h-[500vh]" // 👈 very tall section to allow slow scroll
+      >
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ amount: 0.8 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          ref={textRef}
+          className="h-screen flex items-center justify-center sticky top-0"
+        >
+          <p className="text-5xl leading-[4.5rem] tracking-normal px-48 mx-auto">
             {segments.map((segment, index) => (
               <span
                 key={index}
@@ -77,9 +94,9 @@ const GradientTextSection = () => {
               </span>
             ))}
           </p>
-        </div>
+        </motion.div>
       </div>
-      <div className="h-[40vh]"></div>
+      <div className="h-[40vh]" />
     </>
   );
 };

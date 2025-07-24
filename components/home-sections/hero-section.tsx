@@ -10,8 +10,8 @@ import {
   Navigation,
   Keyboard,
 } from "swiper/modules";
-import { motion, AnimatePresence } from "framer-motion";
-import { easeOut, easeIn } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
+import { easeOut, easeIn } from "motion/react";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
