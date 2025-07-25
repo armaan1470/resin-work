@@ -69,16 +69,19 @@ const TextHighlightSection: React.FC = () => {
 
   return (
     <>
-      <div ref={containerRef} className="relative min-h-[500vh]">
+      <div
+        ref={containerRef}
+        className="relative min-h-[700vh] xl:min-h-[500vh]"
+      >
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ amount: 0.8 }}
           transition={{ duration: 1, ease: "easeOut" }}
           ref={textRef}
-          className="h-screen flex items-center justify-center sticky top-0 max-w-[1300px] mx-auto"
+          className="h-screen flex items-center justify-center sticky top-15 xl:top-10"
         >
-          <p className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl md:leading-[2.6rem] lg:leading-[2.8rem] xl:leading-[4.5rem] px-4 md:px-14 lg:px-26 xl:px-0 tracking-normal  mx-auto">
+          <p className="text-2xl md:text-3xl xl:text-5xl md:leading-[2.6rem] lg:leading-[2.8rem] xl:leading-[4.5rem] px-4 md:px-14 lg:px-26 xl:px-48 tracking-normal">
             {segments.map((segment, index) => (
               <span
                 key={index}
