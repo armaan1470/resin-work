@@ -4,7 +4,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import GradientTextSection from "./gradient-text-section";
+import TextHighlightSection from "./combined-section/text-highlight-section";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -208,7 +208,7 @@ const LogoAnimationSection = () => {
           </p>
         </div>
       </div>
-      <GradientTextSection />
+      <TextHighlightSection />
     </div>
   );
 };
