@@ -1,0 +1,28 @@
+{
+  "HeroSection": {
+    "title": "Hello world!",
+    "about": "Go to the about page"
+  },
+  "slides": {
+    "slide1": {
+      "heading": "Engineered for Precision, <br /> Designed for Dentistry!",
+      "text": "Trusted by dental professionals for high‑performance results.",
+      "button": "Learn More"
+    },
+    "slide2": {
+      "heading": "Engineered for Precision, <br /> Designed for Dentistry!",
+      "text": "Our resins are the trusted choice for dental professionals who demand accuracy and reliability.",
+      "button": "Explore More"
+    },
+    "slide3": {
+      "heading": "Smooth, Accurate, <br /> & Ready to Cast",
+      "text": "Bring jewellery designs to life with clarity and precision, ready for casting.",
+      "button": "Discover Products"
+    },
+    "slide4": {
+      "heading": "Engineered for Precision, <br /> Designed for Dentistry!",
+      "text": "Trusted by dental professionals for high‑performance results.",
+      "button": "Learn More"
+    }
+  }
+}

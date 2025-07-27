@@ -1,0 +1,18 @@
+[
+  {
+    "key": "slide1",
+    "image": "/hero-section/slider0.png"
+  },
+  {
+    "key": "slide2",
+    "image": "/hero-section/slider1.png"
+  },
+  {
+    "key": "slide3",
+    "image": "/hero-section/slider2.png"
+  },
+  {
+    "key": "slide4",
+    "image": "/hero-section/slider3.png"
+  }
+]
