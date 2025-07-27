@@ -1,12 +1,13 @@
 "use client";
 
-import { dentalProducts as productData } from "../../../public/data/dental";
+import { dentalProducts as productData } from "../../../../public/data/dental";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { FileText } from "lucide-react";
 import { useHashNavigation } from "@/hooks/useHashNavigation";
+import { useTranslations } from "next-intl";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,6 +59,8 @@ const DentalProductSection: React.FC = () => {
   const [userSelectedColor, setUserSelectedColor] = useState<boolean | null>(
     null
   );
+
+  const t = useTranslations("DentalProducts");
 
   // Use the generic hash navigation hook with longer delay for GSAP animations
   const { isPageReady } = useHashNavigation({
@@ -274,13 +277,13 @@ const DentalProductSection: React.FC = () => {
             {/* Left side - content */}
             <div className="py-10 pt-[6.8rem]">
               <h2 className="w-[90%] pop font-semibold rounded-lg border border-[var(--color-primary)] text-[var(--text-primary)] text-[1.8rem] ps-[1rem] lg:text-[2rem] xl:text-[2.6rem]">
-                {product.name}
+                {t(`${product.navic_id}.name`)}
               </h2>
               <h3 className="text-[var(--text-subheading)] text-[1.5rem] font-bold my-[1rem] me-[3rem]">
-                {product.subTitle}
+                {t(`${product.navic_id}.subTitle`)}
               </h3>
               <div className="space-y-2 pe-[4rem]">
-                {product.description
+                {t(`${product.navic_id}.description`)
                   .split(".")
                   .filter((sentence) => sentence.trim().length > 0)
                   .map((sentence, idx) => (
@@ -321,7 +324,9 @@ const DentalProductSection: React.FC = () => {
                               <div className="flex items-center space-x-3">
                                 <div className="w-4 h-4 bg-[var(--color-primary)] rounded-full"></div>
                                 <h4 className="lg:text-[1.4rem] xl:text-[2rem] font-medium text-[var(--text-subheading1)]">
-                                  {feature.title}
+                                  {t(
+                                    `${product.navic_id}.features.${idx}.title`
+                                  )}
                                 </h4>
                               </div>
                               {/* SVG Icon */}
@@ -358,7 +363,9 @@ const DentalProductSection: React.FC = () => {
                               }}
                             >
                               <p className="text-[var(--text-subheading)] text-justify text-[1rem] ps-[2rem] pe-[2rem]">
-                                {feature.description}
+                                {t(
+                                  `${product.navic_id}.features.${idx}.description`
+                                )}
                               </p>
                             </div>
                             <div className="bg-[#5D5D5D] h-[.5px] w-[90%]"></div>
@@ -475,7 +482,7 @@ const DentalProductSection: React.FC = () => {
                   </div>
                   <div className="bg-[var(--bg-primary)]">
                     <button className="text-[var(--text-subheading)] px-4 rounded-md py-[2rem] flex space-x-2 items-center cursor-pointer">
-                      <span>Download product data sheet</span>
+                      <span>{t("download")}</span>
                       <FileText />
                     </button>
                   </div>

@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTranslations } from "next-intl";
 gsap.registerPlugin(ScrollTrigger);
 
 const GradientTextSection = () => {
@@ -11,9 +12,9 @@ const GradientTextSection = () => {
   const containerRef = useRef(null);
   const animationFrame = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+  const t = useTranslations("GradientText");
 
-  const text =
-    "Precision, reliability, and innovation are the cornerstones that define RESINWORK. Proudly developed in Germany, each formulation is the result of extensive in-house. Where cutting-edge technology meets our state-of-the-art manufacturing process. Trusted by professionals across industries like Dental, Engineering, Jewellery and more. We enable you to achieve outstanding results, pushing the boundaries of what's possible in 3D Printing.";
+  const text = t("text");
 
   const segments = text.split(/(?<=\.)/g);
 

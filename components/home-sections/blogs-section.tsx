@@ -3,6 +3,7 @@
 // src/components/home-secions/BlogsSection.tsx
 import React, { useState } from "react";
 import { Calendar, ChevronDown, ChevronUp } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface BlogItem {
   id: number;
@@ -14,48 +15,49 @@ interface BlogItem {
 type TabType = "blogs" | "caseStudies";
 
 const BlogsSection: React.FC = () => {
+  const t = useTranslations("BlogSection");
   const [activeTab, setActiveTab] = useState<TabType>("blogs");
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
 
   const blogData: BlogItem[] = [
     {
       id: 1,
-      date: "02 dec 2024",
-      title: "What does the next decade of 3D printing look like?",
-      desc: "Additive manufacturing, commonly known as 3D printing, has already revolutionized industries ranging from aerospace to healthcare.",
+      date: t("data.1.date"),
+      title: t("data.1.title"),
+      desc: t("data.1.desc"),
     },
     {
       id: 2,
-      date: "02 dec 2024",
-      title: "Dental",
-      desc: "Let's dive into how resin manufacturing is reshaping the dental landscape and why it's becoming an indispensable tool for modern dental practices.",
+      date: t("data.2.date"),
+      title: t("data.2.title"),
+      desc: t("data.2.desc"),
     },
     {
       id: 3,
-      date: "02 dec 2024",
-      title: "Jewellery",
-      desc: "Choosing the Right Resin for Jewellery Wax Models: A Comprehensive Guide",
+      date: t("data.3.date"),
+      title: t("data.3.title"),
+      desc: t("data.3.desc"),
     },
   ];
 
   const caseStudyData: BlogItem[] = [
     {
       id: 1,
-      date: "15 jan 2024",
-      title: "3D Printing in Aerospace: A Case Study",
-      desc: "How our resin solutions helped reduce aircraft component weight by 30% while maintaining structural integrity.",
+      date: t("data.4.date"),
+      title: t("data.4.title"),
+      desc: t("data.4.desc"),
     },
     {
       id: 2,
-      date: "22 mar 2024",
-      title: "Dental Implant Success Story",
-      desc: "Case study on how our dental resins improved precision and reduced production time by 40% for a major dental lab.",
+      date: t("data.5.date"),
+      title: t("data.5.title"),
+      desc: t("data.5.desc"),
     },
     {
       id: 3,
-      date: "05 may 2024",
-      title: "Custom Jewelry Manufacturing",
-      desc: "How a luxury jewelry brand scaled production using our high-resolution casting resins.",
+      date: t("data.6.date"),
+      title: t("data.6.title"),
+      desc: t("data.6.desc"),
     },
   ];
 
@@ -88,7 +90,7 @@ const BlogsSection: React.FC = () => {
                       {activeTab === "blogs" && (
                         <div className="absolute inset-0 bg-brand rounded-full shadow-lg transform scale-105 transition-transform duration-500"></div>
                       )}
-                      <span className="relative z-10">Our Blogs</span>
+                      <span className="relative z-10"> {t("blog")}</span>
                     </button>
                     <button
                       onClick={() => setActiveTab("caseStudies")}
@@ -101,7 +103,7 @@ const BlogsSection: React.FC = () => {
                       {activeTab === "caseStudies" && (
                         <div className="absolute inset-0 bg-brand rounded-full shadow-lg transform scale-105 transition-transform duration-500"></div>
                       )}
-                      <span className="relative z-10">Case Studies</span>
+                      <span className="relative z-10">{t("case")}</span>
                     </button>
                   </div>
                 </div>
@@ -122,9 +124,7 @@ const BlogsSection: React.FC = () => {
                 : "Explore real-world applications of our products through these detailed case studies demonstrating innovation and problem-solving across industries."}
             </p>
             <button className="b1 text-white bg-brand cursor-pointer px-[3rem] py-[.51rem] rounded-lg my-[1.4rem] hover:opacity-60 transition-opacity">
-              {activeTab === "blogs"
-                ? "Explore More Blogs"
-                : "View All Case Studies"}
+              {activeTab === "blogs" ? t("button.explor") : t("button.view")}
             </button>
             <img
               src="/images/blog.png"
@@ -151,7 +151,7 @@ const BlogsSection: React.FC = () => {
                   </div>
                   <div className="col-span-2">
                     <button className="rounded-lg text-[.8rem] text-red-500 hover:text-red-600 transition-colors">
-                      Learn More
+                      {t("leanr")}
                     </button>
                   </div>
                   <h4 className="col-span-12 text-black/60 text-[1rem] font-light text-start">
@@ -180,7 +180,7 @@ const BlogsSection: React.FC = () => {
                       : "text-gray-600"
                   }`}
                 >
-                  Our Blogs
+                  {t("blog")}
                 </button>
                 <button
                   onClick={() => setActiveTab("caseStudies")}
@@ -190,7 +190,7 @@ const BlogsSection: React.FC = () => {
                       : "text-gray-600"
                   }`}
                 >
-                  Case Studies
+                  {t("case")}
                 </button>
               </div>
             </div>
@@ -250,7 +250,7 @@ const BlogsSection: React.FC = () => {
                       {item.desc}
                     </p>
                     <button className="text-red-400 hover:text-red-300 font-medium text-sm transition-colors duration-200">
-                      Learn More
+                      {t("leanr")}
                     </button>
                   </div>
                 </div>
@@ -261,9 +261,7 @@ const BlogsSection: React.FC = () => {
           {/* Mobile CTA */}
           <div className="text-center mt-8">
             <button className="bg-[var(--color-primary)] hover:opacity-90 text-white px-8 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg">
-              {activeTab === "blogs"
-                ? "Explore More Blogs"
-                : "View All Case Studies"}
+              {activeTab === "blogs" ? t("button.explor") : t("button.view")}
             </button>
           </div>
         </div>
