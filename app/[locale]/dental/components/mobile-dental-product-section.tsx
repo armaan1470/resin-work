@@ -1,6 +1,6 @@
 "use client";
 
-import { dentalProducts as productData } from "../../../public/data/dental";
+import { dentalProducts as productData } from "../../../../public/data/dental";
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";

@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import { Search, Menu, ChevronRight } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
 import {
   Sheet,
@@ -17,6 +16,8 @@ import { Separator } from "./ui/separator";
 import navData from "@/data/nav-links.json";
 import { useNavigation } from "@/hooks/useNavigation";
 import SearchOverlay from "./search-overlay";
+import { useLocale } from "next-intl";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 
 interface Product {
   id: number;
@@ -39,6 +40,17 @@ export default function Navbar() {
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
   const navItems: NavItem[] = navData.navItems;
   const router = useRouter();
+
+  const locale = useLocale();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const toggleLocale = locale === "en" ? "de" : "en";
+  const changeLocale = () => {
+    // preserve current path and query parameters
+    const query = Object.fromEntries(searchParams.entries());
+    router.push({ pathname, query }, { locale: toggleLocale });
+  };
 
   const { handleSectionClick, isNavigating } = useNavigation({
     debug: process.env.NODE_ENV === "development",
@@ -191,8 +203,12 @@ export default function Navbar() {
                 <Button
                   variant="ghost"
                   className="p-0 cursor-pointer text-2xl hover:bg-transparent"
+                  onClick={changeLocale}
+                  aria-label={`Switch language to ${
+                    toggleLocale === "en" ? "English" : "Deutsch"
+                  }`}
                 >
-                  🇺🇸
+                  {toggleLocale === "en" ? "🇺🇸 EN" : "🇩🇪 DE"}
                 </Button>
                 <Button
                   variant="ghost"

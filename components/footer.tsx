@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/form";
 import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 // Form validation schema
 const contactFormSchema = z.object({
@@ -69,6 +70,8 @@ const Footer: React.FC = () => {
       message: "",
     },
   });
+
+  const t = useTranslations("Footer");
 
   // Subscribe form for desktop
   const subscribeForm = useForm<SubscribeFormData>({
@@ -167,7 +170,7 @@ const Footer: React.FC = () => {
         <div className="hidden md:block">
           <div className="flex justify-center flex-col mb-4 md:mb-0">
             <h2 className="text-[28px] md:text-[35px] font-light mb-4">
-              Subscribe for latest updates
+              {t("subscribe.title")}
             </h2>
             <Form {...subscribeForm}>
               <form
@@ -183,7 +186,7 @@ const Footer: React.FC = () => {
                         <Input
                           {...field}
                           type="email"
-                          placeholder="Enter your Email Address"
+                          placeholder={t("subscribe.placeholder")}
                           className="h-14 py-[0.8rem] px-4 placeholder:opacity-50 rounded border text-[16px] md:text-[20px] border-[#C4C4C4] bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
                         />
                       </FormControl>
@@ -202,7 +205,7 @@ const Footer: React.FC = () => {
 
         <div>
           <p className="text-[#FFFFFF]/60 text-[18px] md:text-[22px] mb-4">
-            Please fill out the form and we will get back to you.
+            {t("contactPrompt")}
           </p>
 
           <Form {...contactForm}>
@@ -219,7 +222,7 @@ const Footer: React.FC = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-white">
-                          Phone Number *
+                          {t("form.phoneLabel")}
                         </FormLabel>
                         <FormControl>
                           <Input
@@ -239,7 +242,9 @@ const Footer: React.FC = () => {
                     name="company"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-white">Company *</FormLabel>
+                        <FormLabel className="text-white">
+                          {t("form.companyLabel")}
+                        </FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -262,7 +267,7 @@ const Footer: React.FC = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-white">
-                          Your Name *
+                          {t("form.nameLabel")}
                         </FormLabel>
                         <FormControl>
                           <Input
@@ -283,7 +288,7 @@ const Footer: React.FC = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-white">
-                          Your Email *
+                          {t("form.emailLabel")}
                         </FormLabel>
                         <FormControl>
                           <Input
@@ -308,7 +313,7 @@ const Footer: React.FC = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-white">
-                          Your Message *
+                          {t("form.messageLabel")}
                         </FormLabel>
                         <FormControl>
                           <Textarea
@@ -337,7 +342,7 @@ const Footer: React.FC = () => {
           </Form>
 
           <p className="hidden md:block text-white text-[12px] mt-2">
-            * Fields are mandatory
+            {t("form.fieldsMandatory")}
           </p>
         </div>
       </div>
@@ -345,7 +350,7 @@ const Footer: React.FC = () => {
       {/* Mobile Subscribe Section */}
       <div className="w-full md:hidden bg-[#FFF3F0] py-[2rem] flex flex-col justify-center items-center">
         <h2 className="text-[1.5rem] text-[#FF4713] text-center font-bold">
-          Subscribe for latest updates
+          {t("subscribe.mobileTitle")}
         </h2>
 
         <Form {...mobileSubscribeForm}>
@@ -362,7 +367,7 @@ const Footer: React.FC = () => {
                     <Input
                       {...field}
                       type="email"
-                      placeholder="Enter your Email Address"
+                      placeholder={t("subscribe.placeholder")}
                       className="py-2 px-3 rounded border border-[#C4C4C4] placeholder:text-black placeholder:opacity-60 bg-transparent text-black focus:ring-0 focus:border-[#FF4713]"
                     />
                   </FormControl>
@@ -374,7 +379,7 @@ const Footer: React.FC = () => {
               type="submit"
               className="px-[3rem] bg-[#FF4713] text-[#ffffff] rounded-md py-[0.5rem] md:py-[1rem] my-[0.5rem] md:my-[1rem] hover:bg-[#FF4713]/90"
             >
-              Submit
+              {t("subscribe.submit")}
             </Button>
           </form>
         </Form>
@@ -395,11 +400,16 @@ const Footer: React.FC = () => {
               />
             </div>
             <div className="text-white text-[12px] leading-[1.6]">
-              <strong className="text-[var(--color-primary)]">INDIA</strong>
-              <br />3 AK Chemie Pvt.Ltd.
-              <br />5 / B5 / 1, TSIIC Automotive Park,
+              <strong className="text-[var(--color-primary)]">
+                {t("mobileFooter.address.country")}
+              </strong>
               <br />
-              Kallakal - 502336 Telangana, India.
+              {t("mobileFooter.address.line1")}
+              <br />
+              {t("mobileFooter.address.line2")}
+              <br />
+              {t("mobileFooter.address.line3")}
+              <br />
               {/* <br />
               <br /> */}
               {/* <strong className="text-[var(--color-primary)]">GERMANY</strong>
@@ -415,7 +425,7 @@ const Footer: React.FC = () => {
           {/* Quick Links */}
           <div className="col-span-2 order-3 md:order-2">
             <h3 className="text-[16px] text-[var(--color-primary)] font-medium mb-3">
-              QUICK LINKS
+              {t("quickLinks.title")}
             </h3>
             <ul className="space-y-2">
               <li>
@@ -423,7 +433,7 @@ const Footer: React.FC = () => {
                   href="/"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Home
+                  {t("quickLinks.home")}
                 </Link>
               </li>
               <li>
@@ -431,7 +441,7 @@ const Footer: React.FC = () => {
                   href="/jewellery"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Jewellery
+                  {t("quickLinks.jewellery")}
                 </Link>
               </li>
               <li>
@@ -439,7 +449,7 @@ const Footer: React.FC = () => {
                   href="/dental"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Dental
+                  {t("quickLinks.dental")}
                 </Link>
               </li>
               <li>
@@ -447,7 +457,7 @@ const Footer: React.FC = () => {
                   href="/functionality"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Functionality
+                  {t("quickLinks.functionality")}
                 </Link>
               </li>
               <li>
@@ -455,7 +465,7 @@ const Footer: React.FC = () => {
                   href="/filaments"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Filaments
+                  {t("quickLinks.filaments")}
                 </Link>
               </li>
               <li>
@@ -463,7 +473,7 @@ const Footer: React.FC = () => {
                   href="/company"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Company
+                  {t("quickLinks.company")}
                 </Link>
               </li>
             </ul>
@@ -472,7 +482,7 @@ const Footer: React.FC = () => {
           {/* Support */}
           <div className="col-span-2 order-4 md:order-3">
             <h3 className="text-[16px] text-[var(--color-primary)] font-medium mb-3">
-              SUPPORT
+              {t("support.title")}
             </h3>
             <ul className="space-y-2">
               <li>
@@ -480,7 +490,7 @@ const Footer: React.FC = () => {
                   href="/order-status"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Order Status
+                  {t("support.orderStatus")}
                 </Link>
               </li>
               <li>
@@ -488,7 +498,7 @@ const Footer: React.FC = () => {
                   href="/tds-msds"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  TDS / MSDS
+                  {t("support.tdsMsds")}
                 </Link>
               </li>
               <li>
@@ -496,7 +506,7 @@ const Footer: React.FC = () => {
                   href="/media-centre"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Media Centre
+                  {t("support.mediaCentre")}
                 </Link>
               </li>
               <li>
@@ -504,7 +514,7 @@ const Footer: React.FC = () => {
                   href="/case-studies"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Case Studies
+                  {t("support.caseStudies")}
                 </Link>
               </li>
               <li>
@@ -512,7 +522,7 @@ const Footer: React.FC = () => {
                   href="/blogs"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Blogs
+                  {t("support.blogs")}
                 </Link>
               </li>
               <li>
@@ -520,7 +530,7 @@ const Footer: React.FC = () => {
                   href="/faq"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  FAQ's
+                  {t("support.faqs")}
                 </Link>
               </li>
             </ul>
@@ -529,7 +539,7 @@ const Footer: React.FC = () => {
           {/* About Us */}
           <div className="col-span-2 order-5 md:order-4 mt-6 md:mt-0">
             <h3 className="text-[16px] text-[var(--color-primary)] font-medium mb-3">
-              ABOUT US
+              {t("aboutUs.title")}
             </h3>
             <ul className="space-y-2">
               <li>
@@ -537,7 +547,7 @@ const Footer: React.FC = () => {
                   href="/who-we-are"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Who We Are
+                  {t("aboutUs.whoWeAre")}
                 </Link>
               </li>
               <li>
@@ -545,7 +555,7 @@ const Footer: React.FC = () => {
                   href="/services"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Services
+                  {t("aboutUs.services")}
                 </Link>
               </li>
               <li>
@@ -553,7 +563,7 @@ const Footer: React.FC = () => {
                   href="/solutions"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Solutions
+                  {t("aboutUs.solutions")}
                 </Link>
               </li>
               <li>
@@ -561,7 +571,7 @@ const Footer: React.FC = () => {
                   href="/news-events"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  News & Events
+                  {t("aboutUs.newsEvents")}
                 </Link>
               </li>
             </ul>
@@ -570,14 +580,13 @@ const Footer: React.FC = () => {
           {/* Contact Us */}
           <div className="col-span-3 order-2 md:order-5">
             <h3 className="text-[16px] text-[var(--color-primary)] font-medium mb-3">
-              CONTACT US
+              {t("contactUs.title")}
             </h3>
             <p>
-              1800 - 102 - 0525
-              <br />
-              Mon - Sun - 10 AM - 7 PM
+              {t("contactUs.phone")} <br />
+              <span className="text-[12px]">{t("contactUs.hours")}</span>
             </p>
-            <p className="mt-4">Resellers</p>
+            <p className="mt-4">{t("contactUs.resellers")}</p>
           </div>
 
           {/* Bottom Links and Social */}
@@ -588,7 +597,7 @@ const Footer: React.FC = () => {
                   href="/privacy-policy"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Privacy Policy
+                  {t("bottomLinks.privacyPolicy")}
                 </Link>
               </li>
               <li>
@@ -596,7 +605,7 @@ const Footer: React.FC = () => {
                   href="/terms-conditions"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Terms & Conditions
+                  {t("bottomLinks.termsConditions")}
                 </Link>
               </li>
               <li>
@@ -604,7 +613,7 @@ const Footer: React.FC = () => {
                   href="/cookie-policy"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Cookie Policy
+                  {t("bottomLinks.cookiePolicy")}
                 </Link>
               </li>
               <li>
@@ -612,7 +621,7 @@ const Footer: React.FC = () => {
                   href="/sitemap"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Sitemap
+                  {t("bottomLinks.sitemap")}
                 </Link>
               </li>
             </ul>
@@ -657,7 +666,7 @@ const Footer: React.FC = () => {
 
         <div>
           <h2 className="text-[16px] text-[var(--color-primary)] font-medium my-3">
-            QUICK LINKS
+            {t("mobileFooter.quickLinks")}
           </h2>
           <div className="grid grid-cols-2 gap-4">
             <ul>
@@ -666,7 +675,7 @@ const Footer: React.FC = () => {
                   href="/"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Home
+                  {t("mobileFooter.linksColumn1.home")}
                 </Link>
               </li>
               <li>
@@ -674,7 +683,7 @@ const Footer: React.FC = () => {
                   href="/dental"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Dental
+                  {t("mobileFooter.linksColumn1.dental")}
                 </Link>
               </li>
               <li>
@@ -682,7 +691,7 @@ const Footer: React.FC = () => {
                   href="/functionality"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Functionality
+                  {t("mobileFooter.linksColumn1.functionality")}
                 </Link>
               </li>
               <li>
@@ -690,7 +699,7 @@ const Footer: React.FC = () => {
                   href="/filaments"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Filaments
+                  {t("mobileFooter.linksColumn1.filaments")}
                 </Link>
               </li>
             </ul>
@@ -700,7 +709,7 @@ const Footer: React.FC = () => {
                   href="/diy"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  DIY
+                  {t("mobileFooter.linksColumn2.diy")}
                 </Link>
               </li>
               <li>
@@ -708,7 +717,7 @@ const Footer: React.FC = () => {
                   href="/offer-zone"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Offer Zone
+                  {t("mobileFooter.linksColumn2.offerZone")}
                 </Link>
               </li>
               <li>
@@ -716,7 +725,7 @@ const Footer: React.FC = () => {
                   href="/featured"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Featured
+                  {t("mobileFooter.linksColumn2.featured")}
                 </Link>
               </li>
             </ul>
@@ -725,7 +734,7 @@ const Footer: React.FC = () => {
 
         <div>
           <h2 className="text-[16px] text-[var(--color-primary)] font-medium my-3">
-            SUPPORT
+            {t("mobileFooter.support")}
           </h2>
           <div className="grid grid-cols-2 gap-4">
             <ul>
@@ -734,7 +743,7 @@ const Footer: React.FC = () => {
                   href="/order-status"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Order Status
+                  {t("mobileFooter.supportColumn1.orderStatus")}
                 </Link>
               </li>
               <li>
@@ -742,7 +751,7 @@ const Footer: React.FC = () => {
                   href="/tds-msds"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  TDS / MSDS
+                  {t("mobileFooter.supportColumn1.tdsMsds")}
                 </Link>
               </li>
               <li>
@@ -750,7 +759,7 @@ const Footer: React.FC = () => {
                   href="/media-centre"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Media Centre
+                  {t("mobileFooter.supportColumn1.mediaCentre")}
                 </Link>
               </li>
             </ul>
@@ -760,7 +769,7 @@ const Footer: React.FC = () => {
                   href="/case-studies"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Case Studies
+                  {t("mobileFooter.supportColumn2.caseStudies")}
                 </Link>
               </li>
               <li>
@@ -768,7 +777,7 @@ const Footer: React.FC = () => {
                   href="/blogs"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Blogs
+                  {t("mobileFooter.supportColumn2.blogs")}
                 </Link>
               </li>
               <li>
@@ -776,7 +785,7 @@ const Footer: React.FC = () => {
                   href="/faq"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  FAQ's
+                  {t("mobileFooter.supportColumn2.faqs")}
                 </Link>
               </li>
             </ul>
@@ -785,7 +794,7 @@ const Footer: React.FC = () => {
 
         <div>
           <h2 className="text-[16px] text-[var(--color-primary)] font-medium my-3">
-            COMPANY
+            {t("aboutUs.title")}
           </h2>
           <div className="grid grid-cols-2 gap-4">
             <ul>
@@ -794,7 +803,7 @@ const Footer: React.FC = () => {
                   href="/who-we-are"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Who We Are
+                  {t("aboutUs.whoWeAre")}
                 </Link>
               </li>
               <li>
@@ -802,7 +811,7 @@ const Footer: React.FC = () => {
                   href="/services"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Services
+                  {t("aboutUs.services")}
                 </Link>
               </li>
               <li>
@@ -810,7 +819,7 @@ const Footer: React.FC = () => {
                   href="/solutions"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Solutions
+                  {t("aboutUs.solutions")}
                 </Link>
               </li>
             </ul>
@@ -820,7 +829,7 @@ const Footer: React.FC = () => {
                   href="/news-events"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  News & Events
+                  {t("aboutUs.newsEvents")}
                 </Link>
               </li>
               <li>
@@ -828,7 +837,7 @@ const Footer: React.FC = () => {
                   href="/career"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Career
+                  {t("contactUs.resellers")}
                 </Link>
               </li>
               <li>
@@ -836,7 +845,7 @@ const Footer: React.FC = () => {
                   href="/resellers"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  Resellers
+                  {t("contactUs.resellers")}
                 </Link>
               </li>
             </ul>
@@ -845,43 +854,41 @@ const Footer: React.FC = () => {
 
         <div className="mb-[1rem]">
           <h2 className="text-[16px] text-[var(--color-primary)] font-medium my-3">
-            CONTACT
+            {t("contactUs.title")}
           </h2>
           <h3>
-            1800 - 102 - 0525{" "}
-            <span className="text-[12px]">(Mon - Sun - 10 AM - 7 PM)</span>
+            {t("contactUs.phone")} <br />
+            <span className="text-[12px]">{t("contactUs.hours")}</span>
           </h3>
         </div>
 
         <div className="grid grid-cols-2 mb-[1rem]">
           <div>
             <h3 className="text-[16px] text-[var(--color-primary)] font-medium mb-1">
-              Information
+              {t("mobileFooter.emails.information")}
             </h3>
-            <h6>info@resinwork.com</h6>
+            <h6>{t("mobileFooter.emails.infoAddress")}</h6>
           </div>
           <div>
             <h3 className="text-[16px] text-[var(--color-primary)] font-medium mb-1">
-              Sales
+              {t("mobileFooter.emails.sales")}
             </h3>
-            <h6>sales@resinwork.com</h6>
+            <h6>{t("mobileFooter.emails.salesAddress")}</h6>
           </div>
         </div>
 
         <div>
           <div className="text-white text-[12px] leading-[1.6]">
-            <strong className="text-[var(--color-primary)]">INDIA</strong>
-            <br />3 AK Chemie Pvt.Ltd.
-            <br />5 / B5 / 1, TSIIC Automotive Park,
+            <strong className="text-[var(--color-primary)]">
+              {t("mobileFooter.address.country")}
+            </strong>
             <br />
-            Kallakal - 502336 Telangana, India.
-            {/* <br />
+            {t("mobileFooter.address.line1")}
             <br />
-            <strong className="text-[var(--color-primary)]">GERMANY</strong>
+            {t("mobileFooter.address.line2")}
             <br />
-            Graichen Produktions - und Vertriebs GmbH
+            {t("mobileFooter.address.line3")}
             <br />
-            Darmstädter Str.127, Bensheim 64625, Germany. */}
           </div>
         </div>
 
@@ -892,7 +899,7 @@ const Footer: React.FC = () => {
                 href="/privacy-policy"
                 className="hover:text-[var(--color-primary)] transition-colors"
               >
-                Privacy Policy
+                {t("bottomLinks.privacyPolicy")}
               </Link>
             </li>
             <li>
@@ -900,7 +907,7 @@ const Footer: React.FC = () => {
                 href="/terms-conditions"
                 className="hover:text-[var(--color-primary)] transition-colors"
               >
-                Terms & Conditions
+                {t("bottomLinks.termsConditions")}
               </Link>
             </li>
             <li>
@@ -908,7 +915,7 @@ const Footer: React.FC = () => {
                 href="/cookie-policy"
                 className="hover:text-[var(--color-primary)] transition-colors"
               >
-                cookie policy
+                {t("bottomLinks.cookiePolicy")}
               </Link>
             </li>
           </ul>

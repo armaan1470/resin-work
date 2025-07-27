@@ -34,7 +34,7 @@ export default async function RootLayout({
     notFound();
   }
 
-  const message = getMessages();
+  const message = await getMessages();
 
   return (
     <html lang="en" suppressHydrationWarning>

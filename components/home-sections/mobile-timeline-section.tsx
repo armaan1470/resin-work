@@ -12,6 +12,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ChevronsUpIcon, Play } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,6 +27,7 @@ interface Tab {
 }
 
 const MobileTimelineSection = () => {
+  const t = useTranslations("Timeline");
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const viewContainerRef = useRef<HTMLDivElement>(null);
@@ -341,10 +343,10 @@ const MobileTimelineSection = () => {
           {/* Text Content */}
           <div ref={textContainerRef} className=" flex flex-col ">
             <h2 className="text-3xl font-bold mb-3 leading-tight">
-              {currentTab.heading}
+              {t(`${currentTab.id}.heading`)}
             </h2>
             <p className="text-base leading-relaxed opacity-80 mb-6">
-              {currentTab.content}
+              {t(`${currentTab.id}.content`)}
             </p>
 
             {/* Tab Indicator */}

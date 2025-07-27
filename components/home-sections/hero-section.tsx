@@ -22,6 +22,7 @@ import { Button } from "../ui/button";
 import "./hero-section.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useTranslations } from "next-intl";
 
 // Animate entire block with entry delay
 const contentVariants = {
@@ -48,7 +49,7 @@ const contentVariants = {
 const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const isMobile = useIsMobile();
-
+  const t = useTranslations("Slides");
   const slideOneImage = isMobile
     ? "/hero-section/slider5.png"
     : "/hero-section/slider4.png";
@@ -138,7 +139,7 @@ const HeroSection = () => {
           </SwiperSlide>
         ))}
         <AnimatePresence mode="wait">
-          {slides[activeIndex].heading && (
+          {t(`slide${activeIndex}.heading`) && activeIndex > 0 && (
             <motion.div
               className="absolute bottom-28 md:bottom-48 left-6 md:left-16 lg:left-24 max-w-[80%] lg:max-w-[40%] xl:max-w-[30%] z-10"
               key={activeIndex}
@@ -149,11 +150,11 @@ const HeroSection = () => {
             >
               <h2
                 dangerouslySetInnerHTML={{
-                  __html: slides[activeIndex].heading,
+                  __html: t(`slide${activeIndex}.heading`),
                 }}
                 className="text-2xl lg:text-4xl font-bold mb-3 md:mb-4 text-white text-wrap font-family-satoshi"
               />
-              <p className="text-white">{slides[activeIndex].text}</p>
+              <p className="text-white">{t(`slide${activeIndex}.text`)}</p>
               {/* button hidden temporarily */}
               {/* <Button
                       size="lg"

@@ -3,9 +3,11 @@ import React, { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 gsap.registerPlugin(ScrollTrigger);
 
 const SolutionsSection = () => {
+  const t = useTranslations("Solution");
   const [hoveredCard, setHoveredCard] = useState<number | null>(0);
   const containerRef = useRef(null);
   const contentRef = useRef(null);
@@ -22,39 +24,34 @@ const SolutionsSection = () => {
   const data = [
     {
       id: 1,
-      title: "Dental",
+      title: t("data.1.title"),
       image: "/our-solution/1.png",
       navigate: "/dental",
-      description:
-        "Custom dental models, appliances and aligners produced with medical-grade materials for perfect patient fit.",
+      description: t("data.1.description"),
     },
     {
       id: 2,
-      title: "Funtionality",
+      title: t("data.2.title"),
       image: "/our-solution/2.png",
-      description:
-        "Precision-engineered parts for mechanical applications with exceptional durability.",
+      description: t("data.2.description"),
     },
     {
       id: 3,
-      title: "DIY",
+      title: t("data.3.title"),
       image: "/our-solution/3.png",
-      description:
-        "State-of-the-art printing technology with precise extrusion control for complex geometries.",
+      description: t("data.3.description"),
     },
     {
       id: 4,
-      title: "Jewellery",
+      title: t("data.4.title"),
       image: "/our-solution/5.png",
-      description:
-        "High-detail character models and prototypes for entertainment and gaming industries.",
+      description: t("data.4.description"),
     },
     {
       id: 5,
-      title: "Filaments",
+      title: t("data.5.title"),
       image: "/our-solution/4.png",
-      description:
-        "Specialized resins and filaments for unique applications with custom properties.",
+      description: t("data.5.description"),
     },
   ];
 
@@ -112,7 +109,7 @@ const SolutionsSection = () => {
           <div className="col-span-2">
             <div className="sticky top-20 mb-20">
               <h2 className="mt-[3rem] text-[2.4rem] font-black text-[#848383] flex flex-col items-center leading-[81%]">
-                {[...`OUR SOLUTIONS`].reverse().map((char, index) => (
+                {[...t("heading")].reverse().map((char, index) => (
                   <span
                     key={index}
                     className={`-rotate-90 text-[40px] ${
@@ -131,7 +128,7 @@ const SolutionsSection = () => {
               <div className="relative">
                 <img src="/our-solution/1.png" alt="" />
                 <h3 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[32px] text-white z-2 inter font-bold">
-                  Dental
+                  {t("data.1.title")}
                 </h3>
                 <div className="absolute bg-black/30 inset-0"></div>
               </div>
@@ -143,7 +140,7 @@ const SolutionsSection = () => {
                 className="h-[271px] object-cover w-full"
               />
               <h3 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[32px] text-white z-2 inter font-bold">
-                Jewellery
+                {t("data.4.title")}
               </h3>
               <div className="absolute bg-black/30 inset-0"></div>
             </div>
@@ -155,14 +152,14 @@ const SolutionsSection = () => {
                   className="object-cover w-full h-full"
                 />
                 <h3 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[24px] text-white z-2 inter font-bold">
-                  DIY
+                  {t("data.3.title")}
                 </h3>
                 <div className="absolute bg-black/30 inset-0"></div>
               </div>
               <div className="relative">
                 <img src="/our-solution/4.png" alt="" />
                 <h3 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[24px] text-white z-2 inter font-bold">
-                  Filaments
+                  {t("data.5.title")}
                 </h3>
                 <div className="absolute bg-black/30 inset-0"></div>
               </div>
@@ -170,7 +167,7 @@ const SolutionsSection = () => {
             <div className="relative">
               <img src="/our-solution/2.png" alt="" />
               <h3 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[32px] text-white z-2 inter font-bold">
-                Engineering
+                {t("data.2.title")}
               </h3>
               <div className="absolute bg-black/30 inset-0"></div>
             </div>
@@ -187,7 +184,7 @@ const SolutionsSection = () => {
           <div className=" grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             <div>
               <h2 className="text-[4rem] font-semibold  text-gray-500 mb-4 text-nowrap">
-                OUR SOLUTIONS
+                {t("heading")}
               </h2>
             </div>
           </div>
