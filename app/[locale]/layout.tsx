@@ -14,13 +14,21 @@ import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { getMessages } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Resin Work - Professional Resin Solutions",
-  description:
-    "Leading provider of high-quality resin solutions for dental, jewellery, and functional applications.",
-  keywords:
-    "resin, dental resin, jewellery resin, functional resin, filaments, 3D printing",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+
+  const messages = await getMessages(); // loads locale JSON
+  return {
+    title: messages["metadata.title"],
+    description: messages["metadata.description"],
+    keywords: messages["metadata.keywords"],
+  };
+}
 
 export default async function RootLayout({
   children,

@@ -1,7 +1,8 @@
 {
-  "HeroSection": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
+  "metadata": {
+    "title": "Resin Work - Professional Resin Solutions",
+    "description": "Leading provider of high-quality resin solutions for dental, jewellery, and functional applications.",
+    "keywords": "resin, dental resin, jewellery resin, functional resin, filaments, 3D printing"
   },
   "Slides": {
     "slide1": {
