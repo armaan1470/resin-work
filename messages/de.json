@@ -1,7 +1,8 @@
 {
-  "HomePage": {
-    "title": "Hallo Welt!",
-    "about": "Gehe zur About-Seite"
+  "metadata": {
+    "title": "Resin Work – Professionelle Harzlösungen",
+    "description": "Marktführer für hochwertige Harzlösungen in den Bereichen Dental, Schmuck und Funktionstechnik.",
+    "keywords": "Harz, Dentalharz, Schmuckharz, Funktionsharz, Filamente, 3D-Druck"
   },
   "Slides": {
     "slide1": {
