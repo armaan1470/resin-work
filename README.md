@@ -1,3 +1,3 @@
 # resin-work
 
-# localization added v2
+# localization added
