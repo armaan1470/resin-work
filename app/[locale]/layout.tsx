@@ -19,10 +19,12 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
-  const { locale } = await params;
+  const { locale } = params;
+
   if (!hasLocale(routing.locales, locale)) notFound();
 
-  const messages = await getMessages(); // loads locale JSON
+  const messages = await getMessages({ locale });
+
   return {
     title: messages["metadata.title"],
     description: messages["metadata.description"],
@@ -35,9 +37,10 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: { locale: string };
 }) {
-  const { locale } = await params;
+  const { locale } = params;
+
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
