@@ -11,6 +11,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "./ui/drawer";
 import { ChevronDown, Check, Loader2, Globe } from "lucide-react";
 
 interface Language {
@@ -47,40 +54,50 @@ export default function LanguageSelect({
     } catch (err) {
       console.error("Failed to change language:", err);
     } finally {
-      // Reset after a short delay to prevent flickering
       setTimeout(() => setIsChanging(false), 200);
     }
   };
 
   if (isMobile) {
     return (
-      <div className={`flex items-center justify-between px-4 py-3 rounded-xl`}>
-        <span className="text-sm text-white/70">Language</span>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="px-3 py-2 text-sm text-white hover:text-brand flex items-center gap-2 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
-              disabled={isChanging}
-            >
+      <Drawer>
+        <DrawerTrigger asChild>
+          <Button
+            variant="ghost"
+            className="w-full justify-between px-4 py-3 text-sm text-white hover:text-brand flex items-center gap-2 focus:outline-none cursor-pointer"
+            disabled={isChanging}
+          >
+            <span className="text-white/70">Language</span>
+            <div className="flex items-center gap-2">
               <Globe className="size-4" />
-              <span>{currentLanguage.code.toUpperCase()}</span>
+              <span className="w-8 text-center">
+                {currentLanguage.code.toUpperCase()}
+              </span>
               {isChanging ? (
                 <Loader2 className="size-4 animate-spin text-brand" />
               ) : (
                 <ChevronDown className="size-4" />
               )}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="end"
-            className="w-44 bg-black/50 backdrop-blur-md border border-white/10 text-white rounded-lg shadow-lg"
-          >
+            </div>
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent className="bg-black/60 backdrop-blur-xl text-white border-t border-white/20 px-4 pb-12">
+          {/* Grabber handle */}
+          <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-10 h-1.5 bg-white/20 rounded-full mx-auto mb-4" />
+
+          <DrawerHeader className="px-0 py-4">
+            <DrawerTitle className="text-white text-base text-center">
+              Select Language
+            </DrawerTitle>
+          </DrawerHeader>
+
+          <div className="flex flex-col justify-center space-y-2">
             {LANGUAGES.map((lang) => (
-              <DropdownMenuItem
+              <Button
                 key={lang.code}
+                variant="ghost"
+                className="w-full justify-between text-white text-sm px-3 py-3 hover:bg-white/10 rounded-md transition"
                 onClick={() => changeLanguage(lang.code)}
-                className="text-sm hover:bg-white/10 focus:bg-white/10 flex justify-between px-3 py-2"
                 disabled={isChanging}
               >
                 <span>
@@ -89,20 +106,21 @@ export default function LanguageSelect({
                 {locale === lang.code && (
                   <Check className="size-4 text-brand" />
                 )}
-              </DropdownMenuItem>
+              </Button>
             ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+          </div>
+        </DrawerContent>
+      </Drawer>
     );
   }
 
+  // Desktop version — dropdown menu
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className={`flex items-center gap-1 cursor-pointer text-white text-sm px-3 py-2 rounded-lg border border-white/10 bg-transparent hover:text-white hover:backdrop-blur-sm focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 active:outline-none active:ring-0`}
+          className={`flex items-center gap-1 cursor-pointer text-white text-sm px-3 py-2 rounded-lg border border-white/10 bg-transparent hover:text-white hover:backdrop-blur-sm focus:outline-none`}
           aria-label="Select language"
           disabled={isChanging}
         >
@@ -117,7 +135,7 @@ export default function LanguageSelect({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="w-44  bg-black/50 backdrop-blur-md border border-white/10 text-white rounded-lg shadow-lg"
+        className="w-44 bg-black/50 backdrop-blur-md border border-white/10 text-white rounded-lg shadow-lg"
       >
         {LANGUAGES.map((lang) => (
           <DropdownMenuItem
