@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useState, useRef, useEffect, RefObject } from "react";
+import { useTranslations } from "next-intl";
 
 const VideoTabSection = () => {
+  const t = useTranslations("VideoTab");
   const videoTab = [
-    { title: "General Purpose", video: "/video/video1.mp4" },
-    { title: "Water Washable", video: "/video/video2.mp4" },
-    { title: "Castable", video: "/video/video3.mp4" },
-    { title: "Waxable", video: "/video/video4.mp4" },
+    { title: t("tabs.1.title"), video: "/video/video1.mp4" },
+    { title: t("tabs.2.title"), video: "/video/video2.mp4" },
+    { title: t("tabs.3.title"), video: "/video/video3.mp4" },
+    { title: t("tabs.4.title"), video: "/video/video4.mp4" },
     // { title: "Supertough", video: "/video/video5.mp4" },
     // { title: "Flexible", video: "/video/video6.mp4" },
     // { title: "ABS Like", video: "/video/video1.mp4" },
@@ -92,8 +94,8 @@ const VideoTabSection = () => {
       <div className="hidden md:block p-8 z-30 relative bg-[var(--bg-primary)] shadow-2xl overflow-hidden">
         <div className="w-full mx-auto grid grid-cols-12 gap-8 p-[2rem] md:p-[5rem] relative z-[12] ">
           <h4 className="col-span-12 md:col-span-4 t1 text-[40px] font-light">
-            <span className="text-[60px] font-medium">Next-gen</span>
-            <br /> 3D printing materials for Every Application, Every Innovation
+            <span className="text-[60px] font-medium">{t("heading")}</span>
+            <br /> {t("subHeading")}
           </h4>
 
           <div className="col-span-12 md:col-span-8 ">
@@ -166,12 +168,8 @@ const VideoTabSection = () => {
       {/* Mobile Version */}
       <div className="md:hidden relative z-30 bg-[#1a1a1a] py-8 pb-[4rem] ">
         <div className="text-center mb-6">
-          <h2 className="text-[2rem] text-white font-bold">NEXT-GEN</h2>
-          <p className="text-[1.2rem] text-white">
-            3D printing materials for
-            <br />
-            Every Application, Every Innovation
-          </p>
+          <h2 className="text-[2rem] text-white font-bold">{t("heading")}</h2>
+          <p className="text-[1.2rem] text-white">{t("subHeading")}</p>
         </div>
 
         {/* Scrollable tabs */}
