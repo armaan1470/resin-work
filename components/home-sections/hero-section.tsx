@@ -3,6 +3,8 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperClass } from "swiper";
+
 import {
   Autoplay,
   Pagination,
@@ -50,6 +52,7 @@ const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const isMobile = useIsMobile();
   const t = useTranslations("Slides");
+  const swiperRef = useRef<SwiperClass | null>(null);
   const slideOneImage = isMobile
     ? "/hero-section/slider5.png"
     : "/hero-section/slider4.png";
