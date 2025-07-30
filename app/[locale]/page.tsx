@@ -3,6 +3,7 @@
 import BentoCardsSection from "@/components/home-sections/bento-cards-section";
 import BlogsSection from "@/components/home-sections/blogs-section";
 import CombinedSection from "@/components/home-sections/combined-section";
+import TextHighlightSection from "@/components/home-sections/combined-section/text-highlight-section";
 import HeroSection from "@/components/home-sections/hero-section";
 import LogoAnimationSection from "@/components/home-sections/logo-animation-section";
 import MobileTimelineSection from "@/components/home-sections/mobile-timeline-section";
@@ -25,6 +26,7 @@ export default function Home() {
 
       {/* <CombinedSection /> */}
       <LogoAnimationSection />
+      {/* <TextHighlightSection /> */}
 
       <SolutionsSection />
 
