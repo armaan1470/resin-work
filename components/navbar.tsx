@@ -2,14 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import {
-  Search,
-  Menu,
-  ChevronRight,
-  Globe,
-  Check,
-  Loader2,
-} from "lucide-react";
+import { Search, Menu, ChevronRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
 import {
@@ -25,6 +18,7 @@ import { useNavigation } from "@/hooks/useNavigation";
 import SearchOverlay from "./search-overlay";
 import { useLocale } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import LanguageSelect from "./language-select";
 
 interface Product {
   id: number;
@@ -41,29 +35,46 @@ interface NavItem {
   products?: Product[];
 }
 
+interface Language {
+  code: string;
+  name: string;
+  flag: string;
+}
+
+// Language configuration - easily extensible
+const LANGUAGES: Language[] = [
+  { code: "en", name: "English", flag: "🇺🇸" },
+  { code: "de", name: "Deutsch", flag: "🇩🇪" },
+  // Add more languages here as needed
+  // { code: "es", name: "Español", flag: "🇪🇸" },
+  // { code: "fr", name: "Français", flag: "🇫🇷" },
+];
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
   const [isChangingLanguage, setIsChangingLanguage] = useState(false);
+
   const navItems: NavItem[] = navData.navItems;
   const router = useRouter();
-
   const locale = useLocale();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const toggleLocale = locale === "en" ? "de" : "en";
-  const changeLocale = async () => {
+  const currentLanguage =
+    LANGUAGES.find((lang) => lang.code === locale) || LANGUAGES[0];
+
+  const changeLocale = async (newLocale: string) => {
+    if (newLocale === locale || isChangingLanguage) return;
+
     setIsChangingLanguage(true);
     try {
-      // preserve current path and query parameters
       const query = Object.fromEntries(searchParams.entries());
-      await router.push({ pathname, query }, { locale: toggleLocale });
+      await router.push({ pathname, query }, { locale: newLocale });
     } catch (error) {
       console.error("Language change failed:", error);
     } finally {
-      // Reset loading state after a short delay to ensure smooth transition
       setTimeout(() => setIsChangingLanguage(false), 500);
     }
   };
@@ -102,7 +113,7 @@ export default function Navbar() {
         console.log(`🚀 Navigating to ${basePath}#${sectionId}`);
       },
       () => {
-        console.log(`✅ Navigation complete`);
+        console.log("✅ Navigation complete");
       }
     );
   };
@@ -167,7 +178,7 @@ export default function Navbar() {
                             <div className="col-span-4 flex justify-start items-center">
                               {item.image && (
                                 <img
-                                  src={item.image}
+                                  src={item.image || "/placeholder.svg"}
                                   alt={item.name}
                                   className="rounded-lg w-full h-full object-cover"
                                 />
@@ -216,56 +227,7 @@ export default function Navbar() {
 
               {/* Right side - Desktop */}
               <div className="flex items-center space-x-3 xl:space-x-4">
-                <div className="relative group">
-                  <Button
-                    variant="ghost"
-                    className={`flex items-center gap-2 px-3 py-2 text-white hover:text-brand hover:bg-white/10 rounded-lg transition-all duration-200 border border-white/20 hover:border-brand/50 backdrop-blur-sm ${
-                      isChangingLanguage ? "opacity-75 cursor-not-allowed" : ""
-                    }`}
-                    onClick={changeLocale}
-                    disabled={isChangingLanguage}
-                    aria-label={`Switch language to ${
-                      toggleLocale === "en" ? "English" : "Deutsch"
-                    }`}
-                  >
-                    {isChangingLanguage ? (
-                      <Loader2 className="size-4 animate-spin" />
-                    ) : (
-                      <Globe className="size-4" />
-                    )}
-                    <span className="text-sm font-medium">
-                      {locale === "en" ? "EN" : "DE"}
-                    </span>
-                    {!isChangingLanguage && (
-                      <div className="flex items-center gap-1">
-                        <div
-                          className={`w-2 h-2 rounded-full ${
-                            locale === "en"
-                              ? "bg-blue-500"
-                              : "bg-transparent border border-white/40"
-                          }`}
-                        />
-                        <div
-                          className={`w-2 h-2 rounded-full ${
-                            locale === "de"
-                              ? "bg-red-500"
-                              : "bg-transparent border border-white/40"
-                          }`}
-                        />
-                      </div>
-                    )}
-                  </Button>
-
-                  {/* Tooltip - Now appears from bottom */}
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1 bg-black/80 text-white text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap backdrop-blur-sm z-50">
-                    {isChangingLanguage
-                      ? "Switching language..."
-                      : `Switch to ${
-                          toggleLocale === "en" ? "English" : "Deutsch"
-                        }`}
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-black/80" />
-                  </div>
-                </div>
+                <LanguageSelect />
                 <Button
                   variant="ghost"
                   className="p-0 cursor-pointer text-white hover:bg-transparent"
@@ -346,64 +308,7 @@ export default function Navbar() {
                       <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider px-4 mb-4">
                         Settings
                       </h3>
-                      <div
-                        className={`flex items-center justify-between px-4 py-3 hover:bg-white/5 rounded-xl transition-all duration-200 cursor-pointer group ${
-                          isChangingLanguage
-                            ? "opacity-75 cursor-not-allowed"
-                            : ""
-                        }`}
-                        onClick={isChangingLanguage ? undefined : changeLocale}
-                      >
-                        <div className="flex items-center gap-3">
-                          {isChangingLanguage ? (
-                            <Loader2 className="size-5 text-brand animate-spin" />
-                          ) : (
-                            <Globe className="size-5 text-white/70 group-hover:text-brand transition-colors" />
-                          )}
-                          <span className="text-lg font-medium text-white group-hover:text-brand transition-colors">
-                            {isChangingLanguage ? "Switching..." : "Language"}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center gap-2">
-                            <div
-                              className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
-                                locale === "en"
-                                  ? "bg-blue-500 scale-110"
-                                  : "bg-white/30"
-                              }`}
-                            />
-                            <span
-                              className={`text-sm font-medium transition-colors ${
-                                locale === "en"
-                                  ? "text-blue-400"
-                                  : "text-white/60"
-                              }`}
-                            >
-                              EN
-                            </span>
-                          </div>
-                          <div className="w-px h-4 bg-white/20" />
-                          <div className="flex items-center gap-2">
-                            <div
-                              className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
-                                locale === "de"
-                                  ? "bg-red-500 scale-110"
-                                  : "bg-white/30"
-                              }`}
-                            />
-                            <span
-                              className={`text-sm font-medium transition-colors ${
-                                locale === "de"
-                                  ? "text-red-400"
-                                  : "text-white/60"
-                              }`}
-                            >
-                              DE
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+                      <LanguageSelect isMobile />
                     </div>
                     <Separator className="my-8 bg-white/20" />
                     <div className="px-4">
@@ -425,7 +330,6 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-
       {/* Search Overlay */}
       <SearchOverlay
         isOpen={searchOpen}
