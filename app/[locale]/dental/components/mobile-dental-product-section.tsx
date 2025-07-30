@@ -1,10 +1,11 @@
 "use client";
 
-import { dentalProducts as productData } from "../../../public/data/dental";
+import { dentalProducts as productData } from "../../../../public/data/dental";
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { FileText } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface ProductImage {
   id: number;
@@ -143,6 +144,8 @@ const MobileDentalProductSection: React.FC = () => {
     }
   };
 
+  const t = useTranslations("DentalProducts");
+
   useEffect(() => {
     ScrollTrigger.getAll().forEach((instance) => instance.kill());
 
@@ -231,7 +234,7 @@ const MobileDentalProductSection: React.FC = () => {
           >
             <div className="py-5  md:py-10  order-2 md:order-1">
               <div className="space-y-2 mt-26 pe-0 md:pe-[4rem] px-4">
-                {product.description
+                {t(`${product.navic_id}.description`)
                   .split(".")
                   .filter((sentence: string) => sentence.trim().length > 0)
                   .map((sentence: string, idx: number) => (
@@ -240,7 +243,8 @@ const MobileDentalProductSection: React.FC = () => {
                       className="text-gray-500 shadow-2xl bg-white p-[1rem] rounded-lg my-[.6rem] text-[0.9rem] md:text-[1rem] lg:text-[1rem] xl:text-[1.3rem]"
                     >
                       {sentence.trim()}
-                      {idx < product.description.split(".").length - 2
+                      {idx <
+                      t(`${product.navic_id}.description`).split(".").length - 2
                         ? "."
                         : ""}
                     </p>
@@ -269,7 +273,9 @@ const MobileDentalProductSection: React.FC = () => {
                                 <div className="flex items-center space-x-3">
                                   <div className="w-4 h-4 bg-[var(--color-primary)] rounded-full"></div>
                                   <h4 className="text-[1.1rem] md:text-[1.4rem] xl:text-[2rem] font-medium text-[var(--text-subheading1)]">
-                                    {feature.title}
+                                    {t(
+                                      `${product.navic_id}.features.${idx}.title`
+                                    )}
                                   </h4>
                                 </div>
 
@@ -309,7 +315,9 @@ const MobileDentalProductSection: React.FC = () => {
                                 }}
                               >
                                 <p className="text-[var(--text-subheading)] text-[0.9rem] md:text-[1rem] ps-[1rem] md:ps-[2rem] pe-[1rem] md:pe-[2rem]">
-                                  {feature.description}
+                                  {t(
+                                    `${product.navic_id}.features.${idx}.description`
+                                  )}
                                 </p>
                               </div>
 
@@ -324,7 +332,7 @@ const MobileDentalProductSection: React.FC = () => {
               </div>
               <div className="bg-[var(--bg-primary)]">
                 <button className="text-[var(--text-subheading)]  px-4 rounded-md py-[1rem] md:py-[2rem] flex space-x-2 items-center cursor-pointer">
-                  <span>Download Product Data Sheet</span>
+                  <span>{t("download")}</span>
                   <FileText />
                 </button>
               </div>
@@ -347,10 +355,10 @@ const MobileDentalProductSection: React.FC = () => {
               >
                 <div className="py-2 md:py-10  order-2 md:order-1">
                   <h2 className="w-full md:w-[90%] py-[.4rem] pop font-semibold rounded-lg border border-[var(--color-primary)] text-[var(--text-primary)] text-[1.5rem] md:text-[1.8rem] ps-[1rem] lg:text-[2rem] xl:text-[2.6rem]">
-                    {product.name}
+                    {t(`${product.navic_id}.name`)}
                   </h2>
                   <h3 className="text-[var(--text-subheading)] text-[1rem] md:text-[1.5rem]  mt-[.61rem] me-0 md:me-[3rem]">
-                    {product.subTitle}
+                    {t(`${product.navic_id}.subTitle`)}
                   </h3>
                 </div>
               </section>

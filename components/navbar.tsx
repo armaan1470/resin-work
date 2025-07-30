@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import { Search, Menu, ChevronRight } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
 import {
   Sheet,
@@ -17,6 +16,9 @@ import { Separator } from "./ui/separator";
 import navData from "@/data/nav-links.json";
 import { useNavigation } from "@/hooks/useNavigation";
 import SearchOverlay from "./search-overlay";
+import { useLocale } from "next-intl";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import LanguageSelect from "./language-select";
 
 interface Product {
   id: number;
@@ -33,12 +35,49 @@ interface NavItem {
   products?: Product[];
 }
 
+interface Language {
+  code: string;
+  name: string;
+  flag: string;
+}
+
+// Language configuration - easily extensible
+const LANGUAGES: Language[] = [
+  { code: "en", name: "English", flag: "🇺🇸" },
+  { code: "de", name: "Deutsch", flag: "🇩🇪" },
+  // Add more languages here as needed
+  // { code: "es", name: "Español", flag: "🇪🇸" },
+  // { code: "fr", name: "Français", flag: "🇫🇷" },
+];
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const [isChangingLanguage, setIsChangingLanguage] = useState(false);
+
   const navItems: NavItem[] = navData.navItems;
   const router = useRouter();
+  const locale = useLocale();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const currentLanguage =
+    LANGUAGES.find((lang) => lang.code === locale) || LANGUAGES[0];
+
+  const changeLocale = async (newLocale: string) => {
+    if (newLocale === locale || isChangingLanguage) return;
+
+    setIsChangingLanguage(true);
+    try {
+      const query = Object.fromEntries(searchParams.entries());
+      await router.push({ pathname, query }, { locale: newLocale });
+    } catch (error) {
+      console.error("Language change failed:", error);
+    } finally {
+      setTimeout(() => setIsChangingLanguage(false), 500);
+    }
+  };
 
   const { handleSectionClick, isNavigating } = useNavigation({
     debug: process.env.NODE_ENV === "development",
@@ -74,7 +113,7 @@ export default function Navbar() {
         console.log(`🚀 Navigating to ${basePath}#${sectionId}`);
       },
       () => {
-        console.log(`✅ Navigation complete`);
+        console.log("✅ Navigation complete");
       }
     );
   };
@@ -139,7 +178,7 @@ export default function Navbar() {
                             <div className="col-span-4 flex justify-start items-center">
                               {item.image && (
                                 <img
-                                  src={item.image}
+                                  src={item.image || "/placeholder.svg"}
                                   alt={item.name}
                                   className="rounded-lg w-full h-full object-cover"
                                 />
@@ -188,12 +227,7 @@ export default function Navbar() {
 
               {/* Right side - Desktop */}
               <div className="flex items-center space-x-3 xl:space-x-4">
-                <Button
-                  variant="ghost"
-                  className="p-0 cursor-pointer text-2xl hover:bg-transparent"
-                >
-                  🇺🇸
-                </Button>
+                <LanguageSelect />
                 <Button
                   variant="ghost"
                   className="p-0 cursor-pointer text-white hover:bg-transparent"
@@ -274,17 +308,7 @@ export default function Navbar() {
                       <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider px-4 mb-4">
                         Settings
                       </h3>
-                      <div className="flex items-center justify-between px-4 py-2 hover:bg-white/5 rounded-xl transition-colors">
-                        <span className="text-lg font-medium text-white">
-                          Language
-                        </span>
-                        <Button
-                          variant="ghost"
-                          className="p-0 text-2xl hover:bg-transparent hover:scale-110 transition-transform"
-                        >
-                          🇺🇸
-                        </Button>
-                      </div>
+                      <LanguageSelect isMobile />
                     </div>
                     <Separator className="my-8 bg-white/20" />
                     <div className="px-4">
@@ -306,7 +330,6 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-
       {/* Search Overlay */}
       <SearchOverlay
         isOpen={searchOpen}

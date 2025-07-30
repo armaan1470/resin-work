@@ -14,6 +14,7 @@ import { Play } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { useTranslations } from "next-intl";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -95,6 +96,7 @@ interface Tab {
 
 const TimelineSection = () => {
   // Refs for DOM elements
+  const t = useTranslations("Timeline");
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const viewContainerRef = useRef<HTMLDivElement>(null);
@@ -553,7 +555,7 @@ const TimelineSection = () => {
                       textOverflow: "clip",
                     }}
                   >
-                    {tab.heading}
+                    {t(`${tab.id}.heading`)}
                   </h1>
                   <p
                     ref={contentRefs.current[index]}
@@ -567,7 +569,7 @@ const TimelineSection = () => {
                       hyphens: "auto",
                     }}
                   >
-                    {tab.content}
+                    {t(`${tab.id}.content`)}
                   </p>
                 </div>
               ))}
@@ -598,7 +600,7 @@ const TimelineSection = () => {
                     justifyContent: "center",
                   }}
                 >
-                  {tab.title}
+                  {t(`${tab.id}.title`)}
                 </button>
               ))}
             </div>

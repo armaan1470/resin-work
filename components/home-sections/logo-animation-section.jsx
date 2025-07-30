@@ -5,11 +5,13 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TextHighlightSection from "./combined-section/text-highlight-section";
+import { useTranslations } from "next-intl";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 const LogoAnimationSection = () => {
+  const t = useTranslations("LogoAnimation");
   const sectionRef = useRef();
   const rRef = useRef();
   const bRef = useRef();
@@ -195,17 +197,10 @@ const LogoAnimationSection = () => {
         </div>
         <div className="flex items-center justify-center flex-col gap-y-[1rem] pe-[6rem] z-[5]">
           <h2 className="text-[3.6rem] text-[var(--header-text)] font-normal">
-            Fast, efficient, reliable 3 D
-            <span className="font-semibold"> Printing Solutions </span>
+            {t("heading")}
+            <span className="font-semibold"> {t("subHeading")} </span>
           </h2>
-          <p className="text-[var(--header-text)]/60">
-            At Resinwork, we provide cutting - edge 3 D printing resins designed
-            to deliver high - quality, precise results with speed and
-            consistency.Whether you 're in manufacturing, prototyping, or
-            product development, our solutions are engineered to meet the
-            demands of any industry - helping you innovate faster and more
-            efficiently.
-          </p>
+          <p className="text-[var(--header-text)]/60">{t("content")}</p>
         </div>
       </div>
       <TextHighlightSection />

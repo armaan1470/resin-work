@@ -1,0 +1,410 @@
+{
+  "metadata": {
+    "title": "Resin Work - Professional Resin Solutions",
+    "description": "Leading provider of high-quality resin solutions for dental, jewellery, and functional applications.",
+    "keywords": "resin, dental resin, jewellery resin, functional resin, filaments, 3D printing"
+  },
+  "Slides": {
+    "slide1": {
+      "heading": "Engineered for Precision, <br /> Designed for Dentistry!",
+      "text": "Our resins are the trusted choice for dental professionals who demand accuracy and reliability.",
+      "button": "Explore More"
+    },
+    "slide2": {
+      "heading": "Smooth, Accurate, <br /> & Ready to Cast",
+      "text": "Bring jewellery designs to life with clarity and precision, ready for casting.",
+      "button": "Discover Products"
+    },
+    "slide3": {
+      "heading": "Engineered for Precision, <br /> Designed for Dentistry!",
+      "text": "Trusted by dental professionals for high‑performance results.",
+      "button": "Learn More"
+    }
+  },
+  "Timeline": {
+    "tab1": {
+      "title": "Research and Development",
+      "heading": "In-House R&D",
+      "content": "Our in-house R&D facility located in Germany & India is a hub of innovation, where advanced materials science meets industry-driven solutions to create groundbreaking 3D printing resins. By pushing the boundaries of performance and customization, we empower industries to achieve unprecedented results in additive manufacturing."
+    },
+    "tab2": {
+      "title": "Manufacturing",
+      "heading": "In-House Manufacturing ",
+      "content": "With state-of-the-art manufacturing facilities, we deliver consistent, high-quality 3D printing resins at scale. Our production processes combine precision engineering with rigorous quality control, ensuring each batch meets the exacting standards demanded by industrial applications across diverse sectors."
+    },
+    "tab3": {
+      "title": "CDMO",
+      "heading": "Contract Development and Manufacturing Organization",
+      "content": "Contract Development and Manufacturing Organization. With state-of-the-art manufacturing facilities, we deliver consistent, high-quality 3D printing resins at scale. Our production processes combine precision engineering with rigorous quality control, ensuring each batch meets the exacting standards demanded by industrial applications across diverse sectors."
+    },
+    "tab4": {
+      "title": "Technology",
+      "heading": "Technology Innovation",
+      "content": "With state-of-the-art manufacturing facilities, we deliver consistent, high-quality 3D printing resins at scale. Our production processes combine precision engineering with rigorous quality control, ensuring each batch meets the exacting standards demanded by industrial applications across diverse sectors."
+    }
+  },
+  "LogoAnimation": {
+    "heading": "Fast, efficient, reliable 3D printing solutions",
+    "subHeading": "Printing Solutions",
+    "content": "At Resinwork, we provide cutting-edge 3D printing resins designed to deliver high-quality, precise results with speed and consistency. Whether you're in manufacturing, prototyping, or product development, our solutions are engineered to meet the demands of any industry - helping you innovate faster and more efficiently."
+  },
+  "GradientText": {
+    "text": "Precision, reliability, and innovation are the cornerstones that define RESINWORK. Proudly developed in Germany, each formulation is the result of extensive in-house. Where cutting-edge technology meets our state-of-the-art manufacturing process. Trusted by professionals across industries like Dental, Engineering, Jewellery and more. We enable you to achieve outstanding results, pushing the boundaries of what's possible in 3D Printing."
+  },
+  "Solution": {
+    "heading": "Our Solutions",
+    "data": {
+      "1": {
+        "title": "Dental",
+        "description": "Custom dental models, appliances and aligners produced with medical-grade materials for perfect patient fit."
+      },
+      "2": {
+        "title": "Funtionality",
+        "description": "Precision-engineered parts for mechanical applications with exceptional durability."
+      },
+      "3": {
+        "title": "DIY",
+        "description": "State-of-the-art printing technology with precise extrusion control for complex geometries."
+      },
+      "4": {
+        "title": "Jewellery",
+        "description": "High-detail character models and prototypes for entertainment and gaming industries."
+      },
+      "5": {
+        "title": "Filaments",
+        "description": "Specialized resins and filaments for unique applications with custom properties."
+      }
+    }
+  },
+  "BentoCards": {
+    "heading": "Fast, efficient, reliable 3D printing solutions",
+    "details": "At Resinwork, we provide cutting-edge 3D printing resins designed to deliver high-quality, precise results with speed and consistency. Whether you're in manufacturing, prototyping, or product development, our solutions are engineered to meet the demands of any industry-helping you innovate faster and more efficiently",
+    "data": {
+      "1": {
+        "title": "Premium Quality Materials Uncompromising Standards for Superior Results",
+        "desc": "Our 3D printing resins are crafted with the highest quality standards to ensure durability, precision, and optimal performance in every print. With"
+      },
+      "2": {
+        "title": "Fast Turnaround Times Accelerating Your Time to Market",
+        "desc": "With our fast-curing resins and efficient production processes, we help you meet tight deadlines and deliver products on time, every time"
+      },
+      "3": {
+        "title": "Tailored Solutions for Every Industry Versatile Resins for Every Application",
+        "desc": "With our fast-curing resins and efficient production processes, we help you meet tight deadlines and deliver products on time, every time"
+      },
+      "4": {
+        "title": "Reliable Performance Consistency You Can Count On",
+        "desc": "Our 3D printing resins are crafted with the highest quality standards to ensure durability, precision, and optimal performance in every print. With"
+      },
+      "5": {
+        "title": "Fast Turnaround Times Accelerating Your Time to Market",
+        "desc": "With our fast-curing resins and efficient production processes, we help you meet tight deadlines and deliver products on time, every time"
+      }
+    }
+  },
+  "VideoTab": {
+    "heading": "Next-gen",
+    "subHeading": "3D printing materials for Every Application, Every Innovation",
+    "tabs": {
+      "1": {
+        "title": "General Purpose"
+      },
+      "2": {
+        "title": "Water Washable"
+      },
+      "3": {
+        "title": "Castable"
+      },
+      "4": {
+        "title": "Waxable"
+      }
+    }
+  },
+  "BlogSection": {
+    "blog": "Our Blogs",
+    "case": "Case Studies",
+    "leanr": "Learn More",
+    "data": {
+      "1": {
+        "date": "02 dec 2024",
+        "title": "What does the next decade of 3D printing look like?",
+        "desc": "Additive manufacturing, commonly known as 3D printing, has already revolutionized industries ranging from aerospace to healthcare."
+      },
+      "2": {
+        "date": "02 dec 2024",
+        "title": "Dental",
+        "desc": "Let's dive into how resin manufacturing is reshaping the dental landscape and why it's becoming an indispensable tool for modern dental practices."
+      },
+      "3": {
+        "date": "02 dec 2024",
+        "title": "Jewellery",
+        "desc": "Choosing the Right Resin for Jewellery Wax Models: A Comprehensive Guide"
+      },
+      "4": {
+        "date": "15 jan 2024",
+        "title": "3D Printing in Aerospace: A Case Study",
+        "desc": "How our resin solutions helped reduce aircraft component weight by 30% while maintaining structural integrity."
+      },
+      "5": {
+        "date": "22 dec 2024",
+        "title": "Dental Implant Success Story",
+        "desc": "Case study on how our dental resins improved precision and reduced production time by 40% for a major dental lab."
+      },
+      "6": {
+        "date": "05 may 2024",
+        "title": "Custom Jewelry Manufacturing",
+        "desc": "How a luxury jewelry brand scaled production using our high-resolution casting resins."
+      }
+    },
+    "button": {
+      "explor": "Explore more",
+      "view": "View all case studies"
+    }
+  },
+  "Footer": {
+    "subscribe": {
+      "title": "Subscribe for latest updates",
+      "placeholder": "Enter your Email Address",
+      "submit": "Submit",
+      "mobileTitle": "Subscribe for latest updates"
+    },
+    "contactPrompt": "Please fill out the form and we will get back to you.",
+    "form": {
+      "phoneLabel": "Phone Number *",
+      "companyLabel": "Company *",
+      "nameLabel": "Your Name *",
+      "emailLabel": "Your Email *",
+      "messageLabel": "Your Message *",
+      "fieldsMandatory": "* Fields are mandatory"
+    },
+    "quickLinks": {
+      "title": "QUICK LINKS",
+      "home": "Home",
+      "jewellery": "Jewellery",
+      "dental": "Dental",
+      "functionality": "Functionality",
+      "filaments": "Filaments",
+      "company": "Company"
+    },
+    "support": {
+      "title": "SUPPORT",
+      "orderStatus": "Order Status",
+      "tdsMsds": "TDS / MSDS",
+      "mediaCentre": "Media Centre",
+      "caseStudies": "Case Studies",
+      "blogs": "Blogs",
+      "faqs": "FAQ's"
+    },
+    "aboutUs": {
+      "title": "ABOUT US",
+      "whoWeAre": "Who We Are",
+      "services": "Services",
+      "solutions": "Solutions",
+      "newsEvents": "News & Events"
+    },
+    "contactUs": {
+      "title": "CONTACT US",
+      "phone": "1800 - 102 - 0525",
+      "hours": "Mon - Sun - 10 AM - 7 PM",
+      "resellers": "Resellers"
+    },
+    "bottomLinks": {
+      "privacyPolicy": "Privacy Policy",
+      "termsConditions": "Terms & Conditions",
+      "cookiePolicy": "Cookie Policy",
+      "sitemap": "Sitemap"
+    },
+    "mobileFooter": {
+      "quickLinks": "QUICK LINKS",
+      "linksColumn1": {
+        "home": "Home",
+        "dental": "Dental",
+        "functionality": "Functionality",
+        "filaments": "Filaments"
+      },
+      "linksColumn2": {
+        "diy": "DIY",
+        "offerZone": "Offer Zone",
+        "featured": "Featured"
+      },
+      "support": "SUPPORT",
+      "supportColumn1": {
+        "orderStatus": "Order Status",
+        "tdsMsds": "TDS / MSDS",
+        "mediaCentre": "Media Centre"
+      },
+      "supportColumn2": {
+        "caseStudies": "Case Studies",
+        "blogs": "Blogs",
+        "faqs": "FAQ's"
+      },
+      "company": "COMPANY",
+      "companyColumn1": {
+        "whoWeAre": "Who We Are",
+        "services": "Services",
+        "solutions": "Solutions"
+      },
+      "companyColumn2": {
+        "newsEvents": "News & Events",
+        "career": "Career",
+        "resellers": "Resellers"
+      },
+      "contact": "CONTACT",
+      "contactInfo": "1800 - 102 - 0525 (Mon - Sun - 10 AM - 7 PM)",
+      "emails": {
+        "information": "Information",
+        "infoAddress": "info@resinwork.com",
+        "sales": "Sales",
+        "salesAddress": "sales@resinwork.com"
+      },
+      "address": {
+        "country": "INDIA",
+        "line1": "3 AK Chemie Pvt.Ltd.",
+        "line2": "5 / B5 / 1, TSIIC Automotive Park,",
+        "line3": "Kallakal - 502336 Telangana, India."
+      },
+      "bottomLinks": {
+        "privacyPolicy": "Privacy Policy",
+        "termsConditions": "Terms & Conditions",
+        "cookiePolicy": "Cookie Policy"
+      }
+    }
+  },
+
+  "DentalHeroSection": {
+    "breadcrumb": {
+      "home": "Home",
+      "dental": "Dental",
+      "products": "Products"
+    },
+    "heading": "The Next Big Thing in Digital Dentistry",
+    "subheading": "In‑office dental 3D printing helps improve the efficiency of forward‑thinking practices all over the world.",
+    "description": "By leveraging existing technologies that exist in digital dentistry, 3D printing enables better responsiveness to patient needs, significantly reduces manufacturing times, and opens up new treatment options. With low operating costs, minimal maintenance, and user‑friendly design, Resinwork products make it easy to bring digital dentistry and 3D printing together in your practice."
+  },
+  "DentalProducts": {
+    "download": "Download product data sheet",
+    "model_3": {
+      "name": "MODEL 3",
+      "subTitle": "3D Photopolymer Dental resin for vacuum/pressure thermoforming",
+      "description": "Resinwork® Model 3 is an advanced, IPA & water‑washable 3D printing resin engineered specifically for dental thermoforming applications. Designed to deliver high thermal resistance and dimensional accuracy, Model 3 ensures reliable performance under vacuum and pressure forming conditions. Formulated with Resinwork's proprietary Anti‑Stick Surface Chemistry, Model 3 enables effortless removal of thermoformed appliances—such as retainers, aligners, nightguards, and sportguards—without damage. This unique surface release property significantly reduces the risk of breakage and enhances workflow efficiency in dental labs. Unlike conventional resins, Model 3 features a stable, matte finish that resists sticking to heated substrates and ensures consistent results. Its high pigment stability eliminates the need for frequent mixing, while its water‑washable composition provides safe, eco‑friendly handling—no alcohol or chemical cleaners required. Whether you're fabricating clear aligners or custom appliances, Resinwork® Model 3 is your go‑to solution for dependable, lab‑grade performance.",
+      "features": {
+        "0": {
+          "title": "IPA & Water Washable",
+          "description": "Resinwork® Model 3 is an advanced, IPA & water‑washable 3D printing resin engineered specifically for dental thermoforming applications. Designed to deliver high thermal resistance and dimensional accuracy, Model 3 ensures reliable performance under vacuum and pressure forming conditions."
+        },
+        "1": {
+          "title": "Anti‑Stick Formula",
+          "description": "Formulated with Resinwork's proprietary Anti‑Stick Surface Chemistry, Model 3 enables effortless removal of thermoformed appliances—such as retainers, aligners, nightguards, and sportguards—without damage. This unique surface release property significantly reduces the risk of breakage and enhances workflow efficiency in dental labs."
+        },
+        "2": {
+          "title": "Thermoformable & Heat‑Resistant",
+          "description": "Unlike conventional resins, Model 3 features a stable, matte finish that resists sticking to heated substrates and ensures consistent results. Its high pigment stability eliminates the need for frequent mixing, while its water‑washable composition provides safe, eco‑friendly handling—no alcohol or chemical cleaners required."
+        },
+        "3": {
+          "title": "Lab Grade",
+          "description": "Whether you're fabricating clear aligners or custom appliances, Resinwork® Model 3 is your go‑to solution for dependable, lab‑grade performance."
+        }
+      }
+    },
+    "model_2": {
+      "name": "MODEL 2",
+      "subTitle": "Water‑Washable Photopolymer for Dental Modelling",
+      "description": "Resinwork® Model 2 is a water‑washable photopolymer (light‑curable) resin for 3D printing dental models—ideal for study models, removable die‑models, or thermoforming aligners and retainers. It features a gypsum‑like texture with excellent dimensional accuracy, low shrinkage, and high detail resolution, all at a low cost per part.",
+      "features": {
+        "0": {
+          "title": "Water Washable",
+          "description": "Unlike traditional resins that require alcohol or other solvents for post‑processing, Resinwork® Model 2 can be easily cleaned with just water, simplifying the workflow, reducing chemical usage, and ensuring a safer and more environmentally friendly operation."
+        },
+        "1": {
+          "title": "Exceptional Dimensional Accuracy",
+          "description": "Formulated with minimal shrinkage properties, Resinwork® Model 2 ensures highly accurate models with precise fitment—critical for producing reliable dental appliances and ensuring patient comfort."
+        },
+        "2": {
+          "title": "Thermoformable & Heat‑Resistant",
+          "description": "The cured resin maintains structural integrity under heat and pressure, making it perfectly suited for vacuum forming processes to fabricate clear aligners, mouthguards, and retainers."
+        },
+        "3": {
+          "title": "Excellent Accuracy",
+          "description": "Digitally build wax‑up models to show patients the results they can look forward to based on your treatment plans."
+        }
+      }
+    },
+    "surgical_guide": {
+      "name": "Surgical Guides",
+      "subTitle": "3D print highly-accurate surgical guides for just a few dollars.",
+      "description": "Receive all the clinical benefits of guided surgery with rapid turnaround times and minimal material cost by printing guides in-office. Upload your scan and CBCT data to Resinwork® Cloud Design and receive printable 3D files designed specifically for Resinwork® Pro. 3D print the surgical guide in as little as 30 minutes. Immediately insert surgical guide sleeves post-print for increased precision, then post‑process and sterilize. Resinwork® Surgical Guide 2 resin features excellent mechanical properties and can be sterilized using standard autoclave protocols without affecting dimensional accuracy.",
+      "features": {
+        "0": {
+          "title": "Full‑Arch Surgical Guides",
+          "description": "With Resinwork® Pro, you can fabricate surgical guides of all kinds, including full‑arch multi‑site implant guides, bone reduction guides, and more."
+        },
+        "1": {
+          "title": "Quadrant Implant Guides",
+          "description": "For single‑unit dental implants, 3D printing provides a rapid, repeatable workflow for the production of implant guides. Simply scan, order your design with Dashboard Design, and fabricate your FDA‑compliant guide."
+        },
+        "2": {
+          "title": "Fabricate Precision",
+          "description": "A recent university study found Resinwork® Pro more accurate and consistent than traditional alginate methods."
+        },
+        "3": {
+          "title": "Economical",
+          "description": "Highly scalable platform for processing bulk & online remittance transactions received from Exchange Houses across the globe."
+        }
+      }
+    },
+    "splints": {
+      "name": "Splints & Night Guards",
+      "subTitle": "Grow your practice with the most approachable workflow in 3D printing",
+      "description": "Help fight the rise in grinding and clenching by delivering more night guards with Resinwork. Featuring the industry's easiest workflow including AI design, 3D printing, and simple post processing, you can go from scan to place in less than an hour. With long‑lasting materials that become flexible at body temperature and a no‑CAD design system, protecting smiles has never been this affordable, repeatable, and profitable.",
+      "features": {
+        "0": {
+          "title": "Clinically Formulated for Translucency",
+          "description": "Highly scalable platform for processing bulk & online remittance transactions received from Exchange Houses across the globe."
+        },
+        "1": {
+          "title": "Improved Flexibility",
+          "description": "Highly scalable platform for processing bulk & online remittance transactions received from Exchange Houses across the globe."
+        },
+        "2": {
+          "title": "Fracture Toughness vs First Generation",
+          "description": "Highly scalable platform for processing bulk & online remittance transactions received from Exchange Houses across the globe."
+        },
+        "3": {
+          "title": "Impact Strength",
+          "description": "Highly scalable platform for processing bulk & online remittance transactions received from Exchange Houses across the globe."
+        },
+        "4": {
+          "title": "Resistance to Scratching",
+          "description": "Highly scalable platform for processing bulk & online remittance transactions received from Exchange Houses across the globe."
+        }
+      }
+    },
+    "dentures": {
+      "name": "Digital Dentures",
+      "subTitle": "Grow your practice with the most approachable workflow in 3D printing",
+      "description": "Help fight the rise in grinding and clenching by delivering more night guards with Resinwork. Featuring the industry's easiest workflow including AI design, 3D printing, and simple post processing, you can go from scan to place in less than an hour. With long‑lasting materials that become flexible at body temperature and a no‑CAD design system, protecting smiles has never been this affordable, repeatable, and profitable.",
+      "features": {
+        "0": {
+          "title": "Clinically Formulated for Translucency",
+          "description": "Highly scalable platform for processing bulk & online remittance transactions received from Exchange Houses across the globe."
+        },
+        "1": {
+          "title": "Improved Flexibility",
+          "description": "Highly scalable platform for processing bulk & online remittance transactions received from Exchange Houses across the globe."
+        },
+        "2": {
+          "title": "Fracture Toughness vs First Generation",
+          "description": "Highly scalable platform for processing bulk & online remittance transactions received from Exchange Houses across the globe."
+        },
+        "3": {
+          "title": "Impact Strength",
+          "description": "Highly scalable platform for processing bulk & online remittance transactions received from Exchange Houses across the globe."
+        },
+        "4": {
+          "title": "Resistance to Scratching",
+          "description": "Highly scalable platform for processing bulk & online remittance transactions received from Exchange Houses across the globe."
+        }
+      }
+    }
+  }
+}

@@ -3,11 +3,12 @@ import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTranslations } from "next-intl";
 
 const BentoCardsSection = () => {
   const stickySection = useRef(null);
   const mobileSection = useRef(null);
-
+  const t = useTranslations("BentoCards");
   // Framer Motion scroll animations for mobile
   const { scrollYProgress } = useScroll({
     target: mobileSection,
@@ -70,32 +71,30 @@ const BentoCardsSection = () => {
 
   const firstRow = [
     {
-      title:
-        "Premium Quality Materials Uncompromising Standards for Superior Results",
-      desc: "Our 3D printing resins are crafted with the highest quality standards to ensure durability, precision, and optimal performance in every print. With",
+      title: t("data.1.title"),
+      desc: t("data.1.desc"),
       icon: "/home-section/1.svg",
     },
     {
-      title: "Fast Turnaround Times Accelerating Your Time to Market",
-      desc: "With our fast-curing resins and efficient production processes, we help you meet tight deadlines and deliver products on time, every time",
+      title: t("data.2.title"),
+      desc: t("data.2.desc"),
       icon: "/home-section/2.svg",
     },
     {
-      title:
-        "Tailored Solutions for Every Industry Versatile Resins for Every Application",
-      desc: "With our fast-curing resins and efficient production processes, we help you meet tight deadlines and deliver products on time, every time",
+      title: t("data.3.title"),
+      desc: t("data.3.desc"),
       icon: "/home-section/3.svg",
     },
   ];
   const secondRow = [
     {
-      title: "Reliable Performance Consistency You Can Count On",
-      desc: "Our 3D printing resins are crafted with the highest quality standards to ensure durability, precision, and optimal performance in every print. With",
+      title: t("data.4.title"),
+      desc: t("data.4.desc"),
       icon: "/home-section/4.svg",
     },
     {
-      title: "Fast Turnaround Times Accelerating Your Time to Market",
-      desc: "With our fast-curing resins and efficient production processes, we help you meet tight deadlines and deliver products on time, every time",
+      title: t("data.5.title"),
+      desc: t("data.5.desc"),
       icon: "/home-section/5.svg",
     },
   ];
@@ -110,15 +109,10 @@ const BentoCardsSection = () => {
         <div className="relative z-[12]">
           <div className="p-[1rem] md:p-[4rem] max-w-7xl mx-auto home-sec5">
             <h2 className="text-[1.8rem] md:text-[2.53rem] text-[var(--color-primary)] text-center font-medium">
-              Fast, efficient, reliable 3D Printing Solutions
+              {t("heading")}
             </h2>
             <p className="text-[0.9rem] hidden md:block md:text-[1rem] t1 opacity-70 text-center px-[1rem] md:px-[14rem] mt-[1rem]">
-              At Resinwork, we provide cutting-edge 3D printing resins designed
-              to deliver high-quality, precise results with speed and
-              consistency. Whether you're in manufacturing, prototyping, or
-              product development, our solutions are engineered to meet the
-              demands of any industry-helping you innovate faster and more
-              efficiently.
+              {t("details")}
             </p>
             <div className="hidden md:block">
               {/* First Row - Full width */}
@@ -192,12 +186,10 @@ const BentoCardsSection = () => {
         <div className="relative z-[12]">
           <div className="p-[1rem] max-w-7xl mx-auto home-sec5">
             <h2 className="text-[1.8rem] text-[var(--color-primary)] text-center font-medium">
-              Fast, efficient, reliable 3D Printing Solutions
+              {t("heading")}
             </h2>
             <p className="text-[0.9rem] t1 opacity-70 text-center px-[1rem] mt-[1rem]">
-              At Resinwork, we provide cutting-edge 3D printing resins designed
-              to deliver high-quality, precise results with speed and
-              consistency.
+              {t("details")}
             </p>
             <div className="mt-[2rem]">
               <motion.div
