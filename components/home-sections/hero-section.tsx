@@ -57,9 +57,6 @@ const HeroSection = () => {
   const slides = [
     {
       image: slideOneImage,
-      // heading: "Engineered for Precision, <br /> Designed for Dentistry!",
-      // text: "Trusted by dental professionals for high-performance results.",
-      // buttonText: "Learn More",
     },
     {
       image: "/hero-section/slider1.png",
@@ -139,7 +136,7 @@ const HeroSection = () => {
           </SwiperSlide>
         ))}
         <AnimatePresence mode="wait">
-          {t(`slide${activeIndex}.heading`) && activeIndex > 0 && (
+          {activeIndex > 0 && slides[activeIndex]?.heading && (
             <motion.div
               className="absolute bottom-28 md:bottom-48 left-6 md:left-16 lg:left-24 max-w-[80%] lg:max-w-[40%] xl:max-w-[30%] z-10"
               key={activeIndex}
