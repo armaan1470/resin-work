@@ -25,8 +25,8 @@ export default function Home() {
       {/* {isMobile ? <MobileTimelineSection /> : <TimelineSection />} */}
 
       {/* <CombinedSection /> */}
-      <LogoAnimationSection />
-      {/* <TextHighlightSection /> */}
+      {/* <LogoAnimationSection /> */}
+      <TextHighlightSection />
 
       <SolutionsSection />
 
