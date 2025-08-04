@@ -1,10 +1,8 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import type { Swiper as SwiperClass } from "swiper";
-
 import {
   Autoplay,
   Pagination,
@@ -52,7 +50,6 @@ const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const isMobile = useIsMobile();
   const t = useTranslations("Slides");
-  const swiperRef = useRef<SwiperClass | null>(null);
   const slideOneImage = isMobile
     ? "/hero-section/slider5.png"
     : "/hero-section/slider4.png";
@@ -84,26 +81,19 @@ const HeroSection = () => {
   return (
     <section className="relative flex justify-center -top-36 md:-top-24 bg-primary min-h-screen w-full">
       <Swiper
-        modules={[Autoplay, Navigation, Keyboard, EffectFade, Pagination]}
+        modules={[Autoplay, Pagination, Navigation, Keyboard, EffectFade]}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
+        pagination={{ clickable: true }}
         loop
+        // effect="fade"
         speed={800}
-        pagination={{
-          clickable: true,
-        }}
-        breakpoints={{
-          640: {
-            pagination: false,
-          },
-        }}
-        onSwiper={(swiper) => (swiperRef.current = swiper)}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         navigation={{
           nextEl: ".custom-swiper-next",
           prevEl: ".custom-swiper-prev",
         }}
-        keyboard={{ enabled: true }}
-        className="h-[100vh] md:h-full"
+        keyboard={{ enabled: true, onlyInViewport: true }}
+        className="relative w-full flex justify-center h-[100vh] md:h-full"
       >
         {slides.map((slide, idx) => (
           <SwiperSlide key={idx} className="flex justify-center">
@@ -173,14 +163,20 @@ const HeroSection = () => {
           )}
         </AnimatePresence>
       </Swiper>
-
-      {/* Prev / Next buttons */}
-      <button className="custom-swiper-prev absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/20 text-white rounded-full z-20 hover:bg-black/40">
-        <ChevronLeft size={24} />
-      </button>
-      <button className="custom-swiper-next absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/20 text-white rounded-full z-20 hover:bg-black/40">
-        <ChevronRight size={24} />
-      </button>
+      <div className="hidden lg:flex absolute z-20 w-full justify-between items-center h-full px-4 pointer-events-none">
+        <button
+          className="custom-swiper-prev cursor-pointer pointer-events-auto backdrop-blur-sm border border-white/20 bg-black/20 hover:bg-black/40 dark:bg-white/10  dark:hover:bg-white/20 text-white rounded-full p-4 transition"
+          aria-label="Previous"
+        >
+          <ChevronLeft size={28} />
+        </button>
+        <button
+          className="custom-swiper-next cursor-pointer pointer-events-auto backdrop-blur-sm border border-white/20 bg-black/20 hover:bg-black/40 dark:bg-white/10  dark:hover:bg-white/20 text-white rounded-full p-4 transition"
+          aria-label="Next"
+        >
+          <ChevronRight size={28} />
+        </button>
+      </div>
     </section>
   );
 };

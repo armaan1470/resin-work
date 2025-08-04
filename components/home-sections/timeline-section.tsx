@@ -264,7 +264,7 @@ const TimelineSection = () => {
   const lenis = useLenis();
 
   const INITIAL_THRESHOLD = 300; // vh units
-  const VIEW_HEIGHT = window.innerHeight;
+  const VIEW_HEIGHT = typeof window !== "undefined" ? window.innerHeight : 0;
   const INITIAL_SLIDE = (INITIAL_THRESHOLD * VIEW_HEIGHT) / 100;
   const SCROLL_THRESHOLD = 200;
   const REST_HEIGHT = 3 * SCROLL_THRESHOLD;
@@ -301,57 +301,6 @@ const TimelineSection = () => {
     // Update the ref to the current activeTab for the next render
     prevActiveTabRef.current = activeTab;
   }, [activeTab, lenis]); // Dependencies: activeTab and lenis
-
-  // // Throttled scroll handler for better performance - FIXED with higher threshold
-  // const throttledScrollHandler = useCallback(() => {
-  //   let ticking = false;
-
-  //   const handleScroll = () => {
-  //     if (!hasScrolled) setHasScrolled(true);
-
-  //     const scrollPosition = window.scrollY;
-  //     const viewportHeight = window.innerHeight;
-
-  //     // FIXED: Increased threshold from 40vh to 100vh per tab transition
-  //     // This makes it much harder to accidentally skip tabs during scrolling
-  //     const SCROLL_THRESHOLD_PER_TAB = 80; // vh units
-  //     const INITIAL_THRESHOLD = 300; // vh units for first tab
-
-  //     // Calculate active tab based on scroll position with higher threshold
-  //     let newActiveTab: number;
-  //     if (scrollPosition < (INITIAL_THRESHOLD * viewportHeight) / 100) {
-  //       newActiveTab = 0;
-  //     } else {
-  //       newActiveTab = Math.min(
-  //         Math.floor(
-  //           (scrollPosition - (INITIAL_THRESHOLD * viewportHeight) / 100) /
-  //             ((SCROLL_THRESHOLD_PER_TAB * viewportHeight) / 100) +
-  //             1
-  //         ),
-  //         tabs.length - 1
-  //       );
-  //     }
-
-  //     if (newActiveTab !== activeTab) {
-  //       setActiveTab(newActiveTab);
-  //     }
-  //     ticking = false;
-  //   };
-
-  //   return () => {
-  //     if (!ticking) {
-  //       requestAnimationFrame(handleScroll);
-  //       ticking = true;
-  //     }
-  //   };
-  // }, [activeTab, hasScrolled, tabs.length]);
-
-  // // Handle scroll events to update active tab - optimized
-  // useEffect(() => {
-  //   const scrollHandler = throttledScrollHandler();
-  //   window.addEventListener("scroll", scrollHandler, { passive: true });
-  //   return () => window.removeEventListener("scroll", scrollHandler);
-  // }, [throttledScrollHandler]);
 
   // Handle video changes when activeTab changes - optimized
   useEffect(() => {
