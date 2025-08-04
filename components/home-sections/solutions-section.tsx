@@ -18,7 +18,6 @@ const SolutionsSection = () => {
     "/our-solution/2.png",
     "/our-solution/3.png",
     "/our-solution/5.png",
-    "/our-solution/5.png",
     "/our-solution/4.png",
   ];
 
