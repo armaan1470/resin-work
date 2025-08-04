@@ -114,6 +114,7 @@ const TimelineSection = () => {
   const [currentYoutubeUrl, setCurrentYoutubeUrl] = useState("");
   const [hasScrolled, setHasScrolled] = useState(false);
 
+  const prevActiveTabRef = useRef(activeTab); // Initialize with the initial activeTab (0)
   // Memoize tabs array to prevent recreating on every render
   const tabs: Tab[] = useMemo(
     () => [
@@ -265,7 +266,7 @@ const TimelineSection = () => {
   const INITIAL_THRESHOLD = 300; // vh units
   const VIEW_HEIGHT = window.innerHeight;
   const INITIAL_SLIDE = (INITIAL_THRESHOLD * VIEW_HEIGHT) / 100;
-  const SCROLL_THRESHOLD = 80;
+  const SCROLL_THRESHOLD = 200;
   const REST_HEIGHT = 3 * SCROLL_THRESHOLD;
 
   useEffect(() => {
@@ -286,11 +287,20 @@ const TimelineSection = () => {
   }, []);
 
   useEffect(() => {
-    const SCROLL_POS =
-      INITIAL_SLIDE + (activeTab * SCROLL_THRESHOLD * VIEW_HEIGHT) / 100;
-
-    lenis?.scrollTo(SCROLL_POS);
-  }, [activeTab, lenis]);
+    // Only scroll if activeTab has actually changed from its previous value
+    if (prevActiveTabRef.current !== activeTab) {
+      if (lenis) {
+        let scrl = activeTab == 2 ? SCROLL_THRESHOLD / 2 : SCROLL_THRESHOLD;
+        const SCROLL_POS =
+          INITIAL_SLIDE + (activeTab * scrl * VIEW_HEIGHT) / 100;
+        lenis.scrollTo(SCROLL_POS);
+      } else {
+        console.log("Lenis not yet available for scroll, skipping scroll.");
+      }
+    }
+    // Update the ref to the current activeTab for the next render
+    prevActiveTabRef.current = activeTab;
+  }, [activeTab, lenis]); // Dependencies: activeTab and lenis
 
   // // Throttled scroll handler for better performance - FIXED with higher threshold
   // const throttledScrollHandler = useCallback(() => {
@@ -475,7 +485,7 @@ const TimelineSection = () => {
     // FIXED: Updated scroll container height calculation to match new threshold
     if (scrollContainerRef.current) {
       const firstTabHeight = 300; // 300vh for first tab
-      const otherTabsHeight = 80 * (tabs.length - 1); // 100vh for others (increased from 40vh)
+      const otherTabsHeight = 200 * (tabs.length - 1); // 100vh for others (increased from 40vh)
       const totalHeight = firstTabHeight + otherTabsHeight;
       scrollContainerRef.current.style.height = `${totalHeight}vh`;
     }
