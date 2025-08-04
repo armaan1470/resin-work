@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
@@ -19,14 +18,41 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
+  // Await params if using Next.js 15+
   const { locale } = await params;
-  if (!hasLocale(routing.locales, locale)) notFound();
 
-  const messages = await getMessages(); // loads locale JSON
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  const messages = await getMessages({ locale });
+
+  // Access nested metadata properties correctly
+  const metadata = messages.metadata as any;
+
   return {
-    title: messages["metadata.title"],
-    description: messages["metadata.description"],
-    keywords: messages["metadata.keywords"],
+    title: metadata?.title || "Resin Work - Professional Resin Solutions",
+    description:
+      metadata?.description ||
+      "Leading provider of high-quality resin solutions",
+    keywords: metadata?.keywords || "resin, dental resin, jewellery resin",
+    // Add Open Graph metadata for better social sharing
+    openGraph: {
+      title: metadata?.title || "Resin Work - Professional Resin Solutions",
+      description:
+        metadata?.description ||
+        "Leading provider of high-quality resin solutions",
+      type: "website",
+      locale: locale,
+    },
+    // Add Twitter Card metadata
+    twitter: {
+      card: "summary_large_image",
+      title: metadata?.title || "Resin Work - Professional Resin Solutions",
+      description:
+        metadata?.description ||
+        "Leading provider of high-quality resin solutions",
+    },
   };
 }
 
@@ -35,21 +61,23 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: { locale: string };
 }) {
+  // Await params if using Next.js 15+
   const { locale } = await params;
+
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 
-  const message = await getMessages();
+  const messages = await getMessages({ locale });
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${satoshi.variable} font-satoshi antialiased bg-primary text-text min-h-screen scrollbar-hidden`}
       >
-        <NextIntlClientProvider messages={message}>
+        <NextIntlClientProvider messages={messages}>
           <SmoothScroll>
             <ThemeProvider
               attribute="class"
