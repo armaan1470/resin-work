@@ -22,7 +22,7 @@ import { Button } from "../ui/button";
 import "./hero-section.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 // Animate entire block with entry delay
 const contentVariants = {
@@ -49,10 +49,18 @@ const contentVariants = {
 const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const isMobile = useIsMobile();
+  const locale = useLocale();
   const t = useTranslations("Slides");
-  const slideOneImage = isMobile
-    ? "/hero-section/slider5.png"
-    : "/hero-section/slider4.png";
+
+  const desktopImage =
+    locale === "en"
+      ? "/hero-section/slider4.jpg"
+      : "/hero-section/slider4-de.jpg";
+  const mobileImage =
+    locale === "en"
+      ? "/hero-section/slider5.jpg"
+      : "/hero-section/slider5-de.jpg";
+  const slideOneImage = isMobile ? mobileImage : desktopImage;
 
   const slides = [
     {
