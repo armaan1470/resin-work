@@ -103,7 +103,7 @@ const SolutionsSection = () => {
     <div>
       <div
         ref={mobileContainerRef}
-        className="max-sm:block hidden w-screen md:mt-[-30%] relative"
+        className="max-sm:block hidden w-screen relative"
       >
         <div className="grid grid-cols-12 relative bg-[#d9d9d9]">
           <div className="col-span-2">
@@ -177,7 +177,7 @@ const SolutionsSection = () => {
       <div
         ref={containerRef}
         className="max-sm:hidden  relative z-[30] bg-white 
-        mt-[-23%]  min-h-screen py-[3rem] pt-[1rem] px-[15rem]"
+          min-h-screen py-[3rem] pt-[1rem] px-[15rem]"
       >
         <div ref={contentRef} className="max-w-7xl  mx-auto mt-[1%]">
           {/* Header */}
