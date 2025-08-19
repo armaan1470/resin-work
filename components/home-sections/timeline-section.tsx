@@ -261,47 +261,6 @@ const TimelineSection = () => {
     [tabs]
   );
 
-  const lenis = useLenis();
-
-  const INITIAL_THRESHOLD = 300; // vh units
-  const VIEW_HEIGHT = typeof window !== "undefined" ? window.innerHeight : 0;
-  const INITIAL_SLIDE = (INITIAL_THRESHOLD * VIEW_HEIGHT) / 100;
-  const SCROLL_THRESHOLD = 200;
-  const REST_HEIGHT = 3 * SCROLL_THRESHOLD;
-
-  useEffect(() => {
-    const cleanup = detectScrollEnd((scrollY, direction) => {
-      if (
-        scrollY > INITIAL_SLIDE &&
-        scrollY < INITIAL_SLIDE + (REST_HEIGHT * VIEW_HEIGHT) / 100
-      ) {
-        if (direction === "down") {
-          setActiveTab((prev) => Math.min(prev + 1, tabs.length - 1));
-        } else if (direction === "up") {
-          setActiveTab((prev) => Math.max(prev - 1, 0));
-        }
-      }
-    });
-
-    return () => cleanup();
-  }, []);
-
-  useEffect(() => {
-    // Only scroll if activeTab has actually changed from its previous value
-    if (prevActiveTabRef.current !== activeTab) {
-      if (lenis) {
-        let scrl = activeTab == 2 ? SCROLL_THRESHOLD / 2 : SCROLL_THRESHOLD;
-        const SCROLL_POS =
-          INITIAL_SLIDE + (activeTab * scrl * VIEW_HEIGHT) / 100;
-        lenis.scrollTo(SCROLL_POS);
-      } else {
-        console.log("Lenis not yet available for scroll, skipping scroll.");
-      }
-    }
-    // Update the ref to the current activeTab for the next render
-    prevActiveTabRef.current = activeTab;
-  }, [activeTab, lenis]); // Dependencies: activeTab and lenis
-
   // Handle video changes when activeTab changes - optimized
   useEffect(() => {
     const currentTab = tabs[activeTab];
@@ -319,88 +278,6 @@ const TimelineSection = () => {
       }
     }
   }, [activeTab, hasScrolled, tabs]);
-
-  // Function to update progress bar based on active tab - optimized with useCallback
-  const updateProgressBar = useCallback(
-    (activeIndex: number) => {
-      const firstButton = buttonRefs.current[0];
-      const activeButton = buttonRefs.current[activeIndex];
-      const lastButton = buttonRefs.current[tabs.length - 1];
-      const progressBar = progressBarRef.current;
-      const progressFill = progressFillRef.current;
-      const progressDot = progressDotRef.current;
-
-      if (
-        firstButton &&
-        activeButton &&
-        lastButton &&
-        progressBar &&
-        progressFill &&
-        progressDot
-      ) {
-        const progressBarWidth = progressBar.offsetWidth;
-
-        // --- Calculate Fill ---
-        const fillStartX = firstButton.offsetLeft;
-        let fillEndX: number;
-
-        if (activeIndex === 0) {
-          fillEndX = firstButton.offsetLeft;
-        } else if (activeIndex === tabs.length - 1) {
-          fillEndX = lastButton.offsetLeft + lastButton.offsetWidth;
-        } else {
-          fillEndX = activeButton.offsetLeft + activeButton.offsetWidth / 2;
-        }
-
-        const fillWidth = fillEndX - fillStartX;
-        const fillScale =
-          progressBarWidth > 0 ? fillWidth / progressBarWidth : 0;
-
-        gsap.to(progressFill, {
-          x: fillStartX,
-          scaleX: fillScale >= 0 ? fillScale : 0,
-          transformOrigin: "left center",
-          duration: 0.5,
-          ease: "power2.out",
-        });
-
-        // --- Calculate Dot ---
-        let dotOffset: number;
-        const dotCenter = progressDot.offsetWidth / 2;
-
-        if (activeIndex === 0) {
-          dotOffset = firstButton.offsetLeft - dotCenter;
-        } else if (activeIndex === tabs.length - 1) {
-          dotOffset =
-            lastButton.offsetLeft + lastButton.offsetWidth - dotCenter;
-        } else {
-          dotOffset =
-            activeButton.offsetLeft + activeButton.offsetWidth / 2 - dotCenter;
-        }
-
-        gsap.to(progressDot, {
-          x: dotOffset,
-          duration: 0.5,
-          ease: "power2.out",
-        });
-      }
-    },
-    [tabs.length]
-  );
-
-  // Handle progress bar updates
-  useLayoutEffect(() => {
-    // A timeout is used here as a more forceful way to ensure the calculation
-    // happens after the browser has completed all rendering and layout updates
-    // that result from the change in the active tab's style.
-    const timeoutId = setTimeout(() => {
-      updateProgressBar(activeTab);
-    }, 200); // Increased delay for more reliability.
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [activeTab]);
 
   // Initialize component - optimized
   useEffect(() => {
@@ -433,10 +310,7 @@ const TimelineSection = () => {
 
     // FIXED: Updated scroll container height calculation to match new threshold
     if (scrollContainerRef.current) {
-      const firstTabHeight = 300; // 300vh for first tab
-      const otherTabsHeight = 200 * (tabs.length - 1); // 100vh for others (increased from 40vh)
-      const totalHeight = firstTabHeight + otherTabsHeight;
-      scrollContainerRef.current.style.height = `${totalHeight}vh`;
+      scrollContainerRef.current.style.height = `${280}vh`;
     }
 
     // Initialize animations
@@ -570,10 +444,10 @@ const TimelineSection = () => {
           </div>
           <div
             id="scroll-indicator"
-            className="absolute top-[80vh] text-white text-sm text-center w-[88%] left-1/2 transform -translate-x-1/2 opacity-100 z-50"
+            className="absolute top-[80vh] text-white text-sm text-center w-[88%] left-1/2 transform -translate-x-1/2 opacity-100  z-50"
             ref={tabsRef}
           >
-            <div className="flex justify-between mb-5 relative z-50">
+            <div className="flex justify-evenly gap-0.5 mb-5 relative z-50">
               {tabs.map((tab, index) => (
                 <button
                   key={tab.id}
@@ -581,8 +455,8 @@ const TimelineSection = () => {
                     buttonRefs.current[index] = el;
                   }}
                   className={cn(
-                    "text-sm text-[#878787] font-medium cursor-pointer transition-all duration-200 ease-in-out rounded-md  relative z-50 pointer-events-auto bg-transparent",
-                    index === activeTab && "text-brand font-bold text-base"
+                    "text-sm text-[#878787] font-medium cursor-pointer transition-all duration-200 ease-in-out border-b-4 relative z-50 pointer-events-auto bg-transparent w-full",
+                    index <= activeTab && "text-brand font-bold text-base"
                   )}
                   onClick={(e) => handleTabClick(e, tab.id, index)}
                   style={{
@@ -597,7 +471,7 @@ const TimelineSection = () => {
                 </button>
               ))}
             </div>
-            <div
+            {/* <div
               ref={progressBarRef}
               className="h-1 rounded-full bg-gray-400/10 bg-opacity-30 w-full"
             >
@@ -609,7 +483,7 @@ const TimelineSection = () => {
                 ref={progressDotRef}
                 className="absolute -bottom-1 origin-left size-3 rounded-full bg-[var(--color-primary)]"
               ></div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

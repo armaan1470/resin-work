@@ -13,6 +13,7 @@ import {
   Linkedin,
   ChevronDown,
   ArrowRight,
+  LoaderCircle,
 } from "lucide-react";
 import {
   BsInstagram,
@@ -35,6 +36,7 @@ import {
 import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 // Form validation schema
 const contactFormSchema = z.object({
@@ -59,6 +61,7 @@ interface SocialLink {
 }
 
 const Footer: React.FC = () => {
+  const [loading, setLoading] = useState(false);
   // Contact form
   const contactForm = useForm<ContactFormData>({
     // resolver: zodResolver(contactFormSchema),
@@ -115,6 +118,7 @@ const Footer: React.FC = () => {
   const onContactSubmit = async (data: ContactFormData) => {
     console.log("Contact form submitted:", data);
 
+    setLoading(true);
     // Create form data object for EmailJS
     const formData = {
       phone: data.phoneNumber,
@@ -136,10 +140,12 @@ const Footer: React.FC = () => {
       console.log("Email sent:", result.text);
 
       if (result.text == "OK") {
+        setLoading(false);
         toast(
           "Your message has been sent successfully. We will get back to you soon."
         );
       } else {
+        setLoading(false);
         toast(
           "There was an error sending your message. Please try again later."
         );
@@ -148,6 +154,7 @@ const Footer: React.FC = () => {
       // Reset form
       contactForm.reset();
     } catch (error) {
+      setLoading(false);
       console.error("Error:", error);
       toast("There was an error sending your message. Please try again later.");
     }
@@ -333,8 +340,13 @@ const Footer: React.FC = () => {
                     type="submit"
                     variant="outline"
                     className="size-12 text-[#C4C4C4] rounded-full hover:bg-transparent hover:text-white"
+                    disabled={loading}
                   >
-                    <ArrowRight className="size-8" />
+                    {!loading ? (
+                      <ArrowRight className="size-8" />
+                    ) : (
+                      <LoaderCircle className="size-8 animate-spin" />
+                    )}
                   </Button>
                 </div>
               </div>
