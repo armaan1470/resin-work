@@ -7,6 +7,7 @@ import HeroSection from "@/components/home-sections/hero-section";
 import MobileTimelineSection from "@/components/home-sections/mobile-timeline-section";
 import HomeSection3 from "@/components/home-sections/OldAnimation";
 import SolutionsSection from "@/components/home-sections/solutions-section";
+import TextHighlightSection from "@/components/home-sections/text-highlight";
 import TimelineSection from "@/components/home-sections/timeline-section";
 import TimelineSectionSample from "@/components/home-sections/timeline-section-sample";
 import VideoTabSection from "@/components/home-sections/video-tab-section";
@@ -25,7 +26,8 @@ export default function Home() {
 
       {/* <CombinedSection /> */}
       {/* <CombinedSection /> */}
-      <HomeSection3 />
+      {!isMobile && <HomeSection3 />}
+      {!isMobile && <TextHighlightSection />}
 
       <SolutionsSection />
 

@@ -4,6 +4,159 @@
     "description": "Marktführer für hochwertige Harzlösungen in den Bereichen Dental, Schmuck und Funktionstechnik.",
     "keywords": "Harz, Dentalharz, Schmuckharz, Funktionsharz, Filamente, 3D-Druck"
   },
+  "Navigation": {
+    "navItems": [
+      {
+        "name": "Dental",
+        "href": "/dental",
+        "hasSubmenu": true,
+        "image": "/product-img/4.png",
+        "products": [
+          {
+            "id": 1,
+            "name": "Model 3",
+            "navic_id": "model_3",
+            "description": "Resinwork® Model 3 ist ein IPA- und wasserabwaschbares Photopolymerharz für den 3D-Druck von Zahnmodellen..."
+          },
+          {
+            "id": 2,
+            "name": "Model 2",
+            "navic_id": "model_2",
+            "description": "Resinwork® Model 2 ist ein wasserabwaschbares Photopolymerharz für den 3D-Druck von Zahnmodellen..."
+          },
+          {
+            "id": 3,
+            "name": "Digitale Zahnprothesen",
+            "navic_id": "dentures",
+            "description": "Bekämpfen Sie das Zähneknirschen und -pressen durch die Bereitstellung von mehr Nachtschienen mit Resinwork..."
+          },
+          {
+            "id": 4,
+            "name": "Chirurgische Schablonen",
+            "navic_id": "surgical_guide",
+            "description": "Erhalten Sie alle klinischen Vorteile der geführten Chirurgie mit schnellen Durchlaufzeiten..."
+          },
+          {
+            "id": 5,
+            "name": "Kronen & Brücken",
+            "navic_id": "crown_bridge",
+            "description": "Bekämpfen Sie das Zähneknirschen und -pressen durch die Bereitstellung von mehr Nachtschienen mit Resinwork..."
+          }
+        ]
+      },
+      {
+        "name": "Schmuck",
+        "href": "/jewellery",
+        "hasSubmenu": true,
+        "image": "/category-home/5.png",
+        "products": [
+          {
+            "id": 1,
+            "name": "Gießen / Ausbrennen",
+            "navic_id": "casting_burnout",
+            "description": ""
+          },
+          {
+            "id": 2,
+            "name": "Wachsbares Harz",
+            "navic_id": "waxable_resin",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "name": "Funktionalität",
+        "href": "/functionality",
+        "hasSubmenu": true,
+        "image": "/category-home/2.png",
+        "products": [
+          {
+            "id": 1,
+            "name": "Flexibel",
+            "navic_id": "flexible",
+            "description": ""
+          },
+          {
+            "id": 2,
+            "name": "Flex & Dehnung",
+            "navic_id": "flex_elongation",
+            "description": ""
+          },
+          {
+            "id": 3,
+            "name": "Super zäh",
+            "navic_id": "super_tough",
+            "description": ""
+          },
+          {
+            "id": 4,
+            "name": "Hart",
+            "navic_id": "hard",
+            "description": ""
+          },
+          {
+            "id": 5,
+            "name": "ABS-ähnlich",
+            "navic_id": "abs_like",
+            "description": ""
+          },
+          {
+            "id": 6,
+            "name": "Standard",
+            "navic_id": "standard",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "name": "Filamente",
+        "href": "/filaments",
+        "hasSubmenu": true,
+        "image": "/category-home/4.png",
+        "products": [
+          {
+            "id": 1,
+            "name": "PLA",
+            "navic_id": "pla",
+            "description": "Resinwork® Model 3 ist ein IPA- und wasserabwaschbares Photopolymerharz für den 3D-Druck von Zahnmodellen..."
+          },
+          {
+            "id": 2,
+            "name": "PLA+",
+            "navic_id": "pla_plus",
+            "description": ""
+          },
+          {
+            "id": 3,
+            "name": "PEEK",
+            "navic_id": "peek",
+            "description": "Bekämpfen Sie das Zähneknirschen und -pressen durch die Bereitstellung von mehr Nachtschienen mit Resinwork..."
+          },
+          {
+            "id": 4,
+            "name": "Kohlefaser",
+            "navic_id": "carbon_fibre",
+            "description": "Erhalten Sie alle klinischen Vorteile der geführten Chirurgie mit schnellen Durchlaufzeiten..."
+          },
+          {
+            "id": 5,
+            "name": "PLA + Additiv",
+            "navic_id": "pla_additive",
+            "description": "Bekämpfen Sie das Zähneknirschen und -pressen durch die Bereitstellung von mehr Nachtschienen mit Resinwork..."
+          }
+        ]
+      },
+      {
+        "name": "Unternehmen",
+        "href": "/company",
+        "hasSubmenu": false
+      }
+    ],
+    "partnerWithUs": "Partner werden",
+    "navigation": "Navigation",
+    "settings": "Einstellungen",
+    "getStarted": "Loslegen"
+  },
   "Slides": {
     "slide0": {
       "heading": "",

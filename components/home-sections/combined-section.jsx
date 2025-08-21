@@ -6,6 +6,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LogoAnimationSection from "./logo-animation-section";
 import GradientTextSection from "./gradient-text-section";
+import TextHighlightSection from "./text-highlight";
+import HomeSection3 from "./OldAnimation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -64,11 +66,13 @@ const CombinedSection = () => {
       </div>
 
       {/* Foreground Sections */}
-      <LogoAnimationSection />
+      {/* <LogoAnimationSection /> */}
+      <HomeSection3 />
 
       {/* Sticky Content */}
       <div className="sticky top-0 z-[2]">
-        <GradientTextSection />
+        {/* <GradientTextSection /> */}
+        <TextHighlightSection />
       </div>
     </div>
   );

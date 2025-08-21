@@ -447,7 +447,7 @@ const TimelineSection = () => {
             className="absolute top-[80vh] text-white text-sm text-center w-[88%] left-1/2 transform -translate-x-1/2 opacity-100  z-50"
             ref={tabsRef}
           >
-            <div className="flex justify-evenly gap-0.5 mb-5 relative z-50">
+            <div className="flex justify-evenly gap-4 mb-5 relative z-50">
               {tabs.map((tab, index) => (
                 <button
                   key={tab.id}

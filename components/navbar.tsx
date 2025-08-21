@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Search, Menu, ChevronRight } from "lucide-react";
-import { useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
 import {
   Sheet,
@@ -13,11 +12,10 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 import { Separator } from "./ui/separator";
-import navData from "@/data/nav-links.json";
 import { useNavigation } from "@/hooks/useNavigation";
 import SearchOverlay from "./search-overlay";
-import { useLocale } from "next-intl";
-import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import { Link, useRouter } from "@/i18n/navigation";
 import LanguageSelect from "./language-select";
 
 interface Product {
@@ -35,49 +33,13 @@ interface NavItem {
   products?: Product[];
 }
 
-interface Language {
-  code: string;
-  name: string;
-  flag: string;
-}
-
-// Language configuration - easily extensible
-const LANGUAGES: Language[] = [
-  { code: "en", name: "English", flag: "🇺🇸" },
-  { code: "de", name: "Deutsch", flag: "🇩🇪" },
-  // Add more languages here as needed
-  // { code: "es", name: "Español", flag: "🇪🇸" },
-  // { code: "fr", name: "Français", flag: "🇫🇷" },
-];
-
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
-  const [isChangingLanguage, setIsChangingLanguage] = useState(false);
-
-  const navItems: NavItem[] = navData.navItems;
+  const t = useTranslations("Navigation");
+  const navItems: NavItem[] = t.raw("navItems");
   const router = useRouter();
-  const locale = useLocale();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const currentLanguage =
-    LANGUAGES.find((lang) => lang.code === locale) || LANGUAGES[0];
-
-  const changeLocale = async (newLocale: string) => {
-    if (newLocale === locale || isChangingLanguage) return;
-
-    setIsChangingLanguage(true);
-    try {
-      const query = Object.fromEntries(searchParams.entries());
-      await router.push({ pathname, query }, { locale: newLocale });
-    } catch (error) {
-      console.error("Language change failed:", error);
-    } finally {
-      setTimeout(() => setIsChangingLanguage(false), 500);
-    }
-  };
 
   const { handleSectionClick, isNavigating } = useNavigation({
     debug: process.env.NODE_ENV === "development",
@@ -177,9 +139,11 @@ export default function Navbar() {
                           <div className="grid grid-cols-12 gap-8">
                             <div className="col-span-4 flex justify-start items-center">
                               {item.image && (
-                                <img
+                                <Image
                                   src={item.image || "/placeholder.svg"}
                                   alt={item.name}
+                                  width={400}
+                                  height={300}
                                   className="rounded-lg w-full h-full object-cover"
                                 />
                               )}
@@ -240,7 +204,7 @@ export default function Navbar() {
                   onClick={handlePartnerWithUs}
                   className="text-xs cursor-pointer bg-brand text-white px-4 py-2 rounded-md border border-brand transition-colors hover:bg-transparent hover:border-white"
                 >
-                  Partner with us
+                  {t("partnerWithUs")}
                 </Button>
               </div>
             </div>
@@ -288,7 +252,7 @@ export default function Navbar() {
                   <div className="px-2 py-8 overflow-y-scroll">
                     <div className="space-y-2 mb-8">
                       <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider px-4 mb-4">
-                        Navigation
+                        {t("navigation")}
                       </h3>
                       {navItems.map((item) => (
                         <Link
@@ -306,20 +270,20 @@ export default function Navbar() {
                     <Separator className="my-8 bg-white/20" />
                     <div className="mb-8">
                       <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider px-4 mb-4">
-                        Settings
+                        {t("settings")}
                       </h3>
                       <LanguageSelect isMobile />
                     </div>
                     <Separator className="my-8 bg-white/20" />
                     <div className="px-4">
                       <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider mb-4">
-                        Get Started
+                        {t("getStarted")}
                       </h3>
                       <Button
                         className="w-full bg-brand hover:bg-brand/90 text-white font-semibold py-6 px-4 rounded-md transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
                         onClick={handlePartnerWithUs}
                       >
-                        Partner with us
+                        {t("partnerWithUs")}
                       </Button>
                     </div>
                     <div className="h-8"></div>
