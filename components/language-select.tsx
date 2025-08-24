@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
@@ -30,11 +30,7 @@ const LANGUAGES: Language[] = [
   { code: "de", name: "Deutsch" },
 ];
 
-export default function LanguageSelect({
-  isMobile = false,
-}: {
-  isMobile?: boolean;
-}) {
+function LanguageSelectInner({ isMobile = false }: { isMobile?: boolean }) {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -49,6 +45,9 @@ export default function LanguageSelect({
 
     setIsChanging(true);
     try {
+      // Save user's language preference
+      localStorage.setItem("preferred-language", newLocale);
+
       const query = Object.fromEntries(searchParams.entries());
       await router.push({ pathname, query }, { locale: newLocale });
     } catch (err) {
@@ -150,5 +149,30 @@ export default function LanguageSelect({
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+// Wrapper component with Suspense boundary
+export default function LanguageSelect({
+  isMobile = false,
+}: {
+  isMobile?: boolean;
+}) {
+  return (
+    <Suspense
+      fallback={
+        <Button
+          variant="ghost"
+          className={`flex items-center gap-1 cursor-pointer text-white text-sm px-3 py-2 rounded-lg border border-white/10 bg-transparent hover:text-white hover:backdrop-blur-sm focus:outline-none`}
+          disabled
+        >
+          <Globe className="size-4" />
+          <span>EN</span>
+          <ChevronDown className="size-3" />
+        </Button>
+      }
+    >
+      <LanguageSelectInner isMobile={isMobile} />
+    </Suspense>
   );
 }

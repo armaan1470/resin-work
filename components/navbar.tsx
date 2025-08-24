@@ -68,16 +68,13 @@ export default function Navbar() {
 
   const handleProductClick = (basePath: string, sectionId: string) => {
     handleNavClick();
-    handleSectionClick(
-      basePath,
-      sectionId,
-      () => {
-        console.log(`🚀 Navigating to ${basePath}#${sectionId}`);
-      },
-      () => {
-        console.log("✅ Navigation complete");
-      }
-    );
+
+    // For static builds, use direct navigation
+    const targetUrl = `${basePath}#${sectionId}`;
+    console.log(`🚀 Navigating to ${targetUrl}`);
+
+    // Use router.push for navigation
+    router.push(targetUrl);
   };
 
   const handleSearch = (query: string) => {
