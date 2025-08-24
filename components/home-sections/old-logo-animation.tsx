@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const HomeSection3: React.FC = () => {
+const OldLogoAnimation: React.FC = () => {
   const t = useTranslations("LogoAnimation");
 
   const h4Refs = useRef<HTMLHeadingElement[]>([]);
@@ -34,7 +34,6 @@ const HomeSection3: React.FC = () => {
         start: "top 15%",
         end: "bottom 70%",
         scrub: 1,
-        markers: false,
       },
     });
 
@@ -68,7 +67,7 @@ const HomeSection3: React.FC = () => {
     const logoTL = gsap.timeline({
       scrollTrigger: {
         trigger: containerLogoRef.current,
-        start: "top 10%",
+        start: "top 50%",
         end: "bottom -70%",
         scrub: 1,
       },
@@ -77,14 +76,14 @@ const HomeSection3: React.FC = () => {
     logoTL
       .to(rRef.current, {
         x: "50vw",
-        y: "-30vh",
+        y: "-50vh",
         rotate: 75,
         zIndex: 1,
         opacity: 0.5,
       })
       .to(rRef.current, {
         x: "+=30vw",
-        y: "30vh",
+        y: "-50vh",
         rotate: 190,
         zIndex: 10,
         opacity: 0.2,
@@ -96,7 +95,7 @@ const HomeSection3: React.FC = () => {
     const bTL = gsap.timeline({
       scrollTrigger: {
         trigger: containerLogoRef.current,
-        start: "top 10%",
+        start: "top 50%",
         end: "bottom -200%",
         scrub: 1,
       },
@@ -106,19 +105,19 @@ const HomeSection3: React.FC = () => {
       .to(bRef.current, {
         x: "130%",
         rotate: -60,
-        y: "10vh",
+        y: "50vh",
         zIndex: 2,
         opacity: 0.1,
       })
       .to(bRef.current, {
         x: "130%",
-        y: "10vh",
+        y: "30vh",
         rotate: -140,
         zIndex: 5,
       })
       .to(bRef.current, {
         x: "230%",
-        y: "10vh",
+        y: "30vh",
         rotate: -140,
         zIndex: 5,
       });
@@ -126,7 +125,7 @@ const HomeSection3: React.FC = () => {
     const lTL = gsap.timeline({
       scrollTrigger: {
         trigger: containerLogoRef.current,
-        start: "top 10%",
+        start: "top 50%",
         end: "bottom -90%",
         scrub: 1,
       },
@@ -238,4 +237,4 @@ const HomeSection3: React.FC = () => {
   );
 };
 
-export default HomeSection3;
+export default OldLogoAnimation;

@@ -456,7 +456,7 @@ const TimelineSection = () => {
                   }}
                   className={cn(
                     "text-sm text-[#878787] font-medium cursor-pointer transition-all duration-200 ease-in-out border-b-4 relative z-50 pointer-events-auto bg-transparent w-full",
-                    index <= activeTab && "text-brand font-bold text-base"
+                    index == activeTab && "text-brand font-bold text-base"
                   )}
                   onClick={(e) => handleTabClick(e, tab.id, index)}
                   style={{

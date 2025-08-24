@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LogoAnimationSection from "./logo-animation-section";
 import GradientTextSection from "./gradient-text-section";
 import TextHighlightSection from "./text-highlight";
-import HomeSection3 from "./OldAnimation";
+import HomeSection3 from "./old-logo-animation";
 
 gsap.registerPlugin(ScrollTrigger);
 

@@ -5,7 +5,7 @@ import BlogsSection from "@/components/home-sections/blogs-section";
 import CombinedSection from "@/components/home-sections/combined-section";
 import HeroSection from "@/components/home-sections/hero-section";
 import MobileTimelineSection from "@/components/home-sections/mobile-timeline-section";
-import HomeSection3 from "@/components/home-sections/OldAnimation";
+import OldLogoAnimation from "@/components/home-sections/old-logo-animation";
 import SolutionsSection from "@/components/home-sections/solutions-section";
 import TextHighlightSection from "@/components/home-sections/text-highlight";
 import TimelineSection from "@/components/home-sections/timeline-section";
@@ -26,7 +26,7 @@ export default function Home() {
 
       {/* <CombinedSection /> */}
       {/* <CombinedSection /> */}
-      {!isMobile && <HomeSection3 />}
+      {!isMobile && <OldLogoAnimation />}
       {!isMobile && <TextHighlightSection />}
 
       <SolutionsSection />
