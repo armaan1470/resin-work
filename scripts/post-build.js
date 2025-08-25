@@ -31,7 +31,12 @@ const indexHtml = `<!DOCTYPE html>
         
         // Redirect to appropriate language immediately
         const preferredLang = getPreferredLanguage();
-        window.location.replace('/' + preferredLang + '/');
+        const currentPath = window.location.pathname;
+        
+        // Only redirect if we're at the root path, not if we're already on a locale path
+        if (currentPath === '/' || currentPath === '') {
+            window.location.href = '/' + preferredLang + '/';
+        }
     </script>
     <noscript>
         <meta http-equiv="refresh" content="0; url=/en/">

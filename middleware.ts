@@ -1,11 +1,19 @@
-// Middleware disabled for static export
-// For static builds, we handle routing client-side
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
+import { NextRequest } from "next/server";
 
-// import createMiddleware from "next-intl/middleware";
-// import { routing } from "./i18n/routing";
+// Create middleware for development mode
+const intlMiddleware = createMiddleware(routing);
 
-// export default createMiddleware(routing);
+export default function middleware(request: NextRequest) {
+  // Only run middleware in development mode
+  if (process.env.NODE_ENV !== "development") {
+    return;
+  }
 
-// export const config = {
-//   matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
-// };
+  return intlMiddleware(request);
+}
+
+export const config = {
+  matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
+};

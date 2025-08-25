@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, Suspense, useEffect, useCallback } from "react";
 import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "@/i18n/navigation";
-import { useSearchParams } from "next/navigation";
+import { usePathname as useNextPathname } from "next/navigation";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -32,28 +31,52 @@ const LANGUAGES: Language[] = [
 
 function LanguageSelectInner({ isMobile = false }: { isMobile?: boolean }) {
   const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const pathname = useNextPathname();
   const [isChanging, setIsChanging] = useState(false);
 
+  // Extract current locale from URL pathname for more reliable detection
+  const getLocaleFromPath = useCallback(() => {
+    const pathSegments = pathname.split("/");
+    const firstSegment = pathSegments[1];
+    return LANGUAGES.find((lang) => lang.code === firstSegment)?.code || locale;
+  }, [pathname, locale]);
+
+  const [currentLocale, setCurrentLocale] = useState(() => getLocaleFromPath());
+
+  // Sync with both the useLocale hook and URL pathname
+  useEffect(() => {
+    const urlLocale = getLocaleFromPath();
+    setCurrentLocale(urlLocale);
+  }, [getLocaleFromPath]);
+
   const currentLanguage =
-    LANGUAGES.find((lang) => lang.code === locale) || LANGUAGES[0];
+    LANGUAGES.find((lang) => lang.code === currentLocale) || LANGUAGES[0];
 
   const changeLanguage = async (newLocale: string) => {
-    if (newLocale === locale) return;
+    if (newLocale === currentLocale) return;
 
     setIsChanging(true);
     try {
       // Save user's language preference
       localStorage.setItem("preferred-language", newLocale);
 
-      const query = Object.fromEntries(searchParams.entries());
-      await router.push({ pathname, query }, { locale: newLocale });
+      // Update local state immediately for better UX
+      setCurrentLocale(newLocale);
+
+      // For static exports, we need to manually construct the new URL
+      // Remove the current locale from the pathname and add the new one
+      const pathWithoutLocale = pathname.replace(/^\/[a-z]{2}(\/|$)/, "/");
+      const newPath = `/${newLocale}${
+        pathWithoutLocale === "/" ? "" : pathWithoutLocale
+      }`;
+
+      // Use window.location for static exports
+      window.location.href = newPath;
     } catch (err) {
       console.error("Failed to change language:", err);
-    } finally {
-      setTimeout(() => setIsChanging(false), 200);
+      // Revert local state on error
+      setCurrentLocale(locale);
+      setIsChanging(false);
     }
   };
 
@@ -102,7 +125,7 @@ function LanguageSelectInner({ isMobile = false }: { isMobile?: boolean }) {
                 <span>
                   {lang.name} ({lang.code.toUpperCase()})
                 </span>
-                {locale === lang.code && (
+                {currentLocale === lang.code && (
                   <Check className="size-4 text-brand" />
                 )}
               </Button>
@@ -144,7 +167,9 @@ function LanguageSelectInner({ isMobile = false }: { isMobile?: boolean }) {
             disabled={isChanging}
           >
             {lang.name} ({lang.code.toUpperCase()})
-            {locale === lang.code && <Check className="size-4 text-brand" />}
+            {currentLocale === lang.code && (
+              <Check className="size-4 text-brand" />
+            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
