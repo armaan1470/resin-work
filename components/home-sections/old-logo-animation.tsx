@@ -96,7 +96,7 @@ const OldLogoAnimation: React.FC = () => {
       scrollTrigger: {
         trigger: containerLogoRef.current,
         start: "top 50%",
-        end: "bottom -200%",
+        end: "bottom -90%",
         scrub: 1,
       },
     });
@@ -105,19 +105,18 @@ const OldLogoAnimation: React.FC = () => {
       .to(bRef.current, {
         x: "130%",
         rotate: -60,
-        y: "50vh",
         zIndex: 2,
         opacity: 0.1,
       })
       .to(bRef.current, {
         x: "130%",
-        y: "30vh",
+        y: "100vh",
         rotate: -140,
         zIndex: 5,
       })
       .to(bRef.current, {
         x: "230%",
-        y: "30vh",
+        y: "200vh",
         rotate: -140,
         zIndex: 5,
       });
@@ -190,7 +189,7 @@ const OldLogoAnimation: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative hidden md:block h-screen" ref={sectionRef}>
+    <div className="relative hidden md:block h-[80vh]" ref={sectionRef}>
       <div className="grid grid-cols-2 relative py-[16rem] z-[10]">
         <div>
           <div

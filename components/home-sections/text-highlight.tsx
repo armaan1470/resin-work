@@ -41,7 +41,7 @@ const TextHighlightSection: React.FC = () => {
         ease: "none",
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "+=300vh",
+          start: "+=100vh",
           end: `+=${totalSegments * 600}vh`,
           scrub: true,
           markers: false,
@@ -75,7 +75,7 @@ const TextHighlightSection: React.FC = () => {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ amount: 0.8 }}
+          viewport={{ amount: 0.5 }}
           transition={{ duration: 1, ease: "easeOut" }}
           ref={textRef}
           className="flex items-center justify-center sticky top-48"

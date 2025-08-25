@@ -447,7 +447,7 @@ const TimelineSection = () => {
             className="absolute top-[80vh] text-white text-sm text-center w-[88%] left-1/2 transform -translate-x-1/2 opacity-100  z-50"
             ref={tabsRef}
           >
-            <div className="flex justify-evenly gap-4 mb-5 relative z-50">
+            <div className="flex justify-evenly gap-1 mb-5 relative z-50">
               {tabs.map((tab, index) => (
                 <button
                   key={tab.id}
@@ -455,7 +455,7 @@ const TimelineSection = () => {
                     buttonRefs.current[index] = el;
                   }}
                   className={cn(
-                    "text-sm text-[#878787] font-medium cursor-pointer transition-all duration-200 ease-in-out border-b-4 relative z-50 pointer-events-auto bg-transparent w-full",
+                    "text-sm text-[#878787] font-medium cursor-pointer transition-all duration-200 ease-in-out relative z-50 pointer-events-auto bg-transparent w-full after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:-translate-x-1/2 after:w-full after:h-1 after:bg-current after:rounded-full",
                     index == activeTab && "text-brand font-bold text-base"
                   )}
                   onClick={(e) => handleTabClick(e, tab.id, index)}

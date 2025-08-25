@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
   Autoplay,
@@ -18,11 +18,11 @@ import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import { Button } from "../ui/button";
 import "./hero-section.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 
 // Animate entire block with entry delay
 const contentVariants = {
@@ -49,8 +49,9 @@ const contentVariants = {
 const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const isMobile = useIsMobile();
-  const locale = useLocale();
   const t = useTranslations("Slides");
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1];
 
   const desktopImage =
     locale === "en"
