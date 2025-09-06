@@ -95,7 +95,7 @@ const TextHighlightSection: React.FC = () => {
           </p>
         </motion.div>
       </div>
-      <div className="h-[40vh]" />
+      {/* <div className="h-[40vh]" /> */}
     </>
   );
 };

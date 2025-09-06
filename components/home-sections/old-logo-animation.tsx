@@ -189,7 +189,7 @@ const OldLogoAnimation: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative hidden md:block h-[80vh]" ref={sectionRef}>
+    <div className="relative hidden md:block h-[100vh]" ref={sectionRef}>
       <div className="grid grid-cols-2 relative py-[16rem] z-[10]">
         <div>
           <div

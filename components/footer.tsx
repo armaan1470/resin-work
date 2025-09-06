@@ -131,10 +131,10 @@ const Footer: React.FC = () => {
     try {
       // Send email using EmailJS
       const result = await emailjs.send(
-        "service_iy1s31g", // Replace with your EmailJS Service ID
-        "template_nhk69on", // Replace with your EmailJS Template ID
+        "service_h1bbf9r", // Replace with your EmailJS Service ID
+        "template_8r00hwy", // Replace with your EmailJS Template ID
         formData,
-        "cW06URmefv_pthwVt" // Replace with your EmailJS Public Key
+        "98eufrAwkuETxdRPM" // Replace with your EmailJS Public Key
       );
 
       console.log("Email sent:", result.text);
