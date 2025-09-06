@@ -67,7 +67,7 @@ const OldLogoAnimation: React.FC = () => {
     const logoTL = gsap.timeline({
       scrollTrigger: {
         trigger: containerLogoRef.current,
-        start: "top 50%",
+        start: "top 30%",
         end: "bottom -70%",
         scrub: 1,
       },
@@ -82,20 +82,17 @@ const OldLogoAnimation: React.FC = () => {
         opacity: 0.5,
       })
       .to(rRef.current, {
-        x: "+=30vw",
+        x: "+=100vw",
         y: "-50vh",
         rotate: 190,
         zIndex: 10,
         opacity: 0.2,
-      })
-      .to(rRef.current, {
-        x: "100vw",
       });
 
     const bTL = gsap.timeline({
       scrollTrigger: {
         trigger: containerLogoRef.current,
-        start: "top 50%",
+        start: "top 30%",
         end: "bottom -90%",
         scrub: 1,
       },
@@ -109,14 +106,8 @@ const OldLogoAnimation: React.FC = () => {
         opacity: 0.1,
       })
       .to(bRef.current, {
-        x: "130%",
-        y: "100vh",
-        rotate: -140,
-        zIndex: 5,
-      })
-      .to(bRef.current, {
         x: "230%",
-        y: "200vh",
+        y: "100vh",
         rotate: -140,
         zIndex: 5,
       });
@@ -124,7 +115,7 @@ const OldLogoAnimation: React.FC = () => {
     const lTL = gsap.timeline({
       scrollTrigger: {
         trigger: containerLogoRef.current,
-        start: "top 50%",
+        start: "top 30%",
         end: "bottom -90%",
         scrub: 1,
       },
@@ -141,21 +132,17 @@ const OldLogoAnimation: React.FC = () => {
       .to(lRef.current, {
         x: "-30%",
         rotate: -90,
-        y: "113%",
         opacity: 0.1,
       })
       .to(lRef.current, {
         x: "-220%",
         y: "204%",
         zIndex: 22,
-      })
-      .to(lRef.current, {
-        opacity: 0.71,
       });
 
     ScrollTrigger.create({
       trigger: pinRef.current,
-      start: "top 50%",
+      start: "top 30%",
       end: "+=300",
       pin: true,
       anticipatePin: 1,

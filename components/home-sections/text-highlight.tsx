@@ -71,7 +71,7 @@ const TextHighlightSection: React.FC = () => {
 
   return (
     <>
-      <div ref={containerRef} className="relative min-h-[430vh]">
+      <div ref={containerRef} className="relative min-h-[530vh]">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
