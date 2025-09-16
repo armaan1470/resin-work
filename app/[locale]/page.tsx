@@ -4,6 +4,7 @@ import BentoCardsSection from "@/components/home-sections/bento-cards-section";
 import BlogsSection from "@/components/home-sections/blogs-section";
 import CombinedSection from "@/components/home-sections/combined-section";
 import HeroSection from "@/components/home-sections/hero-section";
+import IframeSlider from "@/components/home-sections/iframe-slider";
 import MobileTimelineSection from "@/components/home-sections/mobile-timeline-section";
 import OldLogoAnimation from "@/components/home-sections/old-logo-animation";
 import SolutionsSection from "@/components/home-sections/solutions-section";
@@ -18,7 +19,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      <HeroSection />
+      {/* <HeroSection /> */}
+      <IframeSlider />
 
       {/* <TimelineSectionSample /> */}
 
