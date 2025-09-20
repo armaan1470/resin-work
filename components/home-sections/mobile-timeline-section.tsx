@@ -100,14 +100,19 @@ const MobileTimelineSection = () => {
           prev: { shadow: true, translate: [0, 0, -400] },
           next: { translate: ["100%", 0, 0] },
         }}
-        pagination={{
-          clickable: true,
-        }}
         modules={[EffectCreative, Pagination]}
         className="mySwiper"
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
+        }}
+        spaceBetween={20}
       >
         {tabs.map((tab, index) => (
-          <SwiperSlide key={tab.id} className="dark:bg-black bg-white">
+          <SwiperSlide
+            key={tab.id}
+            className="bg-[var(--service-box)]  p-5 rounded-lg"
+          >
             {/* Video */}
             <div className="relative w-full aspect-video bg-[#111] rounded-lg overflow-hidden mb-6">
               {tab.isYoutube ? (
@@ -146,19 +151,20 @@ const MobileTimelineSection = () => {
             </div>
 
             {/* Text */}
-            <div className="flex flex-col ">
-              <h2 className="text-2xl font-bold mb-3 leading-tight">
+            <div className="flex flex-col h-80">
+              <div className="mb-4">
+                <span className="inline-block px-3 py-1 text-xs font-semibold text-orange-600 dark:text-orange-200 bg-orange-100 dark:bg-orange-700 rounded-full mb-3">
+                  {t(`${tab.id}.title`)}
+                </span>
+              </div>
+              <h2 className="text-2xl font-bold mb-4 leading-tight text-gray-900 dark:text-white">
                 {t(`${tab.id}.heading`)}
               </h2>
-              <p className="text-base leading-relaxed opacity-80 mb-6">
+              <p className="text-base leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
                 {t(`${tab.id}.content`)}
               </p>
-              <div className="text-center mb-16">
-                {/* <span className="text-xs text-gray-500">
-                  {index + 1} of {tabs.length}
-                </span> */}
-              </div>
             </div>
+            <div className="mb-16"></div>
           </SwiperSlide>
         ))}
       </Swiper>

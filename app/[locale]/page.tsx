@@ -19,8 +19,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      {/* <HeroSection /> */}
-      <IframeSlider />
+      <HeroSection />
+      {/* <IframeSlider /> */}
 
       {/* <TimelineSectionSample /> */}
 
@@ -28,8 +28,8 @@ export default function Home() {
 
       {/* <CombinedSection /> */}
       {/* <CombinedSection /> */}
-      {!isMobile && <OldLogoAnimation />}
-      {!isMobile && <TextHighlightSection />}
+      <OldLogoAnimation />
+      <TextHighlightSection />
 
       <SolutionsSection />
 

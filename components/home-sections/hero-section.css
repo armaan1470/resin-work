@@ -24,7 +24,7 @@
 .swiper-pagination-custom,
 .swiper-horizontal > .swiper-pagination-bullets,
 .swiper-pagination-bullets.swiper-pagination-horizontal {
-  bottom: 40px;
+  bottom: 20px;
 }
 
 @media (width >= 48rem /* 768px */) {

@@ -26,6 +26,8 @@ const OldLogoAnimation: React.FC = () => {
   useEffect(() => {
     if (!sectionRef.current) return;
 
+    const isMobile = window.innerWidth < 768; // md breakpoint
+
     gsap.set(h4Refs.current, { color: `var(--scroll-text-inactive)` });
 
     const masterTL = gsap.timeline({
@@ -64,95 +66,101 @@ const OldLogoAnimation: React.FC = () => {
         );
     });
 
-    const logoTL = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerLogoRef.current,
-        start: "top 30%",
-        end: "bottom -70%",
-        scrub: 1,
-      },
-    });
-
-    logoTL
-      .to(rRef.current, {
-        x: "50vw",
-        y: "-50vh",
-        rotate: 75,
-        zIndex: 1,
-        opacity: 0.5,
-      })
-      .to(rRef.current, {
-        x: "+=100vw",
-        y: "-50vh",
-        rotate: 190,
-        zIndex: 10,
-        opacity: 0.2,
+    // Only run complex animations on desktop
+    if (!isMobile) {
+      const logoTL = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerLogoRef.current,
+          start: "top 30%",
+          end: "bottom -70%",
+          scrub: 1,
+        },
       });
 
-    const bTL = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerLogoRef.current,
-        start: "top 30%",
-        end: "bottom -90%",
-        scrub: 1,
-      },
-    });
+      logoTL
+        .to(rRef.current, {
+          x: "50vw",
+          y: "-50vh",
+          rotate: 75,
+          zIndex: 1,
+          opacity: 0.5,
+        })
+        .to(rRef.current, {
+          x: "+=100vw",
+          y: "-50vh",
+          rotate: 190,
+          zIndex: 10,
+          opacity: 0.2,
+        });
 
-    bTL
-      .to(bRef.current, {
-        x: "130%",
-        rotate: -60,
-        zIndex: 2,
-        opacity: 0.1,
-      })
-      .to(bRef.current, {
-        x: "230%",
-        y: "100vh",
-        rotate: -140,
-        zIndex: 5,
+      const bTL = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerLogoRef.current,
+          start: "top 30%",
+          end: "bottom -90%",
+          scrub: 1,
+        },
       });
 
-    const lTL = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerLogoRef.current,
-        start: "top 30%",
-        end: "bottom -90%",
-        scrub: 1,
-      },
-    });
+      bTL
+        .to(bRef.current, {
+          x: "130%",
+          rotate: -60,
+          zIndex: 2,
+          opacity: 0.1,
+        })
+        .to(bRef.current, {
+          x: "230%",
+          y: "100vh",
+          rotate: -140,
+          zIndex: 5,
+        });
 
-    lTL
-      .to(lRef.current, {
-        x: "-30%",
-        rotate: -30,
-        y: "-20vh",
-        opacity: 0.1,
-        zIndex: 13,
-      })
-      .to(lRef.current, {
-        x: "-30%",
-        rotate: -90,
-        opacity: 0.1,
-      })
-      .to(lRef.current, {
-        x: "-220%",
-        y: "204%",
-        zIndex: 22,
+      const lTL = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerLogoRef.current,
+          start: "top 30%",
+          end: "bottom -90%",
+          scrub: 1,
+        },
       });
 
-    ScrollTrigger.create({
-      trigger: pinRef.current,
-      start: "top 30%",
-      end: "+=300",
-      pin: true,
-      anticipatePin: 1,
-      scrub: 0.5,
-      pinSpacing: false,
-    });
+      lTL
+        .to(lRef.current, {
+          x: "-30%",
+          rotate: -30,
+          y: "-20vh",
+          opacity: 0.1,
+          zIndex: 13,
+        })
+        .to(lRef.current, {
+          x: "-30%",
+          rotate: -90,
+          opacity: 0.1,
+        })
+        .to(lRef.current, {
+          x: "-220%",
+          y: "204%",
+          zIndex: 22,
+        });
+
+      ScrollTrigger.create({
+        trigger: pinRef.current,
+        start: "top 30%",
+        end: "+=300",
+        pin: true,
+        anticipatePin: 1,
+        scrub: 0.5,
+        pinSpacing: false,
+      });
+    } else {
+      // On mobile, keep images visible with subtle animation
+      gsap.set([rRef.current, bRef.current, lRef.current], { opacity: 0.8 });
+    }
 
     const anim = gsap.fromTo(
       sectionRef.current,
-      { opacity: 0.1 },
+      { opacity: isMobile ? 1 : 0.1 },
       {
         opacity: 1,
         ease: "power2.out",
@@ -176,8 +184,8 @@ const OldLogoAnimation: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative hidden md:block h-[100vh]" ref={sectionRef}>
-      <div className="grid grid-cols-2 relative py-[16rem] z-[10]">
+    <div className="relative  h-[100vh]" ref={sectionRef}>
+      <div className="grid grid-cols-1 md:grid-cols-2 relative py-[16rem] z-[10]">
         <div>
           <div
             ref={containerLogoRef}
@@ -185,34 +193,34 @@ const OldLogoAnimation: React.FC = () => {
           >
             <div
               ref={pinRef}
-              className="relative w-full h-full logo-animation z-[20]"
+              className="relative w-full h-full logo-animation z-[20] max-w-[400px] max-h-[400px] md:max-w-[500px] md:max-h-[500px]"
             >
               <img
                 ref={rRef}
                 src="/logo-animation/logo-part-1.svg"
                 alt="r"
-                className="absolute top-1/2 left-1/2 w-full h-full opacity-60 object-contain transform -translate-x-1/2 -translate-y-1/2 z-[99]"
+                className="absolute top-1/2 left-1/2 w-[clamp(200px,30vw,400px)] h-[clamp(200px,30vw,400px)] opacity-60 object-contain transform -translate-x-1/2 -translate-y-1/2 z-[99]"
               />
               <img
                 ref={lRef}
                 src="/logo-animation/logo-part-2.png"
                 alt="l"
-                className="absolute top-1/2 left-1/2 w-full h-full opacity-60 object-contain transform -translate-x-1/2 -translate-y-1/2 z-20"
+                className="absolute top-1/2 left-1/2 w-[clamp(200px,30vw,400px)] h-[clamp(200px,30vw,400px)] opacity-60 object-contain transform -translate-x-1/2 -translate-y-1/2 z-20"
               />
               <img
                 ref={bRef}
                 src="/logo-animation/logo-part-3.svg"
                 alt="b"
-                className="absolute top-1/2 left-1/2 w-full h-full opacity-60 object-contain transform -translate-x-1/2 -translate-y-1/2 z-10"
+                className="absolute top-1/2 left-1/2 w-[clamp(200px,30vw,400px)] h-[clamp(200px,30vw,400px)] opacity-60 object-contain transform -translate-x-1/2 -translate-y-1/2 z-10"
               />
             </div>
           </div>
         </div>
         <div
-          className="flex items-center justify-center flex-col gap-y-[1rem] pe-[6rem] z-[5]"
+          className="flex items-center justify-center flex-col gap-y-[1rem] px-5 md:px-0 md:pe-[6rem] z-[5]"
           ref={textContainerRef}
         >
-          <h2 className="text-[3.6rem] text-[var(--header-text)] font-normal">
+          <h2 className="text-[clamp(1.5rem,4vw,3.6rem)] text-[var(--header-text)] font-normal">
             {t("heading")}
             <span className="font-semibold"> {t("subHeading")} </span>
           </h2>
