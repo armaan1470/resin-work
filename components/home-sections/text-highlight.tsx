@@ -52,7 +52,6 @@ const TextHighlightSection: React.FC = () => {
             start: "top top",
             end: `+=${totalSegments * scrollMultiplier}vh`,
             scrub: 1, // Smoother scrubbing
-            markers: true, // Keep markers for debugging
             refreshPriority: -1,
             invalidateOnRefresh: true,
           },
@@ -66,7 +65,7 @@ const TextHighlightSection: React.FC = () => {
             start: `+=${startOffset}vh`,
             end: `+=${totalSegments * scrollMultiplier}vh`,
             scrub: 1, // Smoother scrubbing
-            markers: true, // Keep markers for debugging
+
             refreshPriority: -1,
             invalidateOnRefresh: true,
             onUpdate: () => {

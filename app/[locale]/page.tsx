@@ -6,6 +6,7 @@ import CombinedSection from "@/components/home-sections/combined-section";
 import HeroSection from "@/components/home-sections/hero-section";
 import IframeSlider from "@/components/home-sections/iframe-slider";
 import MobileTimelineSection from "@/components/home-sections/mobile-timeline-section";
+import MobileTextHighlightSection from "@/components/home-sections/mobile-text-highlight";
 import OldLogoAnimation from "@/components/home-sections/old-logo-animation";
 import SolutionsSection from "@/components/home-sections/solutions-section";
 import TextHighlightSection from "@/components/home-sections/text-highlight";
@@ -13,6 +14,7 @@ import TimelineSection from "@/components/home-sections/timeline-section";
 import TimelineSectionSample from "@/components/home-sections/timeline-section-sample";
 import VideoTabSection from "@/components/home-sections/video-tab-section";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import MobileLogoAnimation from "@/components/home-sections/mobile-logo-animation";
 
 export default function Home() {
   const isMobile = useIsMobile();
@@ -28,8 +30,8 @@ export default function Home() {
 
       {/* <CombinedSection /> */}
       {/* <CombinedSection /> */}
-      {!isMobile && <OldLogoAnimation />}
-      {!isMobile && <TextHighlightSection />}
+      {isMobile ? <MobileLogoAnimation /> : <OldLogoAnimation />}
+      {isMobile ? <MobileTextHighlightSection /> : <TextHighlightSection />}
 
       <SolutionsSection />
 
