@@ -28,8 +28,8 @@ export default function Home() {
 
       {/* <CombinedSection /> */}
       {/* <CombinedSection /> */}
-      <OldLogoAnimation />
-      <TextHighlightSection />
+      {!isMobile && <OldLogoAnimation />}
+      {!isMobile && <TextHighlightSection />}
 
       <SolutionsSection />
 
