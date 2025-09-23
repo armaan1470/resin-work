@@ -96,7 +96,7 @@ const MobileTextHighlightSection: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="relative min-h-[230vh] -mt-40"
+      className="relative min-h-[230vh] -mt-60"
       style={{
         // Hardware acceleration
         transform: "translateZ(0)",
@@ -106,8 +106,8 @@ const MobileTextHighlightSection: React.FC = () => {
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ amount: 0.1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
+        viewport={{ amount: 0.5 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         ref={textRef}
         className="flex items-center justify-center sticky top-32"
         style={{
