@@ -1,0 +1,28 @@
+.timeline-slider .swiper-pagination-bullet {
+  width: 80px;
+  height: 8px;
+  background: transparent;
+  border: 1px solid silver;
+  opacity: 0.5;
+  margin-right: 8px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.timeline-slider .swiper-pagination-bullet-active {
+  opacity: 1;
+  background: var(--color-primary);
+  border: 1px solid white;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  display: none !important;
+}
+
+.timeline-slider .swiper-pagination-fraction,
+.timeline-slider .swiper-pagination-custom,
+.timeline-slider .swiper-horizontal > .swiper-pagination-bullets,
+.timeline-slider .swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: 20px;
+}

@@ -102,7 +102,7 @@ const HeroSection = () => {
           prevEl: ".custom-swiper-prev",
         }}
         keyboard={{ enabled: true, onlyInViewport: true }}
-        className="relative w-full flex justify-center h-[100vh] md:h-full"
+        className="relative w-full flex justify-center h-[100vh] md:h-full hero-slider"
       >
         {slides.map((slide, idx) => (
           <SwiperSlide key={idx} className="flex justify-center">

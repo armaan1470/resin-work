@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCreative, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-creative";
+import "./mobile-timeline.css";
 
 import { Play } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -92,7 +93,7 @@ const MobileTimelineSection = () => {
   const youtubeId = getYouTubeId(currentYoutubeUrl);
 
   return (
-    <div className="relative lg:hidden px-4 pt-0 pb-16 ">
+    <div className="relative lg:hidden px-4 pt-0 pb-16 timeline-slider">
       <Swiper
         grabCursor={true}
         effect={"creative"}
@@ -104,7 +105,6 @@ const MobileTimelineSection = () => {
         className="mySwiper"
         pagination={{
           clickable: true,
-          dynamicBullets: true,
         }}
         spaceBetween={20}
       >

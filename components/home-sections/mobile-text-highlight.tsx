@@ -106,7 +106,7 @@ const MobileTextHighlightSection: React.FC = () => {
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ amount: 0.3 }}
+        viewport={{ amount: 0.2 }}
         transition={{ duration: 1, ease: "easeOut" }}
         ref={textRef}
         className="flex items-center justify-center sticky top-32"
@@ -123,7 +123,7 @@ const MobileTextHighlightSection: React.FC = () => {
               ref={(el) => {
                 segmentsRef.current[index] = el;
               }}
-              className="font-semibold leading-7 text-black dark:text-white transition-colors duration-1000 ease-in-out"
+              className="font-semibold leading-9 text-black dark:text-white transition-colors duration-1000 ease-in-out"
               style={{
                 opacity: 0.3,
                 // Hardware acceleration
