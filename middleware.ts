@@ -2,16 +2,18 @@ import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 import { NextRequest } from "next/server";
 
-// Create middleware for development mode
+// Create middleware for internationalization
 const intlMiddleware = createMiddleware(routing);
 
 export default function middleware(request: NextRequest) {
-  // Only run middleware in development mode
-  if (process.env.NODE_ENV !== "development") {
-    return;
+  // Run middleware in development mode
+  if (process.env.NODE_ENV === "development") {
+    return intlMiddleware(request);
   }
 
-  return intlMiddleware(request);
+  // For static exports, the post-build script handles redirects
+  // This middleware won't run in production static builds
+  return;
 }
 
 export const config = {
