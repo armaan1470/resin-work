@@ -96,7 +96,7 @@ const MobileTextHighlightSection: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="relative min-h-[230vh] pt-36"
+      className="relative min-h-[230vh]"
       style={{
         // Hardware acceleration
         transform: "translateZ(0)",
