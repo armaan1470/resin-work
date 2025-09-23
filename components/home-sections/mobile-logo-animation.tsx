@@ -15,6 +15,10 @@ const MobileLogoAnimation: React.FC = () => {
   const bRef = useRef<HTMLImageElement | null>(null);
   const lRef = useRef<HTMLImageElement | null>(null);
   const textContainerRef = useRef<HTMLDivElement | null>(null);
+  const position = {
+    start: "top 40%",
+    end: "bottom top",
+  };
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -23,10 +27,9 @@ const MobileLogoAnimation: React.FC = () => {
     const logoTL = gsap.timeline({
       scrollTrigger: {
         trigger: containerLogoRef.current,
-        start: "top center",
-        end: "bottom top",
+        start: position.start,
+        end: position.end,
         scrub: 1,
-        markers: true,
       },
     });
 
@@ -51,8 +54,8 @@ const MobileLogoAnimation: React.FC = () => {
     const bTL = gsap.timeline({
       scrollTrigger: {
         trigger: containerLogoRef.current,
-        start: "top center",
-        end: "bottom top",
+        start: position.start,
+        end: position.end,
         scrub: 1,
       },
     });
@@ -78,8 +81,8 @@ const MobileLogoAnimation: React.FC = () => {
     const lTL = gsap.timeline({
       scrollTrigger: {
         trigger: containerLogoRef.current,
-        start: "top center",
-        end: "bottom top",
+        start: position.start,
+        end: position.end,
         scrub: 1,
       },
     });
@@ -102,7 +105,7 @@ const MobileLogoAnimation: React.FC = () => {
     // Pin the logo section during animation
     ScrollTrigger.create({
       trigger: pinRef.current,
-      start: "top center",
+      start: "top 40%",
       end: "+=200",
       pin: true,
       anticipatePin: 1,
