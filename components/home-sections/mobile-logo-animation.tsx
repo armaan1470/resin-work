@@ -23,9 +23,10 @@ const MobileLogoAnimation: React.FC = () => {
     const logoTL = gsap.timeline({
       scrollTrigger: {
         trigger: containerLogoRef.current,
-        start: "top 60%",
+        start: "top center",
         end: "bottom top",
         scrub: 1,
+        markers: true,
       },
     });
 
@@ -50,7 +51,7 @@ const MobileLogoAnimation: React.FC = () => {
     const bTL = gsap.timeline({
       scrollTrigger: {
         trigger: containerLogoRef.current,
-        start: "top 60%",
+        start: "top center",
         end: "bottom top",
         scrub: 1,
       },
@@ -77,7 +78,7 @@ const MobileLogoAnimation: React.FC = () => {
     const lTL = gsap.timeline({
       scrollTrigger: {
         trigger: containerLogoRef.current,
-        start: "top 60%",
+        start: "top center",
         end: "bottom top",
         scrub: 1,
       },
@@ -101,7 +102,7 @@ const MobileLogoAnimation: React.FC = () => {
     // Pin the logo section during animation
     ScrollTrigger.create({
       trigger: pinRef.current,
-      start: "top 60%",
+      start: "top center",
       end: "+=200",
       pin: true,
       anticipatePin: 1,
@@ -110,29 +111,14 @@ const MobileLogoAnimation: React.FC = () => {
     });
 
     // Fade in animation for the section
-    const anim = gsap.fromTo(
-      sectionRef.current,
-      { opacity: 0.3 },
-      {
-        opacity: 1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: textContainerRef.current,
-          start: "top 80%",
-          end: "top 50%",
-          scrub: true,
-        },
-      }
-    );
 
     // Optimize performance
     gsap.set([pinRef.current], {
-      willChange: "transform, opacity",
+      willChange: "transform",
     });
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      anim.kill();
     };
   }, []);
 
