@@ -138,7 +138,7 @@ const MobileLogoAnimation: React.FC = () => {
 
   return (
     <div className="relative min-h-[100vh] md:h-[100vh]" ref={sectionRef}>
-      <div className="flex flex-col md:grid md:grid-cols-2 relative py-8 md:py-[16rem] z-[10]">
+      <div className="flex flex-col md:grid md:grid-cols-2 relative py-8 md:py-[16rem] z-[10] overflow-x-hidden">
         {/* Logo Section - First on mobile, left on desktop */}
         <div className="order-1 md:order-1 mb-6 md:mb-0">
           <div
