@@ -96,7 +96,7 @@ const MobileTextHighlightSection: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="relative min-h-[230vh] -mt-20"
+      className="relative min-h-[230vh] -mt-40"
       style={{
         // Hardware acceleration
         transform: "translateZ(0)",
@@ -116,7 +116,7 @@ const MobileTextHighlightSection: React.FC = () => {
           willChange: "transform",
         }}
       >
-        <p className="text-3xl leading-6 sm:text-xl sm:leading-7 px-4 tracking-normal">
+        <p className="text-3xl leading-6 sm:text-xl sm:leading-7 px-4 tracking-normal pb-16">
           {segments.map((segment, index) => (
             <span
               key={index}

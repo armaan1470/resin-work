@@ -16,7 +16,7 @@ const MobileLogoAnimation: React.FC = () => {
   const lRef = useRef<HTMLImageElement | null>(null);
   const textContainerRef = useRef<HTMLDivElement | null>(null);
   const position = {
-    start: "top 40%",
+    start: "top 38%",
     end: "bottom top",
   };
 
