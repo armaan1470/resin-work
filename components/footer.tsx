@@ -42,7 +42,10 @@ import { useState } from "react";
 const contactFormSchema = z.object({
   phoneNumber: z.string().min(1, "Phone number is required"),
   company: z.string().min(1, "Company is required"),
-  name: z.string().min(1, "Name is required"),
+  name: z
+    .string()
+    .min(1, "Name is required")
+    .regex(/^[a-zA-Z\s]+$/, "Name should only contain letters and spaces"),
   email: z.string().email("Invalid email address"),
   message: z.string().min(1, "Message is required"),
 });
@@ -64,7 +67,7 @@ const Footer: React.FC = () => {
   const [loading, setLoading] = useState(false);
   // Contact form
   const contactForm = useForm<ContactFormData>({
-    // resolver: zodResolver(contactFormSchema),
+    resolver: zodResolver(contactFormSchema),
     defaultValues: {
       phoneNumber: "",
       company: "",
@@ -192,6 +195,7 @@ const Footer: React.FC = () => {
                       <FormControl>
                         <Input
                           {...field}
+                          required
                           type="email"
                           placeholder={t("subscribe.placeholder")}
                           className="h-14 py-[0.8rem] px-4 placeholder:opacity-50 rounded border text-[16px] md:text-[20px] border-[#C4C4C4] bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
@@ -234,6 +238,7 @@ const Footer: React.FC = () => {
                         <FormControl>
                           <Input
                             {...field}
+                            required
                             className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
                           />
                         </FormControl>
@@ -255,6 +260,7 @@ const Footer: React.FC = () => {
                         <FormControl>
                           <Input
                             {...field}
+                            required
                             className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
                           />
                         </FormControl>
@@ -279,6 +285,7 @@ const Footer: React.FC = () => {
                         <FormControl>
                           <Input
                             {...field}
+                            required
                             className="h-11 py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white"
                           />
                         </FormControl>
@@ -301,6 +308,7 @@ const Footer: React.FC = () => {
                           <Input
                             {...field}
                             type="email"
+                            required
                             className="h-11 py-2 px-3 text-white rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent placeholder-white focus:ring-0 focus:border-white"
                           />
                         </FormControl>
@@ -325,6 +333,7 @@ const Footer: React.FC = () => {
                         <FormControl>
                           <Textarea
                             {...field}
+                            required
                             rows={3}
                             className="py-2 px-3 rounded border border-[#C4C4C4] placeholder:opacity-60 bg-transparent text-white placeholder-white focus:ring-0 focus:border-white resize-none"
                           />
