@@ -110,7 +110,7 @@ const MobileLogoAnimation: React.FC = () => {
       pin: true,
       anticipatePin: 1,
       scrub: 0.5,
-      pinSpacing: false,
+      // pinSpacing: true, // default behavior – prevents jump
     });
 
     // Fade in animation for the section

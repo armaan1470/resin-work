@@ -106,7 +106,7 @@ const MobileTextHighlightSection: React.FC = () => {
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ amount: 0.5 }}
+        viewport={{ amount: 0.8 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         ref={textRef}
         className="flex items-center justify-center sticky top-32"
