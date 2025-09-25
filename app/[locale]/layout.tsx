@@ -12,6 +12,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { getMessages } from "next-intl/server";
+import Script from "next/script";
 
 // Generate static params for all locales
 export function generateStaticParams() {
@@ -79,6 +80,19 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        <Script id="zoho-init" strategy="beforeInteractive">
+          {`
+            window.$zoho=window.$zoho || {};
+            $zoho.salesiq=$zoho.salesiq||{ready:function(){}}
+          `}
+        </Script>
+        <Script
+          id="zsiqscript"
+          src="https://salesiq.zohopublic.in/widget?wc=siqdf0a2d378d98ce250c5ed02dd748fdb10571bacd1b57a741ac0c8bc8ed5749c9"
+          strategy="afterInteractive"
+        />
+      </head>
       <body
         className={`${satoshi.variable} font-satoshi antialiased bg-primary text-text min-h-screen scrollbar-hidden`}
       >
